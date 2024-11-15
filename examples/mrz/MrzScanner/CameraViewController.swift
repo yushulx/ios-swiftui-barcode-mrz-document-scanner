@@ -90,9 +90,15 @@ extension CameraViewController: CapturedResultReceiver {
             DispatchQueue.main.async {
                 self.cvr.stopCapturing()
                 self.dce.clearBuffer()
+                self.dce.cameraView.getDrawingLayer(DrawingLayerId.DLR.rawValue)?.visible =
+                false
                 let vc = MRZResultViewController()
                 vc.mrzResultModel = self.model
-                self.navigationController?.pushViewController(vc, animated: true)
+                vc.delegate = self
+                vc.modalPresentationStyle = .overCurrentContext  // Make it hover over the current view
+                vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.3)  // 70% opacity background
+                vc.preferredContentSize = CGSize(width: self.view.bounds.width * 0.8, height: self.view.bounds.height * 0.6)
+                self.present(vc, animated: true, completion: nil)
             }
         } else {
             if let text = result.recognizedTextLinesResult?.items?.first?.text {
@@ -136,5 +142,17 @@ extension CameraViewController: LicenseVerificationListener {
             label.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
             label.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
         ])
+    }
+}
+
+extension CameraViewController: MRZResultViewControllerDelegate {
+    
+    func restartCapturing() {
+        // Restart the camera capturing process after returning from the MRZResultViewController
+        cvr.startCapturing(currentTemplateName) { isSuccess, error in
+            if !isSuccess, let error = error {
+                self.showResult("Error", error.localizedDescription)
+            }
+        }
     }
 }

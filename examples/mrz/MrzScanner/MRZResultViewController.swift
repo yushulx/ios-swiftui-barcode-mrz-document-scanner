@@ -1,41 +1,65 @@
 import Foundation
 import UIKit
 
+protocol MRZResultViewControllerDelegate: AnyObject {
+    func restartCapturing()
+}
+
 class MRZResultViewController: UIViewController {
 
     var mrzResultModel: ParsedItemModel!
-    
     private var resultListArray: [[String : String]] = []
+    weak var delegate: MRZResultViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "MRZ Result"
-        view.backgroundColor = .white
+        
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        
+        let contentView = UIView()
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 10
+        contentView.clipsToBounds = true
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(contentView)
+        
+        // Define the content size and position
+        NSLayoutConstraint.activate([
+            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            contentView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8), // 80% of the screen width
+            contentView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6) // 60% of the screen height
+        ])
+
         analyzeData()
-        setupUI()
+        setupUI(in: contentView)
     }
 
-    func analyzeData() -> Void {
+    func analyzeData() {
         resultListArray = [["Title": "Document Type", "Content":mrzResultModel.documentType],
                            ["Title": "Document Number:", "Content":mrzResultModel.documentNumber],
+                           ["Title": "Name:", "Content":mrzResultModel.name],
+                           ["Title": "Gender:", "Content":mrzResultModel.gender],
+                           ["Title": "Age:", "Content":mrzResultModel.age != -1 ? String(format: "%ld", mrzResultModel.age) : "Unknown"],
                            ["Title": "Issuing State:", "Content":mrzResultModel.issuingState],
                            ["Title": "Nationality:", "Content":mrzResultModel.nationality],
                            ["Title": "Date of Birth(YYYY-MM-DD):", "Content":mrzResultModel.dateOfBirth],
-                           ["Title": "Date of Expiry(YYYY-MM-DD):", "Content":mrzResultModel.dateOfExpiry],
-                           
+                           ["Title": "Date of Expiry(YYYY-MM-DD):", "Content":mrzResultModel.dateOfExpiry]
         ]
     }
     
-    func setupUI() -> Void {
-        let safeArea = view.safeAreaLayoutGuide
+    func setupUI(in contentView: UIView) {
+        let safeArea = contentView.safeAreaLayoutGuide
         
+        // Create and configure the table view inside the content view (popup dialog)
         let tableView = UITableView()
         tableView.flashScrollIndicators()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tableView)
+        contentView.addSubview(tableView)
         
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
@@ -44,23 +68,23 @@ class MRZResultViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
         
-        let headerView = UIView()
-        let label = UILabel()
-        label.text = String(format: "%@\n%@, Age: %@", mrzResultModel.name, mrzResultModel.gender, mrzResultModel.age != -1 ? String(format: "%ld", mrzResultModel.age) : "Unknown")
-        label.font = UIFont.boldSystemFont(ofSize: 20.0)
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(label)
+        // Add a dismiss button (Back) inside the content view (popup dialog)
+        let dismissButton = UIButton(type: .system)
+        dismissButton.setTitle("Back", for: .normal)
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        dismissButton.addTarget(self, action: #selector(dismissViewController), for: .touchUpInside)
+        contentView.addSubview(dismissButton)
         
+        // Set the button's position at the top-right corner of the content view
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(greaterThanOrEqualTo: headerView.trailingAnchor, constant: -16),
-            label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 10),
-            label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10)
-            ])
-        
-        headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100)
-        tableView.tableHeaderView = headerView
+            dismissButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20), // 20 points from the top
+            dismissButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20) // 20 points from the right
+        ])
+    }
+    
+    @objc func dismissViewController() {
+        delegate?.restartCapturing()
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
