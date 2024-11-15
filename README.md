@@ -1,5 +1,6 @@
 # iOS SwiftUI Examples for Barcode, MRZ and Document Scanning
-This repository contains examples of using the Dynamsoft Capture Vision SDK for detecting 1D/2D barcodes, documents, MRZ (Machine Readable Zone).
+This repository contains examples of using the Dynamsoft Capture Vision SDK to detect 1D/2D barcodes, documents, and MRZ (Machine Readable Zone).
+
 
 ## Prerequisites
 - Click [here](https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform) to apply for a 30-day FREE Trial license.
