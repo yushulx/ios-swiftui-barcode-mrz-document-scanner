@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  MrzScanner
-//
-//  Created by Xiao Ling on 11/14/24.
-//
-
 import SwiftUI
 
 struct ContentView: View {
