@@ -11,3 +11,5 @@ This repository contains examples of using the Dynamsoft Capture Vision SDK to d
     https://user-images.githubusercontent.com/2202306/156506394-7fccfdd2-5be6-4533-883c-b694034a2afa.mp4
 
 - [MRZ Scanning](./examples/mrz/)
+
+    https://github.com/user-attachments/assets/09b6151d-c285-451b-9467-3079a2414c82
