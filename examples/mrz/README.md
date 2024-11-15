@@ -1,6 +1,8 @@
 # iOS SwiftUI MRZ Scanner 
 The sample demonstrates how to quickly implement an iOS MRZ scanner app using SwiftUI and Dynamsoft Capture Vision.
 
+https://github.com/user-attachments/assets/09b6151d-c285-451b-9467-3079a2414c82
+
 ## Prerequisites
 - Click [here](https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform) to apply for a 30-day FREE Trial license.
 
