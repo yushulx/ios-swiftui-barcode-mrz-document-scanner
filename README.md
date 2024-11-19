@@ -13,3 +13,7 @@ This repository contains examples of using the Dynamsoft Capture Vision SDK to d
 - [MRZ Scanning](./examples/mrz/)
 
     https://github.com/user-attachments/assets/09b6151d-c285-451b-9467-3079a2414c82
+
+- [macOS Barcode Scanner](./examples/capture_vision/)
+    
+    https://github.com/user-attachments/assets/321fa8ce-8f38-4c7a-bb50-93c1cd1b152f
