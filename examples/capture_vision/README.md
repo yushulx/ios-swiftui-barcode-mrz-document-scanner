@@ -15,5 +15,7 @@ https://github.com/user-attachments/assets/321fa8ce-8f38-4c7a-bb50-93c1cd1b152f
     ```
 
 2. Build and run the project in Xcode.
+    ![macos barcode scanner](https://www.dynamsoft.com/codepool/img/2024/11/macos-barcode-scanner-swiftui.png)
 
-
+## Blog
+- [How to Build a macOS Barcode Scanner App Using SwiftUI and C++ Barcode SDK from Scratch](https://www.dynamsoft.com/codepool/macos-barcode-scanner-swiftui-cpp.html)
