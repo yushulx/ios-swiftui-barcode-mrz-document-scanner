@@ -74,24 +74,8 @@
             filePath = "CaptureVision/BarcodeOverlayView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "draw(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6224163F-DD38-43DC-9B90-74D7A39CE1CD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CaptureVision/BarcodeOverlayView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,8 +90,8 @@
             filePath = "CaptureVision/BarcodeOverlayView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "convertToOverlayCoordinates(cameraPoint:overlaySize:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,8 +106,8 @@
             filePath = "CaptureVision/BarcodeOverlayView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -269,6 +253,22 @@
             startingLineNumber = "248"
             endingLineNumber = "248"
             landmarkName = "processCameraFrame(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "56EC361B-E51B-4C2D-8D3C-E07DB220497D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CaptureVision/BarcodeOverlayView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "convertToOverlayCoordinates(cameraPoint:overlaySize:orientation:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -2,6 +2,7 @@ import SwiftUI
 
 #if os(iOS)
     import UIKit
+    import AVFoundation
     typealias OverlayView = UIView
     typealias OverlayColor = UIColor
 #elseif os(macOS)
@@ -13,7 +14,10 @@ import SwiftUI
 class BarcodeOverlayView: OverlayView {
     var barcodeData: [[String: Any]] = []  // Array of barcode data to be drawn
     var cameraPreviewSize: CGSize = .zero
-
+#if os(iOS)
+    var videoOrientation: AVCaptureVideoOrientation = .portrait
+#endif
+    
     override func draw(_ rect: CGRect) {
         guard cameraPreviewSize != .zero else { return }
 
@@ -32,12 +36,25 @@ class BarcodeOverlayView: OverlayView {
             else { continue }
 
             // Convert points from camera space to overlay space
+#if os(iOS)
+            let convertedPoints = points.map { point -> CGPoint in
+                            let x = CGFloat(point["x"]!.doubleValue)
+                            let y = CGFloat(point["y"]!.doubleValue)
+                            return convertToOverlayCoordinates(
+                                cameraPoint: CGPoint(x: x, y: y),
+                                overlaySize: overlaySize,
+                                orientation: videoOrientation
+                            )
+                        }
+#elseif os(macOS)
             let convertedPoints = points.map { point -> CGPoint in
                 let x = CGFloat(point["x"]!.doubleValue)
                 let y = CGFloat(point["y"]!.doubleValue)
                 return convertToOverlayCoordinates(
                     cameraPoint: CGPoint(x: x, y: y), overlaySize: overlaySize)
             }
+#endif
+            
 
             // Draw the polygon
             context.setStrokeColor(OverlayColor.red.cgColor)
@@ -83,6 +100,22 @@ class BarcodeOverlayView: OverlayView {
         }
     }
 
+#if os(iOS)
+    private func convertToOverlayCoordinates(cameraPoint: CGPoint, overlaySize: CGSize, orientation: AVCaptureVideoOrientation) -> CGPoint {
+            let cameraSize = cameraPreviewSize
+
+            // Calculate scaling factors
+            let scaleX = overlaySize.width / cameraSize.height
+            let scaleY = overlaySize.height / cameraSize.width
+
+            // Apply scaling factors
+            var transformedPoint = CGPoint(x: cameraPoint.x * scaleY, y: cameraPoint.y * scaleX)
+        
+            transformedPoint = CGPoint(x: overlaySize.width - transformedPoint.y, y: transformedPoint.x)
+
+            return transformedPoint
+        }
+#elseif os(macOS)
     private func convertToOverlayCoordinates(cameraPoint: CGPoint, overlaySize: CGSize) -> CGPoint {
         let cameraSize = cameraPreviewSize
 
@@ -93,4 +126,5 @@ class BarcodeOverlayView: OverlayView {
         // Apply scaling factors to convert coordinates
         return CGPoint(x: cameraPoint.x * scaleX, y: cameraPoint.y * scaleY)
     }
+#endif
 }
