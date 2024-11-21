@@ -23,7 +23,13 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
     var photoOutput: AVCapturePhotoOutput!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var onImageCaptured: ((ImageType) -> Void)?
+    
+#if os(iOS)
+
+#elseif os(macOS)
     let cv = CaptureVisionWrapper()
+#endif
+    
 
     private var overlayView: BarcodeOverlayView!
 
@@ -65,9 +71,15 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
             let input = try AVCaptureDeviceInput(device: camera)
             photoOutput = AVCapturePhotoOutput()
             let videoOutput = AVCaptureVideoDataOutput()
-            videoOutput.videoSettings = [
-                kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB
-            ]
+
+            
+#if os(iOS)
+        
+#elseif os(macOS)
+                        videoOutput.videoSettings = [
+                            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB
+                        ]
+            #endif
             videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoQueue"))
 
             if captureSession.canAddInput(input) && captureSession.canAddOutput(photoOutput) {
@@ -174,42 +186,52 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         // Get camera preview size from pixel buffer
         let previewWidth = CVPixelBufferGetWidth(pixelBuffer)
         let previewHeight = CVPixelBufferGetHeight(pixelBuffer)
-
+        
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.overlayView.cameraPreviewSize = CGSize(width: previewWidth, height: previewHeight)
         }
-
+#if os(iOS)
+        
+#elseif os(macOS)
+        
         let flippedPixelBuffer = flipVertically(pixelBuffer: pixelBuffer) ?? pixelBuffer
         CVPixelBufferLockBaseAddress(flippedPixelBuffer, .readOnly)
-
+        
         let baseAddress = CVPixelBufferGetBaseAddress(flippedPixelBuffer)
         let width = CVPixelBufferGetWidth(flippedPixelBuffer)
         let height = CVPixelBufferGetHeight(flippedPixelBuffer)
         let bytesPerRow = CVPixelBufferGetBytesPerRow(flippedPixelBuffer)
         let pixelFormat = CVPixelBufferGetPixelFormatType(flippedPixelBuffer)
-
+        
         // Pass frame data to C++ via the wrapper
         if let baseAddress = baseAddress {
+            
+            
             let buffer = Data(bytes: baseAddress, count: bytesPerRow * height)
             let barcodeArray =
-                cv.captureImage(
-                    with: buffer, width: Int32(width), height: Int32(Int(height)),
-                    stride: Int32(Int(bytesPerRow)), pixelFormat: pixelFormat)
-                as? [[String: Any]] ?? []
-
+            cv.captureImage(
+                with: buffer, width: Int32(width), height: Int32(Int(height)),
+                stride: Int32(Int(bytesPerRow)), pixelFormat: pixelFormat)
+            as? [[String: Any]] ?? []
+            
+            
+            
+            
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                
+#if os(iOS)
+                self.overlayView.setNeedsDisplay()  // iOS
+#elseif os(macOS)
                 self.overlayView.barcodeData = barcodeArray
-                #if os(iOS)
-                    self.overlayView.setNeedsDisplay()  // iOS
-                #elseif os(macOS)
-                    self.overlayView.setNeedsDisplay(self.overlayView.bounds)  // macOS
-                #endif
+                self.overlayView.setNeedsDisplay(self.overlayView.bounds)  // macOS
+#endif
             }
         }
-
+        
         CVPixelBufferUnlockBaseAddress(flippedPixelBuffer, .readOnly)
+#endif
     }
 
     func capturePhoto() {

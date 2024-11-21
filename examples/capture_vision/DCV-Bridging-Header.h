@@ -1,6 +1,9 @@
 #ifndef DCV_Bridging_Header_h
 #define DCV_Bridging_Header_h
 
+#include <TargetConditionals.h>
+
+#if defined(__APPLE__) && defined(__MACH__) && !TARGET_OS_IPHONE
 #ifdef __cplusplus
 #include "DynamsoftCaptureVisionRouter.h"
 #include "DynamsoftUtility.h"
@@ -28,5 +31,6 @@ using namespace dynamsoft::basic_structures;
                            pixelFormat:(OSType)pixelFormat;
 
 @end
+#endif
 
 #endif /* DCV_Bridging_Header_h */

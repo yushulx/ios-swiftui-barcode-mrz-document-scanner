@@ -5,7 +5,7 @@ struct ContentView: View {
         NavigationView {
             VStack(spacing: 20) {
 
-                NavigationLink(destination:CaptureView(title: "Scan MRZ")) {
+                NavigationLink(destination: CaptureView(title: "Scan MRZ")) {
                     Text("Scan MRZ")
                         .font(.title2)
                         .padding()
@@ -13,7 +13,7 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
-                
+
             }
             .navigationTitle("Home")
         }

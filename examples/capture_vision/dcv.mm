@@ -3,6 +3,8 @@
 
 #import "DCV-Bridging-Header.h"
 
+#if defined(__APPLE__) && defined(__MACH__) && !TARGET_OS_IPHONE
+
 @implementation CaptureVisionWrapper {
   CCaptureVisionRouter *cvr;
 }
@@ -126,3 +128,5 @@
 }
 
 @end
+
+#endif
