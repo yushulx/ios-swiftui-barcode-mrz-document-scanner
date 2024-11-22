@@ -25,3 +25,4 @@ This sample demonstrates how to build a macOS & iOS barcode scanner with SwiftUI
 
 ## Blog
 - [How to Build a macOS Barcode Scanner App Using SwiftUI and C++ Barcode SDK from Scratch](https://www.dynamsoft.com/codepool/macos-barcode-scanner-swiftui-cpp.html)
+- [How to Create a SwiftUI Barcode Scanner Project for macOS and iOS](https://www.dynamsoft.com/codepool/swiftui-ios-barcode-scanner.html)
