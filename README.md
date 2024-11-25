@@ -17,3 +17,7 @@ This repository contains examples of using the Dynamsoft Capture Vision SDK to d
 - [macOS Barcode Scanner](./examples/capture_vision/)
     
     https://github.com/user-attachments/assets/321fa8ce-8f38-4c7a-bb50-93c1cd1b152f
+
+- [iOS Document Scanner](./examples/document/)
+    
+    https://github.com/user-attachments/assets/5f056487-519b-45f1-9900-b3bc212a58a9
