@@ -7,10 +7,10 @@ import SwiftUI
     import CoreGraphics
     import DynamsoftCameraEnhancer
     import DynamsoftCaptureVisionRouter
-    import DynamsoftBarcodeReader
     import DynamsoftLicense
     import DynamsoftCodeParser
     import DynamsoftLabelRecognizer
+    import DynamsoftDocumentNormalizer
     typealias ViewController = UIViewController
     typealias ImageType = UIImage
 #elseif os(macOS)
@@ -26,6 +26,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
     var photoOutput: AVCapturePhotoOutput!
     var previewLayer: AVCaptureVideoPreviewLayer!
     var onImageCaptured: ((ImageType) -> Void)?
+    var isCaptureEnabled = false
 
     #if os(iOS)
         let cvr = CaptureVisionRouter()
@@ -33,7 +34,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         let cv = CaptureVisionWrapper()
     #endif
 
-    private var overlayView: BarcodeOverlayView!
+    private var overlayView: DocumentOverlayView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +55,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         #endif
 
         // Initialize the overlay view
-        overlayView = BarcodeOverlayView()
+        overlayView = DocumentOverlayView()
 
         #if os(iOS)
             overlayView.backgroundColor = UIColor.clear
@@ -134,21 +135,6 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         // Process the frame
         processCameraFrame(pixelBuffer)
     }
-    
-    func flipBufferVertically(buffer: Data, width: Int, height: Int, bytesPerRow: Int) -> Data {
-        var flippedBuffer = Data(capacity: buffer.count)
-
-        for row in 0..<height {
-            // Calculate the range of the current row in the buffer
-            let start = (height - row - 1) * bytesPerRow
-            let end = start + bytesPerRow
-
-            // Append the row from the original buffer to the flipped buffer
-            flippedBuffer.append(buffer[start..<end])
-        }
-
-        return flippedBuffer
-    }
 
     func flipVertically(pixelBuffer: CVPixelBuffer) -> CVPixelBuffer? {
         CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
@@ -219,10 +205,6 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
             self.overlayView.cameraPreviewSize = CGSize(width: previewWidth, height: previewHeight)
         }
         #if os(iOS)
-            // Convert pixel buffer to UIImage
-            //            let uiImage = imageFromPixelBuffer(pixelBuffer)
-            //            let result = cvr.captureFromImage(
-            //                uiImage, templateName: PresetTemplate.readBarcodes.rawValue)
 
             CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
 
@@ -256,84 +238,106 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
                     bytes: buffer, width: UInt(width), height: UInt(height),
                     stride: UInt(bytesPerRow), format: .ARGB8888, orientation: 0, tag: nil)
                 let result = cvr.captureFromBuffer(
-                    imageData, templateName: PresetTemplate.readBarcodes.rawValue)
+                    imageData, templateName: PresetTemplate.detectAndNormalizeDocument.rawValue)
 
-                var barcodeArray: [[String: Any]] = []
+                var documentArray: [[String: Any]] = []
                 if let items = result.items, items.count > 0 {
-                    print("Decoded Barcode Count: \(items.count)")
+                    print("Decoded document Count: \(items.count)")
 
                     for item in items {
-                        if item.type == .barcode, let barcodeItem = item as? BarcodeResultItem {
-                            let format = barcodeItem.formatString
-                            let text = barcodeItem.text
-                            let points = barcodeItem.location.points
+                        if item.type == .normalizedImage,
+                            let documentItem = item as? NormalizedImageResultItem
+                        {
 
-                            // Map points to a dictionary format
-                            let pointArray: [[String: CGFloat]] = points.compactMap { point in
-                                guard let cgPoint = point as? CGPoint else { return nil }
-                                return ["x": cgPoint.x, "y": cgPoint.y]
+                            do {
+                                let image = try documentItem.imageData?.toUIImage()
+                                let points = documentItem.location.points
+
+                                // Map points to a dictionary format
+                                let pointArray: [[String: CGFloat]] = points.compactMap { point in
+                                    guard let cgPoint = point as? CGPoint else { return nil }
+                                    return ["x": cgPoint.x, "y": cgPoint.y]
+                                }
+
+                                // rotate image
+                                let rotatedImage = image!.rotate(byDegrees: 90)
+
+                                // Create dictionary for barcode data
+                                let documentData: [String: Any] = [
+                                    "image": rotatedImage!,
+                                    "points": pointArray,
+                                ]
+
+                                // Append barcode data to array
+                                documentArray.append(documentData)
+                            } catch {
+                                print("Failed to convert image data to UIImage: \(error)")
                             }
 
-                            // Create dictionary for barcode data
-                            let barcodeData: [String: Any] = [
-                                "format": format,
-                                "text": text,
-                                "points": pointArray,
-                            ]
-
-                            // Append barcode data to array
-                            barcodeArray.append(barcodeData)
-
-                            // Debugging logs
-                            print("Barcode Format: \(format)")
-                            print("Barcode Text: \(text)")
                         }
                     }
                 }
 
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.overlayView.barcodeData = barcodeArray
+                    self.overlayView.documentData = documentArray
                     self.overlayView.setNeedsDisplay()
+                    if isCaptureEnabled && documentArray.count > 0 {
+                        onImageCaptured?(documentArray[0]["image"] as! ImageType)
+                        isCaptureEnabled = false
+                    }
                 }
             }
 
             CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
 
         #elseif os(macOS)
+            //        let image = convertPixelBufferToNSImage(pixelBuffer: pixelBuffer)
 
-            CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
+            //            let flippedPixelBuffer = flipVertically(pixelBuffer: pixelBuffer) ?? pixelBuffer
+            var flippedPixelBuffer = pixelBuffer
 
-            let baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer)
-            let width = CVPixelBufferGetWidth(pixelBuffer)
-            let height = CVPixelBufferGetHeight(pixelBuffer)
-            let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
-            let pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
+            let image = convertPixelBufferToNSImage(pixelBuffer: flippedPixelBuffer)
+
+            CVPixelBufferLockBaseAddress(flippedPixelBuffer, .readOnly)
+
+            defer { CVPixelBufferUnlockBaseAddress(flippedPixelBuffer, .readOnly) }
+
+            guard let baseAddress = CVPixelBufferGetBaseAddress(flippedPixelBuffer) else {
+                print("Failed to get base address of pixel buffer.")
+                return
+            }
+            let width = CVPixelBufferGetWidth(flippedPixelBuffer)
+            let height = CVPixelBufferGetHeight(flippedPixelBuffer)
+            let bytesPerRow = CVPixelBufferGetBytesPerRow(flippedPixelBuffer)
+            let pixelFormat = CVPixelBufferGetPixelFormatType(flippedPixelBuffer)
 
             // Pass frame data to C++ via the wrapper
-            if let baseAddress = baseAddress {
 
-                var buffer = Data(bytes: baseAddress, count: bytesPerRow * height)
-                buffer = flipBufferVertically(
-                    buffer: buffer, width: width, height: height, bytesPerRow: bytesPerRow)
-                let barcodeArray =
-                    cv.captureImage(
-                        with: buffer, width: Int32(width), height: Int32(Int(height)),
-                        stride: Int32(Int(bytesPerRow)), pixelFormat: pixelFormat)
-                    as? [[String: Any]] ?? []
+            var buffer = Data(bytes: baseAddress, count: bytesPerRow * height)
+            buffer = flipBufferVertically(
+                buffer: buffer, width: width, height: height, bytesPerRow: bytesPerRow)
+            let documentArray =
+                cv.captureImage(
+                    with: buffer, width: Int32(width), height: Int32(height),
+                    stride: Int32(bytesPerRow), pixelFormat: pixelFormat)
+                as? [[String: Any]] ?? []
 
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.overlayView.barcodeData = barcodeArray
-                    self.overlayView.setNeedsDisplay(self.overlayView.bounds)  // macOS
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.overlayView.documentData = documentArray
+                self.overlayView.setNeedsDisplay(self.overlayView.bounds)  // macOS
+                if isCaptureEnabled && documentArray.count > 0 {
+                    onImageCaptured?(documentArray[0]["image"] as! ImageType)
+                    isCaptureEnabled = false
                 }
             }
 
-            CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
         #endif
     }
 
     #if os(iOS)
+
         // Helper function to convert CVPixelBuffer to UIImage
         func imageFromPixelBuffer(_ pixelBuffer: CVPixelBuffer) -> ImageType {
             let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
@@ -372,15 +376,57 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
                 }
             }
         }
+    #elseif os(macOS)
+        func flipBufferVertically(buffer: Data, width: Int, height: Int, bytesPerRow: Int) -> Data {
+            var flippedBuffer = Data(capacity: buffer.count)
+
+            for row in 0..<height {
+                // Calculate the range of the current row in the buffer
+                let start = (height - row - 1) * bytesPerRow
+                let end = start + bytesPerRow
+
+                // Append the row from the original buffer to the flipped buffer
+                flippedBuffer.append(buffer[start..<end])
+            }
+
+            return flippedBuffer
+        }
+
+        func convertPixelBufferToNSImage(pixelBuffer: CVPixelBuffer) -> NSImage? {
+            // Step 1: Create a CIImage from the CVPixelBuffer
+            let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+
+            // Step 2: Create a CIContext to render the CIImage
+            let ciContext = CIContext(options: nil)
+
+            // Step 3: Get the pixel buffer properties
+            let width = CVPixelBufferGetWidth(pixelBuffer)
+            let height = CVPixelBufferGetHeight(pixelBuffer)
+
+            // Step 4: Create a CGImage from the CIImage
+            guard
+                let cgImage = ciContext.createCGImage(
+                    ciImage, from: CGRect(x: 0, y: 0, width: width, height: height))
+            else {
+                print("Failed to create CGImage from CIImage.")
+                return nil
+            }
+
+            // Step 5: Create an NSImage from the CGImage
+            let nsImage = NSImage(cgImage: cgImage, size: NSSize(width: width, height: height))
+
+            return nsImage
+        }
 
     #endif
 
     func capturePhoto() {
-        let settings = AVCapturePhotoSettings()
-        #if os(iOS)
-            settings.flashMode = .auto
-        #endif
-        photoOutput.capturePhoto(with: settings, delegate: self)
+        //        let settings = AVCapturePhotoSettings()
+        //        #if os(iOS)
+        //            settings.flashMode = .auto
+        //        #endif
+        //        photoOutput.capturePhoto(with: settings, delegate: self)
+        isCaptureEnabled = true
     }
 
     // MARK: AVCapturePhotoCaptureDelegate
@@ -465,6 +511,46 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
                 label.trailingAnchor.constraint(
                     lessThanOrEqualTo: view.trailingAnchor, constant: -20),
             ])
+        }
+    }
+
+    extension UIImage {
+        func rotate(byDegrees degrees: CGFloat) -> UIImage? {
+            // Calculate the size of the rotated view's bounding box
+            let radians = degrees * .pi / 180
+            var newSize = CGRect(
+                origin: .zero,
+                size: self.size
+            ).applying(CGAffineTransform(rotationAngle: radians)).size
+
+            // Normalize size
+            newSize.width = floor(newSize.width)
+            newSize.height = floor(newSize.height)
+
+            // Create a new graphics context
+            UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
+            guard let context = UIGraphicsGetCurrentContext() else { return nil }
+
+            // Move origin to the middle of the image so the rotation will happen around the center
+            context.translateBy(x: newSize.width / 2, y: newSize.height / 2)
+            // Rotate the context
+            context.rotate(by: radians)
+
+            // Draw the image in the context
+            self.draw(
+                in: CGRect(
+                    x: -self.size.width / 2,
+                    y: -self.size.height / 2,
+                    width: self.size.width,
+                    height: self.size.height
+                )
+            )
+
+            // Capture the rotated image
+            let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return rotatedImage
         }
     }
 #endif
