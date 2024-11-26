@@ -162,25 +162,6 @@
     return nil;
   }
 
-  // Create a buffer for flipped image data
-  unsigned char *flippedData = (unsigned char *)malloc(size);
-  if (!flippedData) {
-    NSLog(@"Failed to allocate memory for flipped image.");
-    return nil;
-  }
-
-  // Flip rows and copy data
-  for (int row = 0; row < height; row++) {
-    const unsigned char *sourceRow = bytes + row * stride;
-    unsigned char *destRow = flippedData + row * stride;
-
-    for (int col = 0; col < width; col++) {
-      destRow[col * 3 + 0] = sourceRow[col * 3 + 0];
-      destRow[col * 3 + 1] = sourceRow[col * 3 + 1];
-      destRow[col * 3 + 2] = sourceRow[col * 3 + 2];
-    }
-  }
-
   // Create NSBitmapImageRep
   NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc]
       initWithBitmapDataPlanes:NULL
@@ -196,13 +177,11 @@
                   bitsPerPixel:bitsPerPixel];
   if (!imageRep) {
     NSLog(@"Failed to create NSBitmapImageRep.");
-    free(flippedData);
     return nil;
   }
 
-  // Copy the flipped and corrected pixel data into the image rep
-  memcpy([imageRep bitmapData], flippedData, size);
-  free(flippedData);
+  // Copy pixel data into the image rep
+  memcpy([imageRep bitmapData], bytes, size);
 
   // Wrap in NSImage
   NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
