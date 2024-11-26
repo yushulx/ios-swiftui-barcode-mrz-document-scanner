@@ -292,25 +292,19 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
             CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
 
         #elseif os(macOS)
-            //        let image = convertPixelBufferToNSImage(pixelBuffer: pixelBuffer)
 
-            //            let flippedPixelBuffer = flipVertically(pixelBuffer: pixelBuffer) ?? pixelBuffer
-            var flippedPixelBuffer = pixelBuffer
+            CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
 
-            let image = convertPixelBufferToNSImage(pixelBuffer: flippedPixelBuffer)
+            defer { CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly) }
 
-            CVPixelBufferLockBaseAddress(flippedPixelBuffer, .readOnly)
-
-            defer { CVPixelBufferUnlockBaseAddress(flippedPixelBuffer, .readOnly) }
-
-            guard let baseAddress = CVPixelBufferGetBaseAddress(flippedPixelBuffer) else {
+            guard let baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer) else {
                 print("Failed to get base address of pixel buffer.")
                 return
             }
-            let width = CVPixelBufferGetWidth(flippedPixelBuffer)
-            let height = CVPixelBufferGetHeight(flippedPixelBuffer)
-            let bytesPerRow = CVPixelBufferGetBytesPerRow(flippedPixelBuffer)
-            let pixelFormat = CVPixelBufferGetPixelFormatType(flippedPixelBuffer)
+            let width = CVPixelBufferGetWidth(pixelBuffer)
+            let height = CVPixelBufferGetHeight(pixelBuffer)
+            let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
+            let pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
 
             // Pass frame data to C++ via the wrapper
 
