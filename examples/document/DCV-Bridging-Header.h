@@ -24,7 +24,7 @@ using namespace dynamsoft::basic_structures;
 @interface CaptureVisionWrapper : NSObject
 + (int)initializeLicense:(NSString *)licenseKey;
 
-- (NSArray *)captureImageWithData:(NSData *)imageData
+- (NSArray *)captureImageWithData:(void *)baseAddress
                             width:(int)width
                            height:(int)height
                            stride:(int)stride

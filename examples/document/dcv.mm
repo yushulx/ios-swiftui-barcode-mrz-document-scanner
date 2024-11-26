@@ -47,16 +47,22 @@
   return self;
 }
 
-- (NSArray *)captureImageWithData:(NSData *)imageData
+- (NSArray *)captureImageWithData:(void *)baseAddress
                             width:(int)width
                            height:(int)height
                            stride:(int)stride
                       pixelFormat:(OSType)pixelFormat {
+
+  if (baseAddress == NULL) {
+    NSLog(@"Base address is NULL.");
+    return nil;
+  }
+
   ImagePixelFormat sdkPixelFormat = [self mapPixelFormat:pixelFormat];
 
   // Construct CImageData
   CImageData *imageStruct =
-      new CImageData(stride * height, (unsigned char *)[imageData bytes], width,
+      new CImageData(stride * height, (unsigned char *)baseAddress, width,
                      height, stride, sdkPixelFormat);
 
   // Call C++ method
@@ -88,15 +94,15 @@
     //    delete imageManager;
     const unsigned char *bytes = imageData->GetBytes();
     unsigned long size = imageData->GetBytesLength();
-    int width = imageData->GetWidth();
-    int height = imageData->GetHeight();
-    int stride = imageData->GetStride();
+    int niWidth = imageData->GetWidth();
+    int niHeight = imageData->GetHeight();
+    int niStride = imageData->GetStride();
     ImagePixelFormat format = imageData->GetImagePixelFormat();
     NSImage *image = [self convertToNSImageWithBytes:bytes
                                                 size:size
-                                               width:width
-                                              height:height
-                                              stride:stride
+                                               width:niWidth
+                                              height:niHeight
+                                              stride:niStride
                                               format:format];
 
     CPoint *points = documentResultItem->GetLocation().points;
@@ -104,10 +110,10 @@
 
     NSDictionary *documentData = @{
       @"points" : @[
-        @{@"x" : @(points[0][0]), @"y" : @(points[0][1])},
-        @{@"x" : @(points[1][0]), @"y" : @(points[1][1])},
-        @{@"x" : @(points[2][0]), @"y" : @(points[2][1])},
-        @{@"x" : @(points[3][0]), @"y" : @(points[3][1])}
+        @{@"x" : @(points[0][0]), @"y" : @(height - points[0][1])},
+        @{@"x" : @(points[1][0]), @"y" : @(height - points[1][1])},
+        @{@"x" : @(points[2][0]), @"y" : @(height - points[2][1])},
+        @{@"x" : @(points[3][0]), @"y" : @(height - points[3][1])}
       ],
       @"image" : image
     };
@@ -165,7 +171,7 @@
 
   // Flip rows and copy data
   for (int row = 0; row < height; row++) {
-    const unsigned char *sourceRow = bytes + (height - row - 1) * stride;
+    const unsigned char *sourceRow = bytes + row * stride;
     unsigned char *destRow = flippedData + row * stride;
 
     for (int col = 0; col < width; col++) {

@@ -307,13 +307,8 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
             let pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
 
             // Pass frame data to C++ via the wrapper
-
-            var buffer = Data(bytes: baseAddress, count: bytesPerRow * height)
-            buffer = flipBufferVertically(
-                buffer: buffer, width: width, height: height, bytesPerRow: bytesPerRow)
             let documentArray =
-                cv.captureImage(
-                    with: buffer, width: Int32(width), height: Int32(height),
+        cv.captureImage(withData: baseAddress, width: Int32(width), height: Int32(height),
                     stride: Int32(bytesPerRow), pixelFormat: pixelFormat)
                 as? [[String: Any]] ?? []
 
