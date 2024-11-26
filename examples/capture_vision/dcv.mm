@@ -47,7 +47,7 @@
   return self;
 }
 
-- (NSArray *)captureImageWithData:(NSData *)imageData
+- (NSArray *)captureImageWithData:(void *)baseAddress
                             width:(int)width
                            height:(int)height
                            stride:(int)stride
@@ -56,7 +56,7 @@
 
   // Construct CImageData
   CImageData *imageStruct =
-      new CImageData(stride * height, (unsigned char *)[imageData bytes], width,
+      new CImageData(stride * height, (unsigned char *)baseAddress, width,
                      height, stride, sdkPixelFormat);
 
   // Call C++ method
@@ -89,10 +89,10 @@
       @"format" : [NSString stringWithUTF8String:format],
       @"text" : [NSString stringWithUTF8String:text],
       @"points" : @[
-        @{@"x" : @(points[0][0]), @"y" : @(points[0][1])},
-        @{@"x" : @(points[1][0]), @"y" : @(points[1][1])},
-        @{@"x" : @(points[2][0]), @"y" : @(points[2][1])},
-        @{@"x" : @(points[3][0]), @"y" : @(points[3][1])}
+        @{@"x" : @(points[0][0]), @"y" : @(height - points[0][1])},
+        @{@"x" : @(points[1][0]), @"y" : @(height - points[1][1])},
+        @{@"x" : @(points[2][0]), @"y" : @(height - points[2][1])},
+        @{@"x" : @(points[3][0]), @"y" : @(height - points[3][1])}
       ]
     };
 
@@ -118,8 +118,6 @@
 
 - (ImagePixelFormat)mapPixelFormat:(OSType)pixelFormat {
   switch (pixelFormat) {
-  case kCVPixelFormatType_32ARGB:
-    return IPF_ARGB_8888;
   case kCVPixelFormatType_32BGRA:
     return IPF_ABGR_8888;
   default:

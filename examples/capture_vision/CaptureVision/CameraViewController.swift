@@ -312,13 +312,9 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
 
             // Pass frame data to C++ via the wrapper
             if let baseAddress = baseAddress {
-
-                var buffer = Data(bytes: baseAddress, count: bytesPerRow * height)
-                buffer = flipBufferVertically(
-                    buffer: buffer, width: width, height: height, bytesPerRow: bytesPerRow)
                 let barcodeArray =
                     cv.captureImage(
-                        with: buffer, width: Int32(width), height: Int32(Int(height)),
+                        withData: baseAddress, width: Int32(width), height: Int32(Int(height)),
                         stride: Int32(Int(bytesPerRow)), pixelFormat: pixelFormat)
                     as? [[String: Any]] ?? []
 
