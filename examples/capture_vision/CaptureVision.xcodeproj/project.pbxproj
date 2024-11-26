@@ -97,7 +97,6 @@
 		11BD8F602CF45E2900C904FA /* DynamsoftLabelRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftLabelRecognizer.h; sourceTree = "<group>"; };
 		11BD8F612CF45E2900C904FA /* DynamsoftLicense.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftLicense.h; sourceTree = "<group>"; };
 		11BD8F622CF45E2900C904FA /* DynamsoftUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftUtility.h; sourceTree = "<group>"; };
-		11BD8F632CF45E2900C904FA /* template.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = template.h; sourceTree = "<group>"; };
 		11BD8F652CF45E2900C904FA /* libDynamicImagex64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicImagex64.dylib; sourceTree = "<group>"; };
 		11BD8F662CF45E2900C904FA /* libDynamicPdf.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicPdf.dylib; sourceTree = "<group>"; };
 		11BD8F672CF45E2900C904FA /* libDynamicPdfCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicPdfCore.dylib; sourceTree = "<group>"; };
@@ -112,6 +111,7 @@
 		11BD8F702CF45E2900C904FA /* libDynamsoftLicense.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftLicense.dylib; sourceTree = "<group>"; };
 		11BD8F712CF45E2900C904FA /* libDynamsoftNeuralNetwork.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftNeuralNetwork.dylib; sourceTree = "<group>"; };
 		11BD8F722CF45E2900C904FA /* libDynamsoftUtility.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftUtility.dylib; sourceTree = "<group>"; };
+		11BD8FC92CF56D5100C904FA /* template.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = template.h; sourceTree = "<group>"; };
 		11DBB10A2CE499970071C317 /* CaptureVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11DBB19B2CEAD2EF0071C317 /* DCV-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DCV-Bridging-Header.h"; sourceTree = "<group>"; };
 		11DBB1BF2CEAE6E00071C317 /* dcv.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = dcv.mm; sourceTree = "<group>"; };
@@ -176,7 +176,6 @@
 				11BD8F602CF45E2900C904FA /* DynamsoftLabelRecognizer.h */,
 				11BD8F612CF45E2900C904FA /* DynamsoftLicense.h */,
 				11BD8F622CF45E2900C904FA /* DynamsoftUtility.h */,
-				11BD8F632CF45E2900C904FA /* template.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -217,6 +216,7 @@
 			children = (
 				11BD8F742CF45E2900C904FA /* dcv */,
 				11DBB1BF2CEAE6E00071C317 /* dcv.mm */,
+				11BD8FC92CF56D5100C904FA /* template.h */,
 				11DBB19B2CEAD2EF0071C317 /* DCV-Bridging-Header.h */,
 				11DBB10C2CE499970071C317 /* CaptureVision */,
 				11DBB1DB2CEB14B40071C317 /* Frameworks */,

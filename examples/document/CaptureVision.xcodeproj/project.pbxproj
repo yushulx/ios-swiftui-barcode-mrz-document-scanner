@@ -111,6 +111,7 @@
 		11BD8FA62CF4603E00C904FA /* libDynamsoftLicense.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftLicense.dylib; sourceTree = "<group>"; };
 		11BD8FA72CF4603E00C904FA /* libDynamsoftNeuralNetwork.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftNeuralNetwork.dylib; sourceTree = "<group>"; };
 		11BD8FA82CF4603E00C904FA /* libDynamsoftUtility.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftUtility.dylib; sourceTree = "<group>"; };
+		11BD8FCA2CF56D6D00C904FA /* template.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = template.h; sourceTree = "<group>"; };
 		11DBB10A2CE499970071C317 /* CaptureVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11DBB19B2CEAD2EF0071C317 /* DCV-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DCV-Bridging-Header.h"; sourceTree = "<group>"; };
 		11DBB1BF2CEAE6E00071C317 /* dcv.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = dcv.mm; sourceTree = "<group>"; };
@@ -214,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				11DBB1BF2CEAE6E00071C317 /* dcv.mm */,
+				11BD8FCA2CF56D6D00C904FA /* template.h */,
 				11DBB19B2CEAD2EF0071C317 /* DCV-Bridging-Header.h */,
 				11DBB10C2CE499970071C317 /* CaptureVision */,
 				11DBB1DB2CEB14B40071C317 /* Frameworks */,
