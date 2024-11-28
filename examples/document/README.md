@@ -15,3 +15,5 @@ https://github.com/user-attachments/assets/5f056487-519b-45f1-9900-b3bc212a58a9
 
 2. Build and run the project for **mac** or **iPhone** in Xcode.
 
+## Blog
+[How to Build a Document Scanner App with SwiftUI for Both macOS and iOS](https://www.dynamsoft.com/codepool/swiftui-document-scanner-macos-ios-ipados.html)
