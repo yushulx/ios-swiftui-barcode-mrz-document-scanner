@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, PixelFormat) {
                            stride:(int)stride
                       pixelFormat:(PixelFormat)pixelFormat;
 
+- (NSArray *)captureImageWithFilePath:(NSString *)filePath;
 @end
 
 #endif

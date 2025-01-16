@@ -8,7 +8,7 @@
 #include "DynamsoftUtility.h"
 #include "template.h"
 
-// Use namespaces conditionally to avoid polluting global namespace
+// Use namespaces conditionally to avoid polluting the global namespace
 using namespace dynamsoft::license;
 using namespace dynamsoft::cvr;
 using namespace dynamsoft::dbr;
@@ -18,11 +18,13 @@ using namespace dynamsoft::basic_structures;
 #endif /* __cplusplus */ // End C++ block
 
 @implementation CaptureVisionWrapper {
-  CCaptureVisionRouter *cvr;
+  CCaptureVisionRouter *cvr; // C++ object for capture vision router
 }
 
+#pragma mark - License Initialization
+
 + (int)initializeLicense:(NSString *)licenseKey {
-  char errorMsgBuffer[512]; // Buffer for error messages
+  char errorMsgBuffer[512] = {0}; // Buffer for error messages
 
   // Convert NSString to C string
   const char *licenseCString = [licenseKey UTF8String];
@@ -42,83 +44,146 @@ using namespace dynamsoft::basic_structures;
   return ret;
 }
 
+#pragma mark - Initialization
+
 - (instancetype)init {
   self = [super init];
   if (self) {
-    cvr = new CCaptureVisionRouter(); // Initialize the C++ object
-  }
+    try {
+      cvr = new CCaptureVisionRouter(); // Initialize the C++ object
 
-  char errorMsgBuffer[512];
-  int ret = cvr->InitSettings(jsonString.c_str(), errorMsgBuffer,
-                              sizeof(errorMsgBuffer));
+      char errorMsgBuffer[512] = {0};
+      int ret = cvr->InitSettings(jsonString.c_str(), errorMsgBuffer,
+                                  sizeof(errorMsgBuffer));
 
-  if (ret != 0) {
-    NSString *errorMessage = [NSString stringWithUTF8String:errorMsgBuffer];
-    NSLog(@"Init setting failed: %@", errorMessage);
+      if (ret != 0) {
+        NSString *errorMessage = [NSString stringWithUTF8String:errorMsgBuffer];
+        NSLog(@"Init setting failed: %@", errorMessage);
+      }
+    } catch (const std::exception &ex) {
+      NSLog(@"Exception during initialization: %s", ex.what());
+    } catch (...) {
+      NSLog(@"Unknown exception during initialization");
+    }
   }
   return self;
 }
+
+#pragma mark - Image Capture Methods
 
 - (NSArray *)captureImageWithData:(void *)baseAddress
                             width:(int)width
                            height:(int)height
                            stride:(int)stride
                       pixelFormat:(PixelFormat)pixelFormat {
-  
-
-  // Construct CImageData
-  CImageData *imageStruct =
-      new CImageData(stride * height, (unsigned char *)baseAddress, width,
-                     height, stride, static_cast<ImagePixelFormat>(pixelFormat));
-
-  // Call C++ method
-  CCapturedResult *result = cvr->Capture(imageStruct, "");
-
-  if (result->GetErrorCode() != 0) {
-    NSLog(@"Error code: %d", result->GetErrorCode());
-  }
-  CDecodedBarcodesResult *barcodeResult = result->GetDecodedBarcodesResult();
-  if (barcodeResult == nullptr || barcodeResult->GetItemsCount() == 0) {
-    NSLog(@"No barcode found");
-    delete imageStruct;
+  if (!baseAddress) {
+    NSLog(@"Error: baseAddress is null");
     return nil;
   }
 
-  int barcodeResultItemCount = barcodeResult->GetItemsCount();
-  NSLog(@"Total barcode(s) found: %d", barcodeResultItemCount);
-  NSMutableArray *barcodeArray = [NSMutableArray array];
+  NSArray *results = nil;
 
-  for (int j = 0; j < barcodeResultItemCount; j++) {
-    const CBarcodeResultItem *barcodeResultItem = barcodeResult->GetItem(j);
-    const char *format = barcodeResultItem->GetFormatString();
-    const char *text = barcodeResultItem->GetText();
-    CPoint *points = barcodeResultItem->GetLocation().points;
-    NSLog(@"Result %d", j + 1);
-    NSLog(@"Barcode Format: %s", barcodeResultItem->GetFormatString());
-    NSLog(@"Barcode Text: %s", barcodeResultItem->GetText());
+  try {
+    // Construct CImageData
+    CImageData *imageStruct = new CImageData(
+        stride * height, (unsigned char *)baseAddress, width, height, stride,
+        static_cast<ImagePixelFormat>(pixelFormat));
 
-    NSDictionary *barcodeData = @{
-      @"format" : [NSString stringWithUTF8String:format],
-      @"text" : [NSString stringWithUTF8String:text],
-      @"points" : @[
-        @{@"x" : @(points[0][0]), @"y" : @(height - points[0][1])},
-        @{@"x" : @(points[1][0]), @"y" : @(height - points[1][1])},
-        @{@"x" : @(points[2][0]), @"y" : @(height - points[2][1])},
-        @{@"x" : @(points[3][0]), @"y" : @(height - points[3][1])}
-      ]
-    };
+    // Call C++ method
+    CCapturedResult *result = cvr->Capture(imageStruct, "");
+    results = [self wrapResults:result];
 
-    [barcodeArray addObject:barcodeData];
+    // Clean up
+    delete imageStruct;
+  } catch (const std::exception &ex) {
+    NSLog(@"Exception during captureImageWithData: %s", ex.what());
+  } catch (...) {
+    NSLog(@"Unknown exception during captureImageWithData");
   }
 
-  if (barcodeResult)
+  return results;
+}
+
+- (NSArray *)captureImageWithFilePath:(NSString *)filePath {
+  if (!filePath) {
+    NSLog(@"Error: filePath is null");
+    return nil;
+  }
+
+  NSArray *results = nil;
+
+  try {
+    // Convert NSString to C string
+    const char *fileCString = [filePath UTF8String];
+    CCapturedResult *result = cvr->Capture(fileCString, "");
+    results = [self wrapResults:result];
+  } catch (const std::exception &ex) {
+    NSLog(@"Exception during captureImageWithFilePath: %s", ex.what());
+  } catch (...) {
+    NSLog(@"Unknown exception during captureImageWithFilePath");
+  }
+
+  return results;
+}
+
+#pragma mark - Result Wrapping
+
+- (NSArray *)wrapResults:(CCapturedResult *)result {
+  if (!result) {
+    NSLog(@"Error: result is null");
+    return nil;
+  }
+
+  NSMutableArray *barcodeArray = [NSMutableArray array];
+
+  try {
+    CDecodedBarcodesResult *barcodeResult = result->GetDecodedBarcodesResult();
+    if (!barcodeResult || barcodeResult->GetItemsCount() == 0) {
+      NSLog(@"No barcode found");
+      return nil;
+    }
+
+    int barcodeResultItemCount = barcodeResult->GetItemsCount();
+    NSLog(@"Total barcode(s) found: %d", barcodeResultItemCount);
+
+    for (int j = 0; j < barcodeResultItemCount; j++) {
+      const CBarcodeResultItem *barcodeResultItem = barcodeResult->GetItem(j);
+      const char *format = barcodeResultItem->GetFormatString();
+      const char *text = barcodeResultItem->GetText();
+      int angle = barcodeResultItem->GetAngle();
+      CPoint *points = barcodeResultItem->GetLocation().points;
+      unsigned char *raw = barcodeResultItem->GetBytes();
+
+      NSDictionary *barcodeData = @{
+        @"format" : format ? [NSString stringWithUTF8String:format] : @"",
+        @"text" : text ? [NSString stringWithUTF8String:text] : @"",
+        @"angle" : @(angle),
+        @"barcodeBytes" :
+            [NSData dataWithBytes:raw
+                           length:barcodeResultItem->GetBytesLength()],
+        @"points" : @[
+          @{@"x" : @(points[0][0]), @"y" : @(points[0][1])},
+          @{@"x" : @(points[1][0]), @"y" : @(points[1][1])},
+          @{@"x" : @(points[2][0]), @"y" : @(points[2][1])},
+          @{@"x" : @(points[3][0]), @"y" : @(points[3][1])}
+        ]
+      };
+
+      [barcodeArray addObject:barcodeData];
+    }
+
     barcodeResult->Release();
+    result->Release();
+  } catch (const std::exception &ex) {
+    NSLog(@"Exception during wrapResults: %s", ex.what());
+  } catch (...) {
+    NSLog(@"Unknown exception during wrapResults");
+  }
 
-  result->Release();
-
-  delete imageStruct;
   return [barcodeArray copy];
 }
+
+#pragma mark - Deallocation
 
 - (void)dealloc {
   // Clean up C++ object
@@ -129,4 +194,3 @@ using namespace dynamsoft::basic_structures;
 }
 
 @end
-
