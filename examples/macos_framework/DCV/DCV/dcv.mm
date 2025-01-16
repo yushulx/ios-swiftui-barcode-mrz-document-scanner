@@ -63,13 +63,13 @@ using namespace dynamsoft::basic_structures;
                             width:(int)width
                            height:(int)height
                            stride:(int)stride
-                      pixelFormat:(OSType)pixelFormat {
-  ImagePixelFormat sdkPixelFormat = [self mapPixelFormat:pixelFormat];
+                      pixelFormat:(PixelFormat)pixelFormat {
+  
 
   // Construct CImageData
   CImageData *imageStruct =
       new CImageData(stride * height, (unsigned char *)baseAddress, width,
-                     height, stride, sdkPixelFormat);
+                     height, stride, static_cast<ImagePixelFormat>(pixelFormat));
 
   // Call C++ method
   CCapturedResult *result = cvr->Capture(imageStruct, "");
@@ -125,15 +125,6 @@ using namespace dynamsoft::basic_structures;
   if (cvr) {
     delete cvr;
     cvr = nullptr;
-  }
-}
-
-- (ImagePixelFormat)mapPixelFormat:(OSType)pixelFormat {
-  switch (pixelFormat) {
-  case kCVPixelFormatType_32BGRA:
-    return IPF_ABGR_8888;
-  default:
-    return IPF_NV21;
   }
 }
 

@@ -1,8 +1,9 @@
 import AVFoundation
 import Accelerate
-import SwiftUI
-import DCV
 import Cocoa
+import DCV
+import SwiftUI
+
 typealias ViewController = NSViewController
 typealias ImageType = NSImage
 
@@ -71,13 +72,9 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
                 previewLayer.videoGravity = .resizeAspectFill
                 previewLayer.frame = view.bounds  // Set frame here
 
-                #if os(iOS)
-                    view.layer.insertSublayer(previewLayer, at: 0)
-                #elseif os(macOS)
-                    view.layer = CALayer()
-                    view.wantsLayer = true
-                    view.layer?.insertSublayer(previewLayer, at: 0)
-                #endif
+                view.layer = CALayer()
+                view.wantsLayer = true
+                view.layer?.insertSublayer(previewLayer, at: 0)
 
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.captureSession.startRunning()
@@ -101,7 +98,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         // Process the frame
         processCameraFrame(pixelBuffer)
     }
-    
+
     func flipBufferVertically(buffer: Data, width: Int, height: Int, bytesPerRow: Int) -> Data {
         var flippedBuffer = Data(capacity: buffer.count)
 
@@ -185,7 +182,6 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
             guard let self = self else { return }
             self.overlayView.cameraPreviewSize = CGSize(width: previewWidth, height: previewHeight)
         }
-        
 
         CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
 
@@ -195,12 +191,11 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
         let pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
 
-        // Pass frame data to C++ via the wrapper
         if let baseAddress = baseAddress {
             let barcodeArray =
                 cv.captureImage(
                     withData: baseAddress, width: Int32(width), height: Int32(Int(height)),
-                    stride: Int32(Int(bytesPerRow)), pixelFormat: pixelFormat)
+                    stride: Int32(Int(bytesPerRow)), pixelFormat: PixelFormat.ARGB8888)
                 as? [[String: Any]] ?? []
 
             DispatchQueue.main.async { [weak self] in
@@ -211,7 +206,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         }
 
         CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
-    
+
     }
 
     func capturePhoto() {

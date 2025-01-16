@@ -34,8 +34,7 @@ struct ContentView: View {
                 }
             }
         }.onAppear {
-            
-            
+
         }
 
         .onChange(of: image) {
