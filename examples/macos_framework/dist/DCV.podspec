@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'DCV'
-    s.version          = '1.0.0'
+    s.version          = '1.0.1'
     s.summary          = 'macOS barcode reading framework.'
   
     s.description      = <<-DESC

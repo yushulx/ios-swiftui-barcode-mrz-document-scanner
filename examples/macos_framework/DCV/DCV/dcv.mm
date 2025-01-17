@@ -139,12 +139,10 @@ using namespace dynamsoft::basic_structures;
   try {
     CDecodedBarcodesResult *barcodeResult = result->GetDecodedBarcodesResult();
     if (!barcodeResult || barcodeResult->GetItemsCount() == 0) {
-      NSLog(@"No barcode found");
       return nil;
     }
 
     int barcodeResultItemCount = barcodeResult->GetItemsCount();
-    NSLog(@"Total barcode(s) found: %d", barcodeResultItemCount);
 
     for (int j = 0; j < barcodeResultItemCount; j++) {
       const CBarcodeResultItem *barcodeResultItem = barcodeResult->GetItem(j);
