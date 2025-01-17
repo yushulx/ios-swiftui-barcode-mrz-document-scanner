@@ -23,8 +23,9 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         super.viewDidLoad()
 
         // Initialize the license here
+        // Get a trial license key from: https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform
         let licenseKey =
-            "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
+            "LICENSE-KEY"
 
         let result = CaptureVisionWrapper.initializeLicense(licenseKey)
 
@@ -34,7 +35,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         // print(ret)
         // ret = cv.setBarcodeFormats(BarcodeType.ALL.rawValue)
         // print(ret)
-//        let barcodeArray = cv.decodeFile(withPath: "")
+        //        let barcodeArray = cv.decodeFile(withPath: "")
         /////////////////////////////////
 
         if result == 0 {
@@ -200,7 +201,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         let height = CVPixelBufferGetHeight(pixelBuffer)
         let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
         let pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
-        
+
         if let baseAddress = baseAddress {
             let barcodeArray =
                 cv.decodeBuffer(

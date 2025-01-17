@@ -41,7 +41,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
 
         // Initialize the license here
         let licenseKey =
-            "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
+            "LICENSE-KEY"
 
         #if os(iOS)
             setLicense(license: licenseKey)
@@ -308,7 +308,8 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
 
             // Pass frame data to C++ via the wrapper
             let documentArray =
-        cv.captureImage(withData: baseAddress, width: Int32(width), height: Int32(height),
+                cv.captureImage(
+                    withData: baseAddress, width: Int32(width), height: Int32(height),
                     stride: Int32(bytesPerRow), pixelFormat: pixelFormat)
                 as? [[String: Any]] ?? []
 

@@ -40,7 +40,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
 
         // Initialize the license here
         let licenseKey =
-            "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
+            "LICENSE-KEY"
 
         #if os(iOS)
             setLicense(license: licenseKey)
@@ -134,7 +134,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         // Process the frame
         processCameraFrame(pixelBuffer)
     }
-    
+
     func flipBufferVertically(buffer: Data, width: Int, height: Int, bytesPerRow: Int) -> Data {
         var flippedBuffer = Data(capacity: buffer.count)
 

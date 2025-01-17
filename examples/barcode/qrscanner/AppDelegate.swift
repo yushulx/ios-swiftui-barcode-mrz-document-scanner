@@ -1,5 +1,5 @@
-import UIKit
 import DynamsoftLicense
+import UIKit
 
 class AppDelegate: UIResponder, UIApplicationDelegate, LicenseVerificationListener {
 
@@ -11,10 +11,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LicenseVerificationListen
         }
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         // Request a trial license: https://www.dynamsoft.com/customer/license/trialLicense?product=dbr
-        LicenseManager.initLicense("DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==", verificationDelegate: self)
+        LicenseManager.initLicense("LICENSE-KEY", verificationDelegate: self)
         return true
     }
 }
-
