@@ -71,7 +71,7 @@ using namespace dynamsoft::basic_structures;
 
 #pragma mark - Image Capture Methods
 
-- (NSArray *)captureImageWithData:(void *)baseAddress
+- (NSArray *)decodeBufferWithData:(void *)baseAddress
                             width:(int)width
                            height:(int)height
                            stride:(int)stride
@@ -104,7 +104,7 @@ using namespace dynamsoft::basic_structures;
   return results;
 }
 
-- (NSArray *)captureImageWithFilePath:(NSString *)filePath {
+- (NSArray *)decodeFileWithPath:(NSString *)filePath {
   if (!filePath) {
     NSLog(@"Error: filePath is null");
     return nil;
@@ -193,4 +193,36 @@ using namespace dynamsoft::basic_structures;
   }
 }
 
+#pragma mark - Get settings
+- (NSString *)getSettings {
+  char *tpl = cvr->OutputSettings("");
+  NSString *settings = [NSString stringWithUTF8String:tpl];
+  dynamsoft::cvr::CCaptureVisionRouter::FreeString(tpl);
+  return settings;
+}
+
+#pragma mark - Set settings
+- (int)setSettings:(NSString *)json {
+  char *tpl = (char *)[json UTF8String];
+  char errorMessage[256];
+  int ret = cvr->InitSettings(tpl, errorMessage, 256);
+  if (ret != 0) {
+    NSLog(@"Set settings failed: %s", errorMessage);
+  }
+  return ret;
+}
+
+#pragma mark - Set barcode formats
+- (int)setBarcodeFormats:(unsigned long long)formats {
+  SimplifiedCaptureVisionSettings pSettings = {};
+  cvr->GetSimplifiedSettings("", &pSettings);
+  pSettings.barcodeSettings.barcodeFormatIds = formats;
+
+  char szErrorMsgBuffer[256];
+  int ret = cvr->UpdateSettings("", &pSettings, szErrorMsgBuffer, 256);
+  if (ret != 0) {
+    NSLog(@"Set barcode formats failed: %s", szErrorMsgBuffer);
+  }
+  return ret;
+}
 @end

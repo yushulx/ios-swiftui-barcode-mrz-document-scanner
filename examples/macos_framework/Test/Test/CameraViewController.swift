@@ -27,6 +27,16 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
             "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
 
         let result = CaptureVisionWrapper.initializeLicense(licenseKey)
+
+        // Test the DCV API
+        // let settings = cv.getSettings()
+        // var ret = cv.setSettings(settings)
+        // print(ret)
+        // ret = cv.setBarcodeFormats(BarcodeType.ALL.rawValue)
+        // print(ret)
+//        let barcodeArray = cv.decodeFile(withPath: "")
+        /////////////////////////////////
+
         if result == 0 {
             print("License initialized successfully")
         } else {
@@ -190,10 +200,10 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         let height = CVPixelBufferGetHeight(pixelBuffer)
         let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
         let pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
-
+        
         if let baseAddress = baseAddress {
             let barcodeArray =
-                cv.captureImage(
+                cv.decodeBuffer(
                     withData: baseAddress, width: Int32(width), height: Int32(Int(height)),
                     stride: Int32(Int(bytesPerRow)), pixelFormat: PixelFormat.ARGB8888)
                 as? [[String: Any]] ?? []
