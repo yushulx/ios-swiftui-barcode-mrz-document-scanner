@@ -18,3 +18,6 @@ https://github.com/user-attachments/assets/c7d88ff9-2911-4d55-89b8-b41dc399f4ab
 
 3. Build and run the project.
    ![macOS framework for barcode scanning](https://www.dynamsoft.com/codepool/img/2025/01/macos-framework-barcode-detection.png)
+
+## Blog
+[Building a macOS Framework with Objective-C++ and C++ for Swift Barcode Detection](https://www.dynamsoft.com/codepool/build-macos-framework-objc-cpp.html)
