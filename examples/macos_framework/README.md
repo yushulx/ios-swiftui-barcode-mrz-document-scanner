@@ -15,3 +15,4 @@ The project aims to build a macOS framework based on the Dynamsoft Barcode Reade
     ```
 
 3. Build and run the project.
+   ![macOS framework for barcode scanning](https://www.dynamsoft.com/codepool/img/2025/01/macos-framework-barcode-detection.png)
