@@ -1,0 +1,15 @@
+{
+  "originHash" : "e479ac3489d07185eea51c51786a3a0500114b37328d3a608d1cfe1093f68b67",
+  "pins" : [
+    {
+      "identity" : "barcode-reader-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Dynamsoft/barcode-reader-spm",
+      "state" : {
+        "revision" : "717eef0a5cb1a0bc10912432c2f96841cea6fb36",
+        "version" : "10.4.3001"
+      }
+    }
+  ],
+  "version" : 3
+}
