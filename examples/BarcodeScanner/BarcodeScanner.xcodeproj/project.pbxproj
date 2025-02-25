@@ -7,18 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1143B6B22D6C50B20097CEE7 /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 1143B6B12D6C50B20097CEE7 /* DynamsoftBarcodeReader */; };
-		1143B6B42D6C50B20097CEE7 /* DynamsoftBarcodeReaderBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 1143B6B32D6C50B20097CEE7 /* DynamsoftBarcodeReaderBundle */; };
-		1143B6B62D6C50B20097CEE7 /* DynamsoftCameraEnhancer in Frameworks */ = {isa = PBXBuildFile; productRef = 1143B6B52D6C50B20097CEE7 /* DynamsoftCameraEnhancer */; };
-		1143B6B82D6C50B20097CEE7 /* DynamsoftCaptureVisionRouter in Frameworks */ = {isa = PBXBuildFile; productRef = 1143B6B72D6C50B20097CEE7 /* DynamsoftCaptureVisionRouter */; };
-		1143B6BA2D6C50B20097CEE7 /* DynamsoftCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1143B6B92D6C50B20097CEE7 /* DynamsoftCore */; };
-		1143B6BC2D6C50B20097CEE7 /* DynamsoftImageProcessing in Frameworks */ = {isa = PBXBuildFile; productRef = 1143B6BB2D6C50B20097CEE7 /* DynamsoftImageProcessing */; };
-		1143B6BE2D6C50B20097CEE7 /* DynamsoftLicense in Frameworks */ = {isa = PBXBuildFile; productRef = 1143B6BD2D6C50B20097CEE7 /* DynamsoftLicense */; };
-		1143B6C02D6C50B20097CEE7 /* DynamsoftUtility in Frameworks */ = {isa = PBXBuildFile; productRef = 1143B6BF2D6C50B20097CEE7 /* DynamsoftUtility */; };
+		117BC8652D6C714500F91DA0 /* BarcodeScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117BC85C2D6C714500F91DA0 /* BarcodeScanResult.swift */; };
+		117BC8662D6C714500F91DA0 /* BarcodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117BC85B2D6C714500F91DA0 /* BarcodeScannerViewController.swift */; };
+		117BC8672D6C714500F91DA0 /* BarcodeScannerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117BC85A2D6C714500F91DA0 /* BarcodeScannerConfig.swift */; };
+		117BC8682D6C714500F91DA0 /* ReadMultipleBarcodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 117BC85F2D6C714500F91DA0 /* ReadMultipleBarcodes.json */; };
+		117BC8692D6C714500F91DA0 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 117BC85E2D6C714500F91DA0 /* Media.xcassets */; };
+		117BC86F2D6C71C300F91DA0 /* DynamsoftBarcodeReaderBundle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 117BC86D2D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.framework */; };
+		117BC8702D6C71C300F91DA0 /* DynamsoftBarcodeReaderBundle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 117BC86D2D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		117BC8812D6D4D7500F91DA0 /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 117BC8802D6D4D7500F91DA0 /* DynamsoftBarcodeReader */; };
+		117BC8852D6D4D7500F91DA0 /* DynamsoftCameraEnhancer in Frameworks */ = {isa = PBXBuildFile; productRef = 117BC8842D6D4D7500F91DA0 /* DynamsoftCameraEnhancer */; };
+		117BC8872D6D4D7500F91DA0 /* DynamsoftCaptureVisionRouter in Frameworks */ = {isa = PBXBuildFile; productRef = 117BC8862D6D4D7500F91DA0 /* DynamsoftCaptureVisionRouter */; };
+		117BC8892D6D4D7500F91DA0 /* DynamsoftCore in Frameworks */ = {isa = PBXBuildFile; productRef = 117BC8882D6D4D7500F91DA0 /* DynamsoftCore */; };
+		117BC88B2D6D4D7500F91DA0 /* DynamsoftImageProcessing in Frameworks */ = {isa = PBXBuildFile; productRef = 117BC88A2D6D4D7500F91DA0 /* DynamsoftImageProcessing */; };
+		117BC88D2D6D4D7500F91DA0 /* DynamsoftLicense in Frameworks */ = {isa = PBXBuildFile; productRef = 117BC88C2D6D4D7500F91DA0 /* DynamsoftLicense */; };
+		117BC88F2D6D4D7500F91DA0 /* DynamsoftUtility in Frameworks */ = {isa = PBXBuildFile; productRef = 117BC88E2D6D4D7500F91DA0 /* DynamsoftUtility */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		117BC86C2D6C714500F91DA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 117BC8612D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1DC845D52CEB04AE00998CCD;
+			remoteInfo = DynamsoftBarcodeReaderBundle;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		117BC8712D6C71C400F91DA0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				117BC8702D6C71C300F91DA0 /* DynamsoftBarcodeReaderBundle.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		113ADDE62D6C6FE60009EC64 /* DynamsoftBarcodeReaderBundle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = DynamsoftBarcodeReaderBundle.xcodeproj; sourceTree = "<group>"; };
 		1143B68D2D6C4E380097CEE7 /* BarcodeScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcodeScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		117BC85A2D6C714500F91DA0 /* BarcodeScannerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerConfig.swift; sourceTree = "<group>"; };
+		117BC85B2D6C714500F91DA0 /* BarcodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerViewController.swift; sourceTree = "<group>"; };
+		117BC85C2D6C714500F91DA0 /* BarcodeScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScanResult.swift; sourceTree = "<group>"; };
+		117BC85D2D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftBarcodeReaderBundle.h; sourceTree = "<group>"; };
+		117BC85E2D6C714500F91DA0 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		117BC85F2D6C714500F91DA0 /* ReadMultipleBarcodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ReadMultipleBarcodes.json; sourceTree = "<group>"; };
+		117BC8612D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = DynamsoftBarcodeReaderBundle.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -34,24 +72,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1143B6B62D6C50B20097CEE7 /* DynamsoftCameraEnhancer in Frameworks */,
-				1143B6C02D6C50B20097CEE7 /* DynamsoftUtility in Frameworks */,
-				1143B6BC2D6C50B20097CEE7 /* DynamsoftImageProcessing in Frameworks */,
-				1143B6BE2D6C50B20097CEE7 /* DynamsoftLicense in Frameworks */,
-				1143B6B42D6C50B20097CEE7 /* DynamsoftBarcodeReaderBundle in Frameworks */,
-				1143B6B82D6C50B20097CEE7 /* DynamsoftCaptureVisionRouter in Frameworks */,
-				1143B6B22D6C50B20097CEE7 /* DynamsoftBarcodeReader in Frameworks */,
-				1143B6BA2D6C50B20097CEE7 /* DynamsoftCore in Frameworks */,
+				117BC88D2D6D4D7500F91DA0 /* DynamsoftLicense in Frameworks */,
+				117BC8812D6D4D7500F91DA0 /* DynamsoftBarcodeReader in Frameworks */,
+				117BC8852D6D4D7500F91DA0 /* DynamsoftCameraEnhancer in Frameworks */,
+				117BC88B2D6D4D7500F91DA0 /* DynamsoftImageProcessing in Frameworks */,
+				117BC88F2D6D4D7500F91DA0 /* DynamsoftUtility in Frameworks */,
+				117BC8892D6D4D7500F91DA0 /* DynamsoftCore in Frameworks */,
+				117BC86F2D6C71C300F91DA0 /* DynamsoftBarcodeReaderBundle.framework in Frameworks */,
+				117BC8872D6D4D7500F91DA0 /* DynamsoftCaptureVisionRouter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		113ADDE72D6C6FE60009EC64 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1143B6842D6C4E380097CEE7 = {
 			isa = PBXGroup;
 			children = (
+				117BC8622D6C714500F91DA0 /* dbrbundle */,
 				1143B68F2D6C4E380097CEE7 /* BarcodeScanner */,
+				117BC86E2D6C71C300F91DA0 /* Frameworks */,
 				1143B68E2D6C4E380097CEE7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,6 +111,44 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		117BC8602D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle */ = {
+			isa = PBXGroup;
+			children = (
+				117BC85A2D6C714500F91DA0 /* BarcodeScannerConfig.swift */,
+				117BC85B2D6C714500F91DA0 /* BarcodeScannerViewController.swift */,
+				117BC85C2D6C714500F91DA0 /* BarcodeScanResult.swift */,
+				117BC85D2D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.h */,
+				117BC85E2D6C714500F91DA0 /* Media.xcassets */,
+				117BC85F2D6C714500F91DA0 /* ReadMultipleBarcodes.json */,
+			);
+			path = DynamsoftBarcodeReaderBundle;
+			sourceTree = "<group>";
+		};
+		117BC8622D6C714500F91DA0 /* dbrbundle */ = {
+			isa = PBXGroup;
+			children = (
+				117BC8602D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle */,
+				117BC8612D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.xcodeproj */,
+			);
+			name = dbrbundle;
+			path = ../dbrbundle;
+			sourceTree = SOURCE_ROOT;
+		};
+		117BC8632D6C714500F91DA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				117BC86D2D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		117BC86E2D6C71C300F91DA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,6 +159,7 @@
 				1143B6892D6C4E380097CEE7 /* Sources */,
 				1143B68A2D6C4E380097CEE7 /* Frameworks */,
 				1143B68B2D6C4E380097CEE7 /* Resources */,
+				117BC8712D6C71C400F91DA0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -84,14 +170,13 @@
 			);
 			name = BarcodeScanner;
 			packageProductDependencies = (
-				1143B6B12D6C50B20097CEE7 /* DynamsoftBarcodeReader */,
-				1143B6B32D6C50B20097CEE7 /* DynamsoftBarcodeReaderBundle */,
-				1143B6B52D6C50B20097CEE7 /* DynamsoftCameraEnhancer */,
-				1143B6B72D6C50B20097CEE7 /* DynamsoftCaptureVisionRouter */,
-				1143B6B92D6C50B20097CEE7 /* DynamsoftCore */,
-				1143B6BB2D6C50B20097CEE7 /* DynamsoftImageProcessing */,
-				1143B6BD2D6C50B20097CEE7 /* DynamsoftLicense */,
-				1143B6BF2D6C50B20097CEE7 /* DynamsoftUtility */,
+				117BC8802D6D4D7500F91DA0 /* DynamsoftBarcodeReader */,
+				117BC8842D6D4D7500F91DA0 /* DynamsoftCameraEnhancer */,
+				117BC8862D6D4D7500F91DA0 /* DynamsoftCaptureVisionRouter */,
+				117BC8882D6D4D7500F91DA0 /* DynamsoftCore */,
+				117BC88A2D6D4D7500F91DA0 /* DynamsoftImageProcessing */,
+				117BC88C2D6D4D7500F91DA0 /* DynamsoftLicense */,
+				117BC88E2D6D4D7500F91DA0 /* DynamsoftUtility */,
 			);
 			productName = BarcodeScanner;
 			productReference = 1143B68D2D6C4E380097CEE7 /* BarcodeScanner.app */;
@@ -127,6 +212,16 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1143B68E2D6C4E380097CEE7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 113ADDE72D6C6FE60009EC64 /* Products */;
+					ProjectRef = 113ADDE62D6C6FE60009EC64 /* DynamsoftBarcodeReaderBundle.xcodeproj */;
+				},
+				{
+					ProductGroup = 117BC8632D6C714500F91DA0 /* Products */;
+					ProjectRef = 117BC8612D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1143B68C2D6C4E380097CEE7 /* BarcodeScanner */,
@@ -134,11 +229,23 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		117BC86D2D6C714500F91DA0 /* DynamsoftBarcodeReaderBundle.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DynamsoftBarcodeReaderBundle.framework;
+			remoteRef = 117BC86C2D6C714500F91DA0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		1143B68B2D6C4E380097CEE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				117BC8682D6C714500F91DA0 /* ReadMultipleBarcodes.json in Resources */,
+				117BC8692D6C714500F91DA0 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +256,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				117BC8652D6C714500F91DA0 /* BarcodeScanResult.swift in Sources */,
+				117BC8662D6C714500F91DA0 /* BarcodeScannerViewController.swift in Sources */,
+				117BC8672D6C714500F91DA0 /* BarcodeScannerConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,42 +479,37 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1143B6B12D6C50B20097CEE7 /* DynamsoftBarcodeReader */ = {
+		117BC8802D6D4D7500F91DA0 /* DynamsoftBarcodeReader */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1143B6B02D6C50B20097CEE7 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftBarcodeReader;
 		};
-		1143B6B32D6C50B20097CEE7 /* DynamsoftBarcodeReaderBundle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1143B6B02D6C50B20097CEE7 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
-			productName = DynamsoftBarcodeReaderBundle;
-		};
-		1143B6B52D6C50B20097CEE7 /* DynamsoftCameraEnhancer */ = {
+		117BC8842D6D4D7500F91DA0 /* DynamsoftCameraEnhancer */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1143B6B02D6C50B20097CEE7 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftCameraEnhancer;
 		};
-		1143B6B72D6C50B20097CEE7 /* DynamsoftCaptureVisionRouter */ = {
+		117BC8862D6D4D7500F91DA0 /* DynamsoftCaptureVisionRouter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1143B6B02D6C50B20097CEE7 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftCaptureVisionRouter;
 		};
-		1143B6B92D6C50B20097CEE7 /* DynamsoftCore */ = {
+		117BC8882D6D4D7500F91DA0 /* DynamsoftCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1143B6B02D6C50B20097CEE7 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftCore;
 		};
-		1143B6BB2D6C50B20097CEE7 /* DynamsoftImageProcessing */ = {
+		117BC88A2D6D4D7500F91DA0 /* DynamsoftImageProcessing */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1143B6B02D6C50B20097CEE7 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftImageProcessing;
 		};
-		1143B6BD2D6C50B20097CEE7 /* DynamsoftLicense */ = {
+		117BC88C2D6D4D7500F91DA0 /* DynamsoftLicense */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1143B6B02D6C50B20097CEE7 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftLicense;
 		};
-		1143B6BF2D6C50B20097CEE7 /* DynamsoftUtility */ = {
+		117BC88E2D6D4D7500F91DA0 /* DynamsoftUtility */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1143B6B02D6C50B20097CEE7 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftUtility;
