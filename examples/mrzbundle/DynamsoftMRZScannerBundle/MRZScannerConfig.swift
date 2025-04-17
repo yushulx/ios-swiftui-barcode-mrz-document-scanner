@@ -1,14 +1,12 @@
-//
-//  MRZScannerConfig.swift
-//  DynamsoftMRZScannerBundle
-//
-//  Copyright © Dynamsoft Corporation.  All rights reserved.
-//
-
 import Foundation
 
+public enum ScanMode {
+    case mrz
+    case vin
+}
+
 @objc(DSDocumentType)
-public enum DocumentType:Int {
+public enum DocumentType: Int {
     case all
     case id
     case passport
@@ -27,4 +25,5 @@ public class MRZScannerConfig: NSObject {
     public var documentType: DocumentType = .all
     public var isGuideFrameVisible: Bool = true
     public var isCameraToggleButtonVisible: Bool = false
+    public var mode: ScanMode = ScanMode.mrz
 }

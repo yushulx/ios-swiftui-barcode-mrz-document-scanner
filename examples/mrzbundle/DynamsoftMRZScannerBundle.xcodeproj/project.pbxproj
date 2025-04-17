@@ -37,7 +37,7 @@
 		68AB7CFE2D02D25D009D60B8 /* DynamsoftLicense in Frameworks */ = {isa = PBXBuildFile; productRef = 68AB7CFD2D02D25D009D60B8 /* DynamsoftLicense */; };
 		68CFBAF22D01792A00E125F8 /* MRZScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFBAF12D01792700E125F8 /* MRZScannerViewController.swift */; };
 		68CFBAF42D01793D00E125F8 /* MRZScannerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFBAF32D01793C00E125F8 /* MRZScannerConfig.swift */; };
-		68CFBAF62D01794300E125F8 /* MRZScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFBAF52D01794200E125F8 /* MRZScanResult.swift */; };
+		68CFBAF62D01794300E125F8 /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CFBAF52D01794200E125F8 /* ScanResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +46,7 @@
 		68AB7CEC2D02D0E8009D60B8 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		68CFBAF12D01792700E125F8 /* MRZScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRZScannerViewController.swift; sourceTree = "<group>"; };
 		68CFBAF32D01793C00E125F8 /* MRZScannerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRZScannerConfig.swift; sourceTree = "<group>"; };
-		68CFBAF52D01794200E125F8 /* MRZScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRZScanResult.swift; sourceTree = "<group>"; };
+		68CFBAF52D01794200E125F8 /* ScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +93,7 @@
 				1DC845D82CEB04AE00998CCD /* DynamsoftMRZScannerBundle.h */,
 				68CFBAF12D01792700E125F8 /* MRZScannerViewController.swift */,
 				68CFBAF32D01793C00E125F8 /* MRZScannerConfig.swift */,
-				68CFBAF52D01794200E125F8 /* MRZScanResult.swift */,
+				68CFBAF52D01794200E125F8 /* ScanResult.swift */,
 				68AB7CEC2D02D0E8009D60B8 /* Media.xcassets */,
 			);
 			path = DynamsoftMRZScannerBundle;
@@ -216,7 +216,7 @@
 			files = (
 				68CFBAF42D01793D00E125F8 /* MRZScannerConfig.swift in Sources */,
 				68CFBAF22D01792A00E125F8 /* MRZScannerViewController.swift in Sources */,
-				68CFBAF62D01794300E125F8 /* MRZScanResult.swift in Sources */,
+				68CFBAF62D01794300E125F8 /* ScanResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

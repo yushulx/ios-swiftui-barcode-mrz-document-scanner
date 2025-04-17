@@ -5,23 +5,23 @@
 //  Copyright © Dynamsoft Corporation.  All rights reserved.
 //
 
-import DynamsoftCore
 import DynamsoftCameraEnhancer
 import DynamsoftCaptureVisionRouter
+import DynamsoftCodeParser
+import DynamsoftCore
+import DynamsoftLabelRecognizer
 import DynamsoftLicense
 import DynamsoftUtility
-import DynamsoftCodeParser
-import DynamsoftLabelRecognizer
 
 @objc(DSMRZScannerViewController)
 public class MRZScannerViewController: UIViewController {
-    
+
     let dce = CameraEnhancer()
     let cameraView = CameraView()
     let cvr = CaptureVisionRouter()
     @objc public var config: MRZScannerConfig = .init()
-    @objc public var onScannedResult: ((MRZScanResult) -> Void)?
-    
+    @objc public var onScannedResult: ((ScanResultBase) -> Void)?
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupLicense()
@@ -41,13 +41,23 @@ public class MRZScannerViewController: UIViewController {
         case .passport:
             name = "ReadPassport"
         }
+
+        switch config.mode {
+        case .mrz:
+            name = "ReadPassportAndId"
+        case .vin:
+            name = "ReadVINText"
+        }
         if let path = config.templateFile {
             if path.hasPrefix("{") || path.hasPrefix("[") {
                 do {
                     try cvr.initSettings(path)
                     name = ""
                 } catch let error as NSError {
-                    self.onScannedResult?(.init(resultStatus: .exception, errorCode: error.code, errorString: error.localizedDescription))
+                    self.onScannedResult?(
+                        .init(
+                            resultStatus: .exception, errorCode: error.code,
+                            errorString: error.localizedDescription))
                     return
                 }
             } else {
@@ -55,7 +65,10 @@ public class MRZScannerViewController: UIViewController {
                     try cvr.initSettingsFromFile(path)
                     name = ""
                 } catch let error as NSError {
-                    self.onScannedResult?(.init(resultStatus: .exception, errorCode: error.code, errorString: error.localizedDescription))
+                    self.onScannedResult?(
+                        .init(
+                            resultStatus: .exception, errorCode: error.code,
+                            errorString: error.localizedDescription))
                     return
                 }
             }
@@ -64,26 +77,32 @@ public class MRZScannerViewController: UIViewController {
                 try cvr.initSettingsFromFile(path)
                 name = ""
             } catch let error as NSError {
-                self.onScannedResult?(.init(resultStatus: .exception, errorCode: error.code, errorString: error.localizedDescription))
+                self.onScannedResult?(
+                    .init(
+                        resultStatus: .exception, errorCode: error.code,
+                        errorString: error.localizedDescription))
                 return
             }
         }
         cvr.startCapturing(name) { isSuccess, error in
             if let error = error as? NSError, !isSuccess {
-                self.onScannedResult?(.init(resultStatus: .exception, errorCode: error.code, errorString: error.localizedDescription))
+                self.onScannedResult?(
+                    .init(
+                        resultStatus: .exception, errorCode: error.code,
+                        errorString: error.localizedDescription))
             }
         }
     }
-    
+
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stop()
     }
-    
+
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-    
+
     lazy var closeButton: UIButton = {
         let bundle = Bundle(for: type(of: self))
         let button = UIButton()
@@ -92,7 +111,7 @@ public class MRZScannerViewController: UIViewController {
         button.addTarget(self, action: #selector(onCloseButtonTouchUp), for: .touchUpInside)
         return button
     }()
-    
+
     lazy var torchButton: UIButton = {
         let bundle = Bundle(for: type(of: self))
         let button = UIButton()
@@ -103,7 +122,7 @@ public class MRZScannerViewController: UIViewController {
         button.addTarget(self, action: #selector(onTorchButtonTouchUp), for: .touchUpInside)
         return button
     }()
-    
+
     lazy var cameraButton: UIButton = {
         let bundle = Bundle(for: type(of: self))
         let button = UIButton()
@@ -112,7 +131,7 @@ public class MRZScannerViewController: UIViewController {
         button.addTarget(self, action: #selector(onCameraButtonTouchUp), for: .touchUpInside)
         return button
     }()
-    
+
     lazy var imageView: UIImageView = {
         let bundle = Bundle(for: type(of: self))
         let imageView = UIImageView(image: UIImage(named: "guide", in: bundle, compatibleWith: nil))
@@ -129,7 +148,7 @@ extension MRZScannerViewController {
             cameraView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             cameraView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             cameraView.topAnchor.constraint(equalTo: view.topAnchor),
-            cameraView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            cameraView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         dce.cameraView = cameraView
         try! cvr.setInput(dce)
@@ -138,54 +157,67 @@ extension MRZScannerViewController {
         filter.enableResultCrossVerification(.textLine, isEnabled: true)
         cvr.addResultFilter(filter)
     }
-    
+
     private func setupUI() {
         closeButton.isHidden = !config.isCloseButtonVisible
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(closeButton)
-        
+
         torchButton.isHidden = !config.isTorchButtonVisible
         torchButton.translatesAutoresizingMaskIntoConstraints = false
-        
+
         cameraButton.isHidden = !config.isCameraToggleButtonVisible
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
-        
+
         let stackView = UIStackView(arrangedSubviews: [torchButton, cameraButton])
         stackView.axis = .horizontal
         stackView.spacing = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
 
-        imageView.isHidden = !config.isGuideFrameVisible
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        
-        let safeArea = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
-            imageView.widthAnchor.constraint(lessThanOrEqualTo: safeArea.widthAnchor, multiplier: 0.9),
-            imageView.heightAnchor.constraint(lessThanOrEqualTo: safeArea.heightAnchor, multiplier: 0.9),
-            
-            closeButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
-            closeButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
-            
-            stackView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            stackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -50),
-        ])
+        switch config.mode {
+        case .mrz:
+            imageView.isHidden = !config.isGuideFrameVisible
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(imageView)
+
+            let safeArea = view.safeAreaLayoutGuide
+            NSLayoutConstraint.activate([
+                imageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+                imageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
+                imageView.widthAnchor.constraint(
+                    lessThanOrEqualTo: safeArea.widthAnchor, multiplier: 0.9),
+                imageView.heightAnchor.constraint(
+                    lessThanOrEqualTo: safeArea.heightAnchor, multiplier: 0.9),
+
+                closeButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 20),
+                closeButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20),
+
+                stackView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+                stackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -50),
+            ])
+        case .vin:
+            let region = Rect()
+            region.top = 0.4
+            region.bottom = 0.6
+            region.left = 0.1
+            region.right = 0.9
+            region.measuredInPercentage = true
+            try? dce.setScanRegion(region)
+        }
     }
-    
+
     private func stop() {
         cvr.stopCapturing()
         dce.close()
         dce.clearBuffer()
     }
-    
+
     @objc func onCloseButtonTouchUp() {
         stop()
         onScannedResult?(.init(resultStatus: .canceled))
     }
-    
+
     @objc func onTorchButtonTouchUp(_ sender: Any) {
         guard let button = sender as? UIButton else { return }
         button.isSelected.toggle()
@@ -195,7 +227,7 @@ extension MRZScannerViewController {
             dce.turnOffTorch()
         }
     }
-    
+
     @objc func onCameraButtonTouchUp() {
         let position = dce.getCameraPosition()
         switch position {
@@ -214,53 +246,86 @@ extension MRZScannerViewController {
 }
 
 extension MRZScannerViewController: CapturedResultReceiver {
-    
+
     public func onParsedResultsReceived(_ result: ParsedResult) {
         guard let item = result.items?.first else { return }
-        let mrzdata = convertToMRZData(item: item)
-        if mrzdata != nil {
-            stop()
-            if config.isBeepEnabled {
-                Feedback.beep()
-            }
-            onScannedResult?(.init(resultStatus: .finished, mrzdata: mrzdata))
+        stop()
+        if config.isBeepEnabled {
+            Feedback.beep()
+        }
+        switch config.mode {
+        case .mrz:
+            let mrzdata = convertToMRZData(item: item)
+            let data = MRZScanResult(resultStatus: .finished, mrzdata: mrzdata)
+            onScannedResult?(data)
+        case .vin:
+            let vindata = convertToVINData(item: item)
+            let data = VINScanResult(resultStatus: .finished, vindata: vindata)
+            onScannedResult?(data)
         }
     }
-    
+
+    private func convertToVINData(item: ParsedResultItem) -> VINData? {
+        let parsedFields = item.parsedFields
+
+        guard let vinString = parsedFields["vinString"] == nil ? "N/A" : parsedFields["vinString"],
+            let wmi = parsedFields["WMI"] == nil ? "N/A" : parsedFields["WMI"],
+            let region = parsedFields["region"] == nil ? "N/A" : parsedFields["region"],
+            let vds = parsedFields["VDS"] == nil ? "N/A" : parsedFields["VDS"],
+            let checkDigit = parsedFields["checkDigit"] == nil ? "N/A" : parsedFields["checkDigit"],
+            let modelYear = parsedFields["modelYear"] == nil ? "N/A" : parsedFields["modelYear"],
+            let plantCode = parsedFields["plantCode"] == nil ? "N/A" : parsedFields["plantCode"],
+            let serialNumber = parsedFields["serialNumber"] == nil
+                ? "N/A" : parsedFields["serialNumber"]
+        else { return nil }
+
+        let vinData = VINData(
+            vinString: vinString, wmi: wmi, region: region, vds: vds,
+            checkDigit: checkDigit, modelYear: modelYear, plantCode: plantCode,
+            serialNumber: serialNumber)
+        return vinData
+    }
+
     private func convertToMRZData(item: ParsedResultItem) -> MRZData? {
         let parsedFields = item.parsedFields
         let codeType = item.codeType
-        
-        var isValidated:Bool
+
+        var isValidated: Bool
         if codeType == "MRTD_TD1_ID" {
-            isValidated = item.getFieldValidationStatus("line1") != .failed && item.getFieldValidationStatus("line2") != .failed && item.getFieldValidationStatus("line3") != .failed
+            isValidated =
+                item.getFieldValidationStatus("line1") != .failed
+                && item.getFieldValidationStatus("line2") != .failed
+                && item.getFieldValidationStatus("line3") != .failed
         } else {
-            isValidated = item.getFieldValidationStatus("line1") != .failed && item.getFieldValidationStatus("line2") != .failed
+            isValidated =
+                item.getFieldValidationStatus("line1") != .failed
+                && item.getFieldValidationStatus("line2") != .failed
         }
         if !isValidated {
             return nil
         }
         guard let birthDay = parsedFields["birthDay"],
-              let birthMonth = parsedFields["birthMonth"],
-              let birthYear = parsedFields["birthYear"],
-              let expiryDay = parsedFields["expiryDay"],
-              let expiryMonth = parsedFields["expiryMonth"],
-              let expiryYear = parsedFields["expiryYear"],
-              let sex = parsedFields["sex"],
-              var issuingState = parsedFields["issuingState"],
-              var nationality = parsedFields["nationality"] else { return nil }
-        
+            let birthMonth = parsedFields["birthMonth"],
+            let birthYear = parsedFields["birthYear"],
+            let expiryDay = parsedFields["expiryDay"],
+            let expiryMonth = parsedFields["expiryMonth"],
+            let expiryYear = parsedFields["expiryYear"],
+            let sex = parsedFields["sex"],
+            var issuingState = parsedFields["issuingState"],
+            var nationality = parsedFields["nationality"]
+        else { return nil }
+
         let lastName = parsedFields["primaryIdentifier"] ?? ""
         let firstName = parsedFields["secondaryIdentifier"] ?? ""
-        
+
         let birthYearInt = calculateBirthYear(birthYear)
-        
+
         var birthYearString: String = "XX"
         if let birthYearInt = birthYearInt {
             birthYearString = String(birthYearInt)
         }
         let dateOfBirth = birthYearString + "-" + birthMonth + "-" + birthDay
-        
+
         var age: Int = 0
         if let birthYear = birthYearInt {
             if let birthMonth = Int(birthMonth), let birthDay = Int(birthDay) {
@@ -270,17 +335,18 @@ extension MRZScannerViewController: CapturedResultReceiver {
                 age = currentYear - birthYear
             }
         }
-        
+
         var expiryYeaString: String = "XX"
         if let expiryYearInt = Int(expiryYear) {
             expiryYeaString = String(2000 + expiryYearInt)
         }
         let dateOfExpire = expiryYeaString + "-" + expiryMonth + "-" + expiryDay
-        
+
         var documentNumber = ""
         switch codeType {
         case "MRTD_TD1_ID":
-            documentNumber = parsedFields["documentNumber"] ?? parsedFields["longDocumentNumber"] ?? ""
+            documentNumber =
+                parsedFields["documentNumber"] ?? parsedFields["longDocumentNumber"] ?? ""
         case "MRTD_TD2_ID", "MRTD_TD2_FRENCH_ID":
             documentNumber = parsedFields["documentNumber"] ?? ""
         case "MRTD_TD3_PASSPORT":
@@ -288,8 +354,8 @@ extension MRZScannerViewController: CapturedResultReceiver {
         default:
             break
         }
-        
-        var mrzText:String = ""
+
+        var mrzText: String = ""
         if let line1 = parsedFields["line1"] {
             mrzText += line1
         }
@@ -302,10 +368,13 @@ extension MRZScannerViewController: CapturedResultReceiver {
 
         issuingState = item.getFieldRawValue("issuingState")
         nationality = item.getFieldRawValue("nationality")
-        let mrzData = MRZData(firstName: firstName, lastName: lastName, sex: sex, issuingState: issuingState, nationality: nationality, dateOfBirth: dateOfBirth, dateOfExpire: dateOfExpire, documentType: codeType, documentNumber: documentNumber, age: age, mrzText: mrzText)
+        let mrzData = MRZData(
+            firstName: firstName, lastName: lastName, sex: sex, issuingState: issuingState,
+            nationality: nationality, dateOfBirth: dateOfBirth, dateOfExpire: dateOfExpire,
+            documentType: codeType, documentNumber: documentNumber, age: age, mrzText: mrzText)
         return mrzData
     }
-    
+
     private func calculateBirthYear(_ birthYearString: String) -> Int? {
         guard let birthYear = Int(birthYearString) else { return nil }
         let currentYear = Calendar.current.component(.year, from: Date())
@@ -319,20 +388,20 @@ extension MRZScannerViewController: CapturedResultReceiver {
         }
         return year
     }
-    
+
     private func calculateAge(day: Int, month: Int, year: Int) -> Int? {
         let calendar = Calendar.current
         var dateComponents = DateComponents()
         dateComponents.day = day
         dateComponents.month = month
         dateComponents.year = year
-        
+
         guard let birthDate = calendar.date(from: dateComponents) else {
             return nil
         }
-        
+
         let currentDate = Date()
-        
+
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: currentDate)
         return ageComponents.year
     }
@@ -345,14 +414,14 @@ extension MRZScannerViewController: CameraStateListener {
 }
 
 extension MRZScannerViewController: LicenseVerificationListener {
-    
+
     private func setupLicense() {
         if let license = config.license {
             LicenseManager.initLicense(license, verificationDelegate: self)
         }
     }
-    
+
     public func onLicenseVerified(_ isSuccess: Bool, error: (any Error)?) {
-        
+
     }
 }

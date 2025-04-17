@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		11253FE32DB0D90500733932 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11253FDA2DB0D90500733932 /* Media.xcassets */; };
 		11253FE42DB0D90500733932 /* MRZScannerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11253FDB2DB0D90500733932 /* MRZScannerConfig.swift */; };
-		11253FE52DB0D90500733932 /* MRZScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11253FDD2DB0D90500733932 /* MRZScanResult.swift */; };
+		11253FE52DB0D90500733932 /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11253FDD2DB0D90500733932 /* ScanResult.swift */; };
 		11253FE62DB0D90500733932 /* MRZScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11253FDC2DB0D90500733932 /* MRZScannerViewController.swift */; };
 		11253FEC2DB0D91B00733932 /* DynamsoftMRZScannerBundle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11253FEA2DB0D90500733932 /* DynamsoftMRZScannerBundle.framework */; };
 		11253FED2DB0D91B00733932 /* DynamsoftMRZScannerBundle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11253FEA2DB0D90500733932 /* DynamsoftMRZScannerBundle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -59,7 +59,7 @@
 		11253FDA2DB0D90500733932 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		11253FDB2DB0D90500733932 /* MRZScannerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRZScannerConfig.swift; sourceTree = "<group>"; };
 		11253FDC2DB0D90500733932 /* MRZScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRZScannerViewController.swift; sourceTree = "<group>"; };
-		11253FDD2DB0D90500733932 /* MRZScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRZScanResult.swift; sourceTree = "<group>"; };
+		11253FDD2DB0D90500733932 /* ScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResult.swift; sourceTree = "<group>"; };
 		11253FDF2DB0D90500733932 /* DynamsoftMRZScannerBundle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = DynamsoftMRZScannerBundle.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,7 +122,7 @@
 				11253FDA2DB0D90500733932 /* Media.xcassets */,
 				11253FDB2DB0D90500733932 /* MRZScannerConfig.swift */,
 				11253FDC2DB0D90500733932 /* MRZScannerViewController.swift */,
-				11253FDD2DB0D90500733932 /* MRZScanResult.swift */,
+				11253FDD2DB0D90500733932 /* ScanResult.swift */,
 			);
 			path = DynamsoftMRZScannerBundle;
 			sourceTree = "<group>";
@@ -262,7 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11253FE42DB0D90500733932 /* MRZScannerConfig.swift in Sources */,
-				11253FE52DB0D90500733932 /* MRZScanResult.swift in Sources */,
+				11253FE52DB0D90500733932 /* ScanResult.swift in Sources */,
 				11253FE62DB0D90500733932 /* MRZScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
