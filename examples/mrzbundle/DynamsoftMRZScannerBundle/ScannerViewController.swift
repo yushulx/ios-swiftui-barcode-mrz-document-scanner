@@ -1,5 +1,5 @@
 //
-//  MRZScannerViewController.swift
+//  ScannerViewController.swift
 //  DynamsoftMRZScannerBundle
 //
 //  Copyright © Dynamsoft Corporation.  All rights reserved.
@@ -13,13 +13,13 @@ import DynamsoftLabelRecognizer
 import DynamsoftLicense
 import DynamsoftUtility
 
-@objc(DSMRZScannerViewController)
-public class MRZScannerViewController: UIViewController {
+@objc(DSScannerViewController)
+public class ScannerViewController: UIViewController {
 
     let dce = CameraEnhancer()
     let cameraView = CameraView()
     let cvr = CaptureVisionRouter()
-    @objc public var config: MRZScannerConfig = .init()
+    @objc public var config: ScannerConfig = .init()
     @objc public var onScannedResult: ((ScanResultBase) -> Void)?
 
     public override func viewDidLoad() {
@@ -140,7 +140,7 @@ public class MRZScannerViewController: UIViewController {
     }()
 }
 
-extension MRZScannerViewController {
+extension ScannerViewController {
     private func setupDCV() {
         cameraView.translatesAutoresizingMaskIntoConstraints = false
         view.insertSubview(cameraView, at: 0)
@@ -245,7 +245,7 @@ extension MRZScannerViewController {
     }
 }
 
-extension MRZScannerViewController: CapturedResultReceiver {
+extension ScannerViewController: CapturedResultReceiver {
 
     public func onParsedResultsReceived(_ result: ParsedResult) {
         guard let item = result.items?.first else { return }
@@ -407,13 +407,13 @@ extension MRZScannerViewController: CapturedResultReceiver {
     }
 }
 
-extension MRZScannerViewController: CameraStateListener {
+extension ScannerViewController: CameraStateListener {
     public func onCameraStateChanged(_ currentState: CameraState) {
 
     }
 }
 
-extension MRZScannerViewController: LicenseVerificationListener {
+extension ScannerViewController: LicenseVerificationListener {
 
     private func setupLicense() {
         if let license = config.license {

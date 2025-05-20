@@ -13,8 +13,8 @@ public enum DocumentType: Int {
 }
 
 @objcMembers
-@objc(DSMRZScannerConfig)
-public class MRZScannerConfig: NSObject {
+@objc(DSScannerConfig)
+public class ScannerConfig: NSObject {
     public var license: String!
     @available(*, deprecated, message: "Use `templateFile` instead")
     public var templateFilePath: String?

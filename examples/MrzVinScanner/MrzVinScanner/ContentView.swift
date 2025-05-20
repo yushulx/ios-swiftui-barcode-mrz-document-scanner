@@ -74,7 +74,7 @@ struct ContentView: View {
     }
 
     func presentScanner() {
-        let config = MRZScannerConfig()
+        let config = ScannerConfig()
         config.license =
             "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
         config.mode = scanMode
@@ -88,7 +88,8 @@ struct ContentView: View {
                     case .mrz:
                         let mrzResult = result as? MRZScanResult
                         if let data = mrzResult?.data {
-                            self.scanResult += "Name: " + data.firstName + " " + data.lastName + "\n\n"
+                            self.scanResult +=
+                                "Name: " + data.firstName + " " + data.lastName + "\n\n"
                             self.scanResult += "Sex: " + data.sex.capitalized + "\n\n"
                             self.scanResult += "Age: " + String(data.age) + "\n\n"
                             self.scanResult += "Document Type: " + data.documentType + "\n\n"
@@ -146,15 +147,15 @@ struct ContentView: View {
 }
 
 struct MRZScannerView: UIViewControllerRepresentable {
-    let config: MRZScannerConfig
+    let config: ScannerConfig
     var onScannedResult: ((ScanResultBase) -> Void)?
 
-    func makeUIViewController(context: Context) -> MRZScannerViewController {
-        let vc = MRZScannerViewController()
+    func makeUIViewController(context: Context) -> ScannerViewController {
+        let vc = ScannerViewController()
         vc.config = config
         vc.onScannedResult = onScannedResult
         return vc
     }
 
-    func updateUIViewController(_ uiViewController: MRZScannerViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: ScannerViewController, context: Context) {}
 }

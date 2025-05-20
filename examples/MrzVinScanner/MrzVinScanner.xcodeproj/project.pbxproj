@@ -8,9 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		11253FE32DB0D90500733932 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11253FDA2DB0D90500733932 /* Media.xcassets */; };
-		11253FE42DB0D90500733932 /* MRZScannerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11253FDB2DB0D90500733932 /* MRZScannerConfig.swift */; };
+		11253FE42DB0D90500733932 /* ScannerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11253FDB2DB0D90500733932 /* ScannerConfig.swift */; };
 		11253FE52DB0D90500733932 /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11253FDD2DB0D90500733932 /* ScanResult.swift */; };
-		11253FE62DB0D90500733932 /* MRZScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11253FDC2DB0D90500733932 /* MRZScannerViewController.swift */; };
 		11253FEC2DB0D91B00733932 /* DynamsoftMRZScannerBundle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11253FEA2DB0D90500733932 /* DynamsoftMRZScannerBundle.framework */; };
 		11253FED2DB0D91B00733932 /* DynamsoftMRZScannerBundle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11253FEA2DB0D90500733932 /* DynamsoftMRZScannerBundle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11253FF12DB0E00400733932 /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 11253FF02DB0E00400733932 /* DynamsoftBarcodeReader */; };
@@ -27,6 +26,7 @@
 		112540072DB0E00400733932 /* DynamsoftNeuralNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 112540062DB0E00400733932 /* DynamsoftNeuralNetwork */; };
 		112540092DB0E00400733932 /* DynamsoftUtility in Frameworks */ = {isa = PBXBuildFile; productRef = 112540082DB0E00400733932 /* DynamsoftUtility */; };
 		1125400B2DB0E00400733932 /* DynamsoftVIN in Frameworks */ = {isa = PBXBuildFile; productRef = 1125400A2DB0E00400733932 /* DynamsoftVIN */; };
+		112540112DB0FF8500733932 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112540102DB0FF8500733932 /* ScannerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,10 +57,10 @@
 		11253FCB2DB0D82200733932 /* MrzVinScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MrzVinScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11253FD92DB0D90500733932 /* DynamsoftMRZScannerBundle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftMRZScannerBundle.h; sourceTree = "<group>"; };
 		11253FDA2DB0D90500733932 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		11253FDB2DB0D90500733932 /* MRZScannerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRZScannerConfig.swift; sourceTree = "<group>"; };
-		11253FDC2DB0D90500733932 /* MRZScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRZScannerViewController.swift; sourceTree = "<group>"; };
+		11253FDB2DB0D90500733932 /* ScannerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerConfig.swift; sourceTree = "<group>"; };
 		11253FDD2DB0D90500733932 /* ScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResult.swift; sourceTree = "<group>"; };
 		11253FDF2DB0D90500733932 /* DynamsoftMRZScannerBundle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = DynamsoftMRZScannerBundle.xcodeproj; sourceTree = "<group>"; };
+		112540102DB0FF8500733932 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -118,10 +118,10 @@
 		11253FDE2DB0D90500733932 /* DynamsoftMRZScannerBundle */ = {
 			isa = PBXGroup;
 			children = (
+				112540102DB0FF8500733932 /* ScannerViewController.swift */,
 				11253FD92DB0D90500733932 /* DynamsoftMRZScannerBundle.h */,
 				11253FDA2DB0D90500733932 /* Media.xcassets */,
-				11253FDB2DB0D90500733932 /* MRZScannerConfig.swift */,
-				11253FDC2DB0D90500733932 /* MRZScannerViewController.swift */,
+				11253FDB2DB0D90500733932 /* ScannerConfig.swift */,
 				11253FDD2DB0D90500733932 /* ScanResult.swift */,
 			);
 			path = DynamsoftMRZScannerBundle;
@@ -261,9 +261,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11253FE42DB0D90500733932 /* MRZScannerConfig.swift in Sources */,
+				11253FE42DB0D90500733932 /* ScannerConfig.swift in Sources */,
+				112540112DB0FF8500733932 /* ScannerViewController.swift in Sources */,
 				11253FE52DB0D90500733932 /* ScanResult.swift in Sources */,
-				11253FE62DB0D90500733932 /* MRZScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +396,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = E5D9GMM365;
@@ -415,6 +416,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.MrzVinScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -426,6 +428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = E5D9GMM365;
@@ -445,6 +448,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.MrzVinScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
