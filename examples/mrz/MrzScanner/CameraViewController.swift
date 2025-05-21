@@ -1,10 +1,4 @@
-import DynamsoftBarcodeReader
-import DynamsoftCameraEnhancer
-import DynamsoftCaptureVisionRouter
-import DynamsoftCodeParser
-import DynamsoftLabelRecognizer
-import DynamsoftLicense
-import SwiftUI
+import DynamsoftMRZScannerBundle
 
 let kAllTemplateNameList: [String] = ["ReadId", "ReadPassport", "ReadPassportAndId"]
 var defaultTemplateIndex: Int = 2
@@ -131,7 +125,7 @@ extension CameraViewController: LicenseVerificationListener {
 
     func setLicense() {
         LicenseManager.initLicense(
-            "LICENSE-KEY",
+            "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==",
             verificationDelegate: self)
     }
 

@@ -1,4 +1,4 @@
-import DynamsoftCodeParser
+import DynamsoftMRZScannerBundle
 import Foundation
 
 class ParsedItemModel {
