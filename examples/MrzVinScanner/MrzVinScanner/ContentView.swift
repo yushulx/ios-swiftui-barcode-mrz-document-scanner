@@ -75,7 +75,7 @@ struct ContentView: View {
     func presentScanner() {
         let config = ScannerConfig()
         config.license =
-            "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
+            "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjM0ODEwLVRYbFFjbTlxIiwibWFpblNlcnZlclVSTCI6Imh0dHBzOi8vbWx0cy5keW5hbXNvZnQuY29tIiwib3JnYW5pemF0aW9uSUQiOiIyMzQ4MTAiLCJzdGFuZGJ5U2VydmVyVVJMIjoiaHR0cHM6Ly9zbHRzLmR5bmFtc29mdC5jb20iLCJjaGVja0NvZGUiOi01OTg5NjgwOTV9"
         config.mode = scanMode
 
         var scannerView = MRZScannerView(config: config)
