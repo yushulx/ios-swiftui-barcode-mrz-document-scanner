@@ -1,4 +1,3 @@
-import DynamsoftLicense
 import DynamsoftMRZScannerBundle
 import SwiftUI
 

@@ -1,13 +1,13 @@
 {
-  "originHash" : "bb1f31da64d8fbf92c62b1afe3f9955fb36f56ec558960b6a8f25403aed360b3",
+  "originHash" : "4e5d8691a4c1296dc75f37565ecda283c0933d87244ca7730c52d9f2ac2fe890",
   "pins" : [
     {
       "identity" : "capture-vision-spm",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Dynamsoft/capture-vision-spm",
       "state" : {
-        "revision" : "43d91bf3b2f1a147fe6d8e49ce9cee7c8add4cf6",
-        "version" : "2.6.1004"
+        "revision" : "c5e8663654869fce678b65feda47e4be09d32607",
+        "version" : "3.0.3000"
       }
     }
   ],

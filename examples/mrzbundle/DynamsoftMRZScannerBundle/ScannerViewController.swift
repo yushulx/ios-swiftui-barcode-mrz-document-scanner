@@ -5,13 +5,7 @@
 //  Copyright © Dynamsoft Corporation.  All rights reserved.
 //
 
-import DynamsoftCameraEnhancer
-import DynamsoftCaptureVisionRouter
-import DynamsoftCodeParser
-import DynamsoftCore
-import DynamsoftLabelRecognizer
-import DynamsoftLicense
-import DynamsoftUtility
+import DynamsoftCaptureVisionBundle
 
 @objc(DSScannerViewController)
 public class ScannerViewController: UIViewController {
