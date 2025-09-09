@@ -1,230 +1,214 @@
 import AVFoundation
 import UIKit
 import Vision
+import ImageIO
 
-class CameraManager: NSObject, ObservableObject {
+final class CameraManager: NSObject, ObservableObject {
     @Published var captureSession = AVCaptureSession()
     @Published var previewLayer: AVCaptureVideoPreviewLayer?
     @Published var detectedFaces: [VNFaceObservation] = []
     @Published var detectedRectangles: [VNRectangleObservation] = []
     @Published var isSessionRunning = false
-    
-    // Debug properties
+
+    // Debug (raw frame info)
     @Published var currentFrameSize: CGSize = .zero
     @Published var currentFrameThumbnail: UIImage?
     @Published var frameOrientation: String = ""
-    
+
     private let videoOutput = AVCaptureVideoDataOutput()
     private let photoOutput = AVCapturePhotoOutput()
     private let sessionQueue = DispatchQueue(label: "camera.session.queue")
     private var photoCaptureDelegate: PhotoCaptureDelegate?
-    
+
+    // Vision requests (reused)
+    private let faceRequest = VNDetectFaceRectanglesRequest()
+    private let rectangleRequest: VNDetectRectanglesRequest = {
+        let r = VNDetectRectanglesRequest()
+        r.minimumConfidence = 0.80
+        r.maximumObservations = 5
+        // Loose detector settings; we’ll still post-filter
+        r.minimumAspectRatio = 0.2
+        r.maximumAspectRatio = 5.0
+        r.minimumSize = 0.05
+        return r
+    }()
+
+    // Throttle UI publishes a bit
+    private var lastPublishTime: CFTimeInterval = 0
+    private let publishInterval: CFTimeInterval = 1.0 / 15.0
+
     override init() {
         super.init()
         setupCamera()
     }
-    
+
     private func setupCamera() {
         sessionQueue.async { [weak self] in
             self?.configureSession()
         }
     }
-    
+
     private func configureSession() {
         captureSession.beginConfiguration()
-        
-        // Set session preset for better quality
         if captureSession.canSetSessionPreset(.photo) {
             captureSession.sessionPreset = .photo
         }
-        
-        // Add video input
+
+        // Back camera input
         guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
               let videoInput = try? AVCaptureDeviceInput(device: camera) else {
             print("Failed to create camera input")
             captureSession.commitConfiguration()
             return
         }
-        
         if captureSession.canAddInput(videoInput) {
             captureSession.addInput(videoInput)
         }
-        
-        // Configure video output
-        videoOutput.setSampleBufferDelegate(self, queue: sessionQueue)
+
+        // Video output (BGRA for Vision)
+        videoOutput.videoSettings = [
+            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA
+        ]
         videoOutput.alwaysDiscardsLateVideoFrames = true
-        
+        videoOutput.setSampleBufferDelegate(self, queue: sessionQueue)
         if captureSession.canAddOutput(videoOutput) {
             captureSession.addOutput(videoOutput)
         }
-        
-        // Add photo output for capture
+
+        // Photo output
         if captureSession.canAddOutput(photoOutput) {
             captureSession.addOutput(photoOutput)
         }
-        
+
+        // Force portrait connection where supported (affects preview, not raw bytes)
+        if let vConn = videoOutput.connection(with: .video), vConn.isVideoOrientationSupported {
+            vConn.videoOrientation = .portrait
+        }
+
         captureSession.commitConfiguration()
-        
-        DispatchQueue.main.async {
-            self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
-            self.previewLayer?.videoGravity = .resizeAspectFill
-            
-            // Configure video orientation for portrait
-            if let connection = self.previewLayer?.connection {
-                if connection.isVideoOrientationSupported {
-                    connection.videoOrientation = .portrait
-                }
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let layer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+            layer.videoGravity = .resizeAspectFill
+            if let conn = layer.connection, conn.isVideoOrientationSupported {
+                conn.videoOrientation = .portrait
             }
-            
-            print("Preview layer created with portrait orientation")
+            self.previewLayer = layer
         }
     }
-    
+
     func startSession() {
         sessionQueue.async { [weak self] in
-            if !(self?.captureSession.isRunning ?? false) {
-                self?.captureSession.startRunning()
-                DispatchQueue.main.async {
-                    self?.isSessionRunning = true
-                }
-            }
+            guard let self, !self.captureSession.isRunning else { return }
+            self.captureSession.startRunning()
+            DispatchQueue.main.async { self.isSessionRunning = true }
         }
     }
-    
+
     func stopSession() {
         sessionQueue.async { [weak self] in
-            if self?.captureSession.isRunning ?? false {
-                self?.captureSession.stopRunning()
-                DispatchQueue.main.async {
-                    self?.isSessionRunning = false
-                }
-            }
+            guard let self, self.captureSession.isRunning else { return }
+            self.captureSession.stopRunning()
+            DispatchQueue.main.async { self.isSessionRunning = false }
         }
     }
-    
+
     func capturePhoto(completion: @escaping (UIImage?) -> Void) {
         let settings = AVCapturePhotoSettings()
         settings.flashMode = .off
-        
-        // Store the delegate to prevent deallocation
         photoCaptureDelegate = PhotoCaptureDelegate { [weak self] image in
             DispatchQueue.main.async {
                 completion(image)
-                self?.photoCaptureDelegate = nil // Clean up after completion
+                self?.photoCaptureDelegate = nil
             }
         }
-        
         photoOutput.capturePhoto(with: settings, delegate: photoCaptureDelegate!)
+    }
+
+    // Debug thumbnail from raw buffer (keeps native -90° look in portrait)
+    private func makeRawThumbnail(from pixelBuffer: CVPixelBuffer, maxSide: CGFloat = 100) -> UIImage? {
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+        let context = CIContext()
+        let scale = min(maxSide / ciImage.extent.width, maxSide / ciImage.extent.height)
+        let scaled = ciImage.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
+        guard let cg = context.createCGImage(scaled, from: scaled.extent) else { return nil }
+        return UIImage(cgImage: cg)
     }
 }
 
 // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    func captureOutput(_ output: AVCaptureOutput,
+                       didOutput sampleBuffer: CMSampleBuffer,
+                       from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-        
-        // Update frame debug info
-        let frameWidth = CVPixelBufferGetWidth(pixelBuffer)
-        let frameHeight = CVPixelBufferGetHeight(pixelBuffer)
-        let frameSize = CGSize(width: frameWidth, height: frameHeight)
-        
-        // Create thumbnail every 30 frames (roughly once per second)
-        let frameCount = arc4random_uniform(30)
-        if frameCount == 0 {
-            let thumbnail = createThumbnail(from: pixelBuffer)
-            DispatchQueue.main.async {
-                self.currentFrameSize = frameSize
-                self.currentFrameThumbnail = thumbnail
-                self.frameOrientation = "Vision: .right, Preview: portrait, Frame: \(frameWidth)x\(frameHeight)"
+
+        // Raw buffer debug (no EXIF rotation applied)
+        let w = CVPixelBufferGetWidth(pixelBuffer)
+        let h = CVPixelBufferGetHeight(pixelBuffer)
+        if arc4random_uniform(30) == 0 { // lightweight sampling
+            let thumb = makeRawThumbnail(from: pixelBuffer)
+            DispatchQueue.main.async { [weak self] in
+                self?.currentFrameSize = CGSize(width: w, height: h)
+                self?.currentFrameThumbnail = thumb
+                self?.frameOrientation = "Vision: .right | Preview: portrait | Raw: \(w)x\(h)"
             }
         }
-        
-        let faceRequest = VNDetectFaceRectanglesRequest { [weak self] request, error in
-            guard let results = request.results as? [VNFaceObservation] else { return }
-            DispatchQueue.main.async {
-                self?.detectedFaces = results
-            }
-        }
-        
-        let rectangleRequest = VNDetectRectanglesRequest { [weak self] request, error in
-            guard let results = request.results as? [VNRectangleObservation] else { return }
-            
-            // Simply find the largest rectangle with decent confidence
-            let filteredResults = results
-                .filter { $0.confidence > 0.7 } // Reasonable confidence threshold
-                .filter { rectangle in
-                    let boundingBox = rectangle.boundingBox
-                    // Basic size filter - must be reasonably large
-                    return boundingBox.width > 0.1 && boundingBox.height > 0.1
-                }
-                .filter { rectangle in
-                    // Ensure all corners are within bounds
-                    let corners = [rectangle.topLeft, rectangle.topRight, rectangle.bottomRight, rectangle.bottomLeft]
-                    return corners.allSatisfy { corner in
-                        corner.x >= 0 && corner.x <= 1 && corner.y >= 0 && corner.y <= 1
-                    }
-                }
-                .sorted { rect1, rect2 in
-                    // Sort by area (largest first) - this is the key change
-                    let area1 = rect1.boundingBox.width * rect1.boundingBox.height
-                    let area2 = rect2.boundingBox.width * rect2.boundingBox.height
-                    return area1 > area2
-                }
-            
-            DispatchQueue.main.async {
-                // Show only the largest rectangle
-                self?.detectedRectangles = Array(filteredResults.prefix(1))
-            }
-        }
-        
-        // Permissive rectangle detection settings - no aspect ratio restrictions
-        rectangleRequest.minimumAspectRatio = 0.2  // Very permissive
-        rectangleRequest.maximumAspectRatio = 5.0  // Very permissive  
-        rectangleRequest.minimumSize = 0.05        // Smaller minimum size
-        rectangleRequest.maximumObservations = 5   // More candidates to choose from
-        
-        let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .right, options: [:])
-        
+
+        // Vision handler: portrait + back camera => .right
+        let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
+                                            orientation: .right,
+                                            options: [:])
+
         do {
             try handler.perform([faceRequest, rectangleRequest])
+
+            let faces = (faceRequest.results as? [VNFaceObservation]) ?? []
+            let rectsRaw = (rectangleRequest.results as? [VNRectangleObservation]) ?? []
+
+            // Post-filter rectangles: decent confidence + largest area
+            let rectsFiltered = rectsRaw
+                .filter { $0.confidence > 0.70 }
+                .filter {
+                    let bb = $0.boundingBox
+                    return bb.width > 0.10 && bb.height > 0.10
+                }
+                .sorted {
+                    ($0.boundingBox.width * $0.boundingBox.height) >
+                    ($1.boundingBox.width * $1.boundingBox.height)
+                }
+            let top1 = Array(rectsFiltered.prefix(1))
+
+            // Throttle publishes
+            let now = CACurrentMediaTime()
+            if now - lastPublishTime >= publishInterval {
+                lastPublishTime = now
+                DispatchQueue.main.async { [weak self] in
+                    self?.detectedFaces = faces
+                    self?.detectedRectangles = top1
+                }
+            }
         } catch {
-            print("Failed to perform vision requests: \(error)")
+            print("Vision perform error: \(error)")
         }
-    }
-    
-    private func createThumbnail(from pixelBuffer: CVPixelBuffer) -> UIImage? {
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
-        let context = CIContext()
-        
-        // Create a small thumbnail (100x100 max)
-        let thumbnailSize: CGFloat = 100
-        let scale = min(thumbnailSize / ciImage.extent.width, thumbnailSize / ciImage.extent.height)
-        let scaledImage = ciImage.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
-        
-        guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else {
-            return nil
-        }
-        
-        return UIImage(cgImage: cgImage)
     }
 }
 
-// MARK: - Photo Capture Delegate
-class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
+// MARK: - Photo capture delegate
+final class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
     private let completion: (UIImage?) -> Void
-    
-    init(completion: @escaping (UIImage?) -> Void) {
-        self.completion = completion
-    }
-    
-    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+    init(completion: @escaping (UIImage?) -> Void) { self.completion = completion }
+
+    func photoOutput(_ output: AVCapturePhotoOutput,
+                     didFinishProcessingPhoto photo: AVCapturePhoto,
+                     error: Error?) {
         guard error == nil,
-              let imageData = photo.fileDataRepresentation(),
-              let image = UIImage(data: imageData) else {
+              let data = photo.fileDataRepresentation(),
+              let image = UIImage(data: data) else {
             completion(nil)
             return
         }
-        
         completion(image)
     }
 }
