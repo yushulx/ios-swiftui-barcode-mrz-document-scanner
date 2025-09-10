@@ -12,80 +12,123 @@ struct CameraView: View {
         ZStack {
             CameraPreviewView(cameraManager: cameraManager)
                 .ignoresSafeArea()
-
-            // Debug heads-up
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Frame Debug").font(.caption).fontWeight(.bold)
-                Text("Size: \(Int(cameraManager.currentFrameSize.width))×\(Int(cameraManager.currentFrameSize.height))").font(.caption)
-                Text(cameraManager.frameOrientation).font(.caption)
-                if let thumb = cameraManager.currentFrameThumbnail {
-                    Image(uiImage: thumb)
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .border(.red, width: 2)
+                .onAppear {
+                    print("📱 CameraPreviewView appeared")
                 }
-                Spacer()
-            }
-            .foregroundStyle(.white)
-            .padding(8)
-            .background(Color.black.opacity(0.35))
-            .cornerRadius(8)
-            .padding(.top, 40)
-            .padding(.leading, 16)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-
-            // Vision overlays aligned via previewLayer conversions
+            
             OverlayView(
                 faces: cameraManager.detectedFaces,
                 rectangles: cameraManager.detectedRectangles,
                 previewLayer: cameraManager.previewLayer
             )
-            .ignoresSafeArea()
-
+            
             VStack {
                 Spacer()
+                
                 Button(action: captureImage) {
-                    ZStack {
-                        Circle().fill(Color.white).frame(width: 72, height: 72)
-                        Circle().stroke(Color.black, lineWidth: 2).frame(width: 72, height: 72)
-                        if isProcessing {
-                            ProgressView().tint(.black)
-                        }
-                    }
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: 80, height: 80)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black, lineWidth: 2)
+                                .frame(width: 70, height: 70)
+                        )
                 }
                 .disabled(isProcessing)
                 .padding(.bottom, 50)
             }
         }
-        .onAppear { cameraManager.startSession() }
-        .onDisappear { cameraManager.stopSession() }
+        .onAppear {
+            print("📱 CameraView appeared, starting session")
+            cameraManager.startSession()
+        }
+        .onDisappear {
+            print("📱 CameraView disappeared, stopping session")
+            cameraManager.stopSession()
+        }
     }
-
+    
     private func captureImage() {
+        print("🔥 CAPTURE: Starting image capture")
         isProcessing = true
-        cameraManager.capturePhoto { captured in
-            guard let image = captured else {
-                isProcessing = false
-                return
-            }
-            // Process on background thread if heavy
-            DispatchQueue.global(qos: .userInitiated).async {
-                let rectified = rectifyImage(image)
-                let ocr = performOCR(on: rectified)
-                DispatchQueue.main.async {
-                    onImageCaptured(rectified, ocr)
-                    isProcessing = false
+        
+        cameraManager.capturePhoto { capturedImage in
+            DispatchQueue.main.async {
+                guard let image = capturedImage else {
+                    print("❌ CAPTURE: Failed to capture image")
+                    self.isProcessing = false
+                    return
                 }
+                
+                print("✅ CAPTURE: Successfully captured image")
+                print("📏 CAPTURE: Original image size: \(image.size)")
+                print("🔍 CAPTURE: Detected rectangles count: \(self.cameraManager.detectedRectangles.count)")
+                
+                // Debug: Save original image to see what we captured
+                self.debugSaveImage(image, name: "original_capture")
+                
+                // Use the detected rectangle for rectification
+                let rectangle = self.cameraManager.detectedRectangles.first
+                if let rect = rectangle {
+                    print("📐 RECTIFY: Using detected rectangle for rectification")
+                    print("📐 RECTIFY: Rectangle confidence: \(rect.confidence)")
+                    print("📐 RECTIFY: Rectangle corners: TL(\(rect.topLeft)), TR(\(rect.topRight)), BR(\(rect.bottomRight)), BL(\(rect.bottomLeft))")
+                } else {
+                    print("⚠️ RECTIFY: No rectangle detected, using original image")
+                }
+                
+                let rectified = ImageRectifier.rectify(image: image, rectangle: rectangle)
+                print("🔧 RECTIFY: Rectified image size: \(rectified.size)")
+                
+                // Debug: Save rectified image to see if it's white
+                self.debugSaveImage(rectified, name: "rectified_image")
+                
+                // Verify we have a valid rectified image
+                guard rectified.size.width > 0 && rectified.size.height > 0 else {
+                    print("❌ RECTIFY: ERROR - Rectified image has invalid size")
+                    // Fallback to original image
+                    let ocr = OCRService.extractText(from: image)
+                    self.onImageCaptured(image, ocr)
+                    self.isProcessing = false
+                    return
+                }
+                
+                // Check if rectified image is actually different from original
+                if rectified.size == image.size && rectangle == nil {
+                    print("ℹ️ RECTIFY: Using original image (no rectification needed)")
+                } else {
+                    print("✅ RECTIFY: Successfully rectified image")
+                }
+                
+                // Process with OCR
+                print("📝 OCR: Starting text extraction")
+                let ocr = OCRService.extractText(from: rectified)
+                print("📝 OCR: Extracted \(ocr.count) text elements: \(ocr)")
+                
+                // Call completion
+                print("🎯 COMPLETION: Calling onImageCaptured with rectified image")
+                self.onImageCaptured(rectified, ocr)
+                self.isProcessing = false
             }
         }
     }
-
-    private func rectifyImage(_ image: UIImage) -> UIImage {
-        guard let best = cameraManager.detectedRectangles.first else { return image }
-        return ImageRectifier.rectify(image: image, rectangle: best) ?? image
+    
+    // Debug helper to save images for inspection
+    private func debugSaveImage(_ image: UIImage, name: String) {
+        guard let data = image.jpegData(compressionQuality: 0.8) else { return }
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL = documentsPath.appendingPathComponent("\(name)_\(Date().timeIntervalSince1970).jpg")
+        try? data.write(to: fileURL)
+        print("💾 DEBUG: Saved \(name) to \(fileURL.path)")
     }
+}
 
-    private func performOCR(on image: UIImage) -> [String] {
-        OCRService.extractText(from: image)
+// MARK: - Preview
+struct CameraView_Previews: PreviewProvider {
+    static var previews: some View {
+        CameraView { image, ocr in
+            print("Captured image with OCR: \(ocr)")
+        }
     }
 }

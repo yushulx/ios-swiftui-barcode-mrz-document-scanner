@@ -3,10 +3,20 @@ import Vision
 import CoreImage
 
 class ImageRectifier {
-    static func rectify(image: UIImage, rectangle: VNRectangleObservation) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
+    static func rectify(image: UIImage, rectangle: VNRectangleObservation?) -> UIImage {
+        // If no rectangle detected, return original image
+        guard let rectangle = rectangle else {
+            print("No rectangle provided, returning original image")
+            return image
+        }
+        
+        guard let cgImage = image.cgImage else {
+            print("Failed to get CGImage, returning original")
+            return image
+        }
         
         let imageSize = CGSize(width: cgImage.width, height: cgImage.height)
+        print("Processing image of size: \(imageSize)")
         
         // Convert normalized coordinates to image coordinates
         let topLeft = convertPoint(rectangle.topLeft, imageSize: imageSize)
@@ -14,9 +24,16 @@ class ImageRectifier {
         let bottomRight = convertPoint(rectangle.bottomRight, imageSize: imageSize)
         let bottomLeft = convertPoint(rectangle.bottomLeft, imageSize: imageSize)
         
+        print("Rectangle corners:")
+        print("  TopLeft: \(topLeft)")
+        print("  TopRight: \(topRight)")
+        print("  BottomRight: \(bottomRight)")
+        print("  BottomLeft: \(bottomLeft)")
+        
         // Create the perspective correction filter
         guard let perspectiveFilter = CIFilter(name: "CIPerspectiveCorrection") else {
-            return nil
+            print("Failed to create perspective filter, returning original")
+            return image
         }
         
         let ciImage = CIImage(cgImage: cgImage)
@@ -26,23 +43,26 @@ class ImageRectifier {
         perspectiveFilter.setValue(CIVector(cgPoint: bottomRight), forKey: "inputBottomRight")
         perspectiveFilter.setValue(CIVector(cgPoint: bottomLeft), forKey: "inputBottomLeft")
         
-        guard let outputImage = perspectiveFilter.outputImage else { return nil }
+        guard let outputImage = perspectiveFilter.outputImage else {
+            print("Failed to get output from perspective filter, returning original")
+            return image
+        }
         
         let context = CIContext()
         guard let rectifiedCGImage = context.createCGImage(outputImage, from: outputImage.extent) else {
-            return nil
+            print("Failed to create rectified CGImage, returning original")
+            return image
         }
         
-        return UIImage(cgImage: rectifiedCGImage)
+        let rectifiedImage = UIImage(cgImage: rectifiedCGImage)
+        print("Successfully rectified image to size: \(rectifiedImage.size)")
+        return rectifiedImage
     }
     
     private static func convertPoint(_ normalizedPoint: CGPoint, imageSize: CGSize) -> CGPoint {
-        // For .right orientation with rightMirrored preview transformation to image coordinates
-        // Vision X maps to Image Y, Vision Y maps to (1 - Image X) due to mirror
-        return CGPoint(
-            x: (1 - normalizedPoint.y) * imageSize.width,
-            y: normalizedPoint.x * imageSize.height
-        )
+        // Convert normalized Vision coordinates to actual image pixel coordinates
+        // Vision uses normalized coordinates (0-1) with origin at bottom-left
+        // Image coordinates use actual pixels with origin at top-left
         return CGPoint(
             x: normalizedPoint.x * imageSize.width,
             y: (1 - normalizedPoint.y) * imageSize.height

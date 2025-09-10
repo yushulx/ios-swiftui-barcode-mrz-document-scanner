@@ -1,26 +1,17 @@
 import SwiftUI
 import AVFoundation
 
+// Main container that handles navigation between camera and results
 struct ContentView: View {
-    @State private var showingResultView = false
-    @State private var showingPermissions = false
-    @State private var capturedImage: UIImage?
-    @State private var ocrResults: [String] = []
     @StateObject private var permissionsManager = PermissionsManager()
+    @State private var showingPermissions = false
+    @State private var navigationPath = NavigationPath()
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigationPath) {
             Group {
                 if permissionsManager.isCameraAuthorized {
-                    CameraView(
-                        onImageCaptured: { image, ocrText in
-                            print("ContentView: Image captured callback received")
-                            capturedImage = image
-                            ocrResults = ocrText
-                            showingResultView = true
-                            print("ContentView: Setting showingResultView to true")
-                        }
-                    )
+                    CameraContainerView(navigationPath: $navigationPath)
                 } else {
                     PermissionDeniedView {
                         showingPermissions = true
@@ -29,10 +20,8 @@ struct ContentView: View {
             }
             .navigationTitle("ID Scanner")
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $showingResultView) {
-                if let image = capturedImage {
-                    ResultView(image: image, ocrResults: ocrResults)
-                }
+            .navigationDestination(for: CapturedImageData.self) { imageData in
+                ResultView(image: imageData.image, ocrResults: imageData.ocrResults)
             }
             .sheet(isPresented: $showingPermissions) {
                 PermissionsView(permissionsManager: permissionsManager, isPresented: $showingPermissions)
@@ -43,7 +32,6 @@ struct ContentView: View {
         }
         .onChange(of: permissionsManager.isCameraAuthorized) { _, isAuthorized in
             if isAuthorized {
-                // Dismiss the permissions sheet when camera is authorized
                 showingPermissions = false
             }
         }
@@ -54,6 +42,43 @@ struct ContentView: View {
         if !permissionsManager.isCameraAuthorized {
             showingPermissions = true
         }
+    }
+}
+
+// Data structure for navigation
+struct CapturedImageData: Hashable {
+    let image: UIImage
+    let ocrResults: [String]
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(image.size.width)
+        hasher.combine(image.size.height)
+        hasher.combine(ocrResults)
+    }
+    
+    static func == (lhs: CapturedImageData, rhs: CapturedImageData) -> Bool {
+        return lhs.image.size == rhs.image.size && lhs.ocrResults == rhs.ocrResults
+    }
+}
+
+// Container for camera view that handles navigation
+struct CameraContainerView: View {
+    @Binding var navigationPath: NavigationPath
+    
+    var body: some View {
+        CameraView(
+            onImageCaptured: { image, ocrText in
+                print("🎯 CameraContainer: Image captured callback received")
+                print("🎯 CameraContainer: Image size: \(image.size)")
+                print("🎯 CameraContainer: OCR results: \(ocrText)")
+                
+                DispatchQueue.main.async {
+                    let imageData = CapturedImageData(image: image, ocrResults: ocrText)
+                    print("🎯 CameraContainer: Navigating to ResultView")
+                    navigationPath.append(imageData)
+                }
+            }
+        )
     }
 }
 
@@ -86,6 +111,3 @@ struct PermissionDeniedView: View {
     }
 }
 
-#Preview {
-    ContentView()
-}

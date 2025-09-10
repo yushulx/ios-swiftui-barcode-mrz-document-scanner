@@ -9,6 +9,10 @@ final class CameraManager: NSObject, ObservableObject {
     @Published var detectedFaces: [VNFaceObservation] = []
     @Published var detectedRectangles: [VNRectangleObservation] = []
     @Published var isSessionRunning = false
+    
+    // Store the latest frame for capture
+    private var latestSampleBuffer: CMSampleBuffer?
+    private var captureCompletion: ((UIImage?) -> Void)?
 
     // Debug (raw frame info)
     @Published var currentFrameSize: CGSize = .zero
@@ -16,9 +20,7 @@ final class CameraManager: NSObject, ObservableObject {
     @Published var frameOrientation: String = ""
 
     private let videoOutput = AVCaptureVideoDataOutput()
-    private let photoOutput = AVCapturePhotoOutput()
     private let sessionQueue = DispatchQueue(label: "camera.session.queue")
-    private var photoCaptureDelegate: PhotoCaptureDelegate?
 
     // Vision requests (reused)
     private let faceRequest = VNDetectFaceRectanglesRequest()
@@ -75,11 +77,6 @@ final class CameraManager: NSObject, ObservableObject {
             captureSession.addOutput(videoOutput)
         }
 
-        // Photo output
-        if captureSession.canAddOutput(photoOutput) {
-            captureSession.addOutput(photoOutput)
-        }
-
         // Force portrait connection where supported (affects preview, not raw bytes)
         if let vConn = videoOutput.connection(with: .video), vConn.isVideoOrientationSupported {
             vConn.videoOrientation = .portrait
@@ -100,30 +97,40 @@ final class CameraManager: NSObject, ObservableObject {
 
     func startSession() {
         sessionQueue.async { [weak self] in
-            guard let self, !self.captureSession.isRunning else { return }
+            guard let self else { return }
+            if self.captureSession.isRunning {
+                return
+            }
             self.captureSession.startRunning()
-            DispatchQueue.main.async { self.isSessionRunning = true }
+            DispatchQueue.main.async { 
+                self.isSessionRunning = true 
+            }
         }
     }
 
     func stopSession() {
         sessionQueue.async { [weak self] in
-            guard let self, self.captureSession.isRunning else { return }
+            guard let self else { return }
+            if !self.captureSession.isRunning {
+                return
+            }
             self.captureSession.stopRunning()
-            DispatchQueue.main.async { self.isSessionRunning = false }
+            DispatchQueue.main.async { 
+                self.isSessionRunning = false 
+            }
         }
     }
 
     func capturePhoto(completion: @escaping (UIImage?) -> Void) {
-        let settings = AVCapturePhotoSettings()
-        settings.flashMode = .off
-        photoCaptureDelegate = PhotoCaptureDelegate { [weak self] image in
-            DispatchQueue.main.async {
-                completion(image)
-                self?.photoCaptureDelegate = nil
-            }
+        
+        guard captureSession.isRunning else {
+            completion(nil)
+            return
         }
-        photoOutput.capturePhoto(with: settings, delegate: photoCaptureDelegate!)
+        
+        // Store the completion to be called when we get the next frame
+        captureCompletion = completion
+        print("✅ CAPTURE: Will capture next available frame")
     }
 
     // Debug thumbnail from raw buffer (keeps native -90° look in portrait)
@@ -135,6 +142,30 @@ final class CameraManager: NSObject, ObservableObject {
         guard let cg = context.createCGImage(scaled, from: scaled.extent) else { return nil }
         return UIImage(cgImage: cg)
     }
+    
+    // Convert sample buffer to properly oriented UIImage for capture
+    private func imageFromSampleBuffer(_ sampleBuffer: CMSampleBuffer) -> UIImage? {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            print("❌ CAPTURE: Failed to get pixel buffer from sample buffer")
+            return nil
+        }
+        
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+        
+        // Apply proper orientation transformation for back camera in portrait mode
+        // The raw frame is rotated -90° relative to portrait, so we need to rotate +90°
+        let rotated = ciImage.oriented(.right)
+        
+        let context = CIContext()
+        guard let cgImage = context.createCGImage(rotated, from: rotated.extent) else {
+            print("❌ CAPTURE: Failed to create CGImage from CIImage")
+            return nil
+        }
+        
+        let image = UIImage(cgImage: cgImage)
+        print("✅ CAPTURE: Created image with size: \(image.size)")
+        return image
+    }
 }
 
 // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
@@ -142,6 +173,30 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput,
                        didOutput sampleBuffer: CMSampleBuffer,
                        from connection: AVCaptureConnection) {
+        
+        // Store the latest buffer for potential capture
+        latestSampleBuffer = sampleBuffer
+        
+        // If we have a pending capture request, fulfill it now
+        if let completion = captureCompletion {
+            print("📸 CAPTURE: Processing frame capture request")
+            captureCompletion = nil
+            
+            // Convert the sample buffer to UIImage
+            if let image = imageFromSampleBuffer(sampleBuffer) {
+                print("✅ CAPTURE: Successfully created image from video frame")
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            } else {
+                print("❌ CAPTURE: Failed to create image from video frame")
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+            return
+        }
+        
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
         // Raw buffer debug (no EXIF rotation applied)
@@ -192,23 +247,5 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
         } catch {
             print("Vision perform error: \(error)")
         }
-    }
-}
-
-// MARK: - Photo capture delegate
-final class PhotoCaptureDelegate: NSObject, AVCapturePhotoCaptureDelegate {
-    private let completion: (UIImage?) -> Void
-    init(completion: @escaping (UIImage?) -> Void) { self.completion = completion }
-
-    func photoOutput(_ output: AVCapturePhotoOutput,
-                     didFinishProcessingPhoto photo: AVCapturePhoto,
-                     error: Error?) {
-        guard error == nil,
-              let data = photo.fileDataRepresentation(),
-              let image = UIImage(data: data) else {
-            completion(nil)
-            return
-        }
-        completion(image)
     }
 }
