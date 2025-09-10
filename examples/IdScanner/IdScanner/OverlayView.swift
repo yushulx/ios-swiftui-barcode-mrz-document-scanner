@@ -65,16 +65,21 @@ struct OverlayView: View {
 
     @inline(__always)
     private func vnRectToMetadata(_ r: CGRect) -> CGRect {
-        // VN normalized in image coords (origin bottom-left) -> metadata (origin top-left)
-        CGRect(x: 1 - r.origin.x,
-               y: 1 - r.origin.y - r.size.height,
-               width: r.size.width,
-               height: r.size.height)
+        // Vision normalized coordinates (origin top-left, Y down)
+        // Convert to metadata format (origin top-left, Y down)
+        return CGRect(
+            x: r.origin.x,
+            y: r.origin.y,
+            width: r.size.width,
+            height: r.size.height
+        )
     }
 
     @inline(__always)
     private func vnPointToMetadata(_ p: CGPoint) -> CGPoint {
-        CGPoint(x: 1 - p.x, y: 1 - p.y)
+        // Vision normalized coordinates (origin top-left, Y down)
+        // Convert to metadata format (origin top-left, Y down)
+        return CGPoint(x: p.x, y: 1 - p.y)
     }
 
     private func convertVisionRect(_ vnRect: CGRect,
@@ -94,10 +99,17 @@ struct OverlayView: View {
     private func convertVisionRectangleToPath(_ rect: VNRectangleObservation,
                                               layer: AVCaptureVideoPreviewLayer?) -> Path {
         guard let layer else { return Path() }
-        let tl = convertVisionPoint(rect.topLeft, layer: layer)
-        let tr = convertVisionPoint(rect.topRight, layer: layer)
-        let br = convertVisionPoint(rect.bottomRight, layer: layer)
-        let bl = convertVisionPoint(rect.bottomLeft, layer: layer)
+        
+        // Convert each corner point properly
+//        let tl = convertVisionPoint(rect.bottomRight, layer: layer)
+//        let tr = convertVisionPoint(rect.bottomLeft, layer: layer)
+//        let br = convertVisionPoint(rect.topLeft, layer: layer)
+//        let bl = convertVisionPoint(rect.topRight, layer: layer)
+        
+        let tl = convertVisionPoint(rect.topRight, layer: layer)
+        let tr = convertVisionPoint(rect.bottomRight, layer: layer)
+        let br = convertVisionPoint(rect.bottomLeft, layer: layer)
+        let bl = convertVisionPoint(rect.topLeft, layer: layer)
 
         var path = Path()
         path.move(to: tl)
