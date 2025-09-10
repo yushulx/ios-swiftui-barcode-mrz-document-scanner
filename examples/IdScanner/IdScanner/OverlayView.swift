@@ -8,7 +8,7 @@ struct OverlayView: View {
     let previewLayer: AVCaptureVideoPreviewLayer?
 
     var body: some View {
-        GeometryReader { _ in
+        GeometryReader { geometry in
             ZStack {
                 // Faces
                 ForEach(Array(faces.enumerated()), id: \.offset) { idx, face in
@@ -17,20 +17,20 @@ struct OverlayView: View {
                         Rectangle()
                             .stroke(Color.green, lineWidth: 2)
                             .frame(width: r.width, height: r.height)
-                            .position(x: r.midX, y: r.midY)
+                            .position(x: r.midX, y: geometry.size.height - r.midY + getYOffset())
                         Text("Face \(idx)")
                             .font(.caption2).bold()
                             .padding(4)
                             .background(Color.black.opacity(0.7))
                             .foregroundColor(.green)
                             .cornerRadius(4)
-                            .position(x: r.midX, y: max(r.minY - 12, 10))
+                            .position(x: r.midX, y: geometry.size.height - max(r.minY - 12, 10) + getYOffset())
                     }
                 }
 
                 // Rectangles
                 ForEach(Array(rectangles.enumerated()), id: \.offset) { idx, ro in
-                    let path = convertVisionRectangleToPath(ro, layer: previewLayer)
+                    let path = convertVisionRectangleToPath(ro, layer: previewLayer, screenSize: geometry.size)
                     path.stroke(Color.blue, lineWidth: 3)
 
                     let bboxL = convertVisionRect(ro.boundingBox, layer: previewLayer)
@@ -41,13 +41,13 @@ struct OverlayView: View {
                             .background(Color.white.opacity(0.85))
                             .foregroundColor(.blue)
                             .cornerRadius(4)
-                            .position(x: bboxL.midX, y: max(bboxL.minY - 12, 10))
+                            .position(x: bboxL.midX, y: geometry.size.height - max(bboxL.minY - 12, 10) + getYOffset())
 
                         // Corner dots
-                        let tl = convertVisionPoint(ro.topLeft, layer: previewLayer)
-                        let tr = convertVisionPoint(ro.topRight, layer: previewLayer)
-                        let br = convertVisionPoint(ro.bottomRight, layer: previewLayer)
-                        let bl = convertVisionPoint(ro.bottomLeft, layer: previewLayer)
+                        let tl = convertVisionPoint(ro.topLeft, layer: previewLayer, screenSize: geometry.size)
+                        let tr = convertVisionPoint(ro.topRight, layer: previewLayer, screenSize: geometry.size)
+                        let br = convertVisionPoint(ro.bottomRight, layer: previewLayer, screenSize: geometry.size)
+                        let bl = convertVisionPoint(ro.bottomLeft, layer: previewLayer, screenSize: geometry.size)
                         Group {
                             dot(.red, at: tl)
                             dot(.green, at: tr)
@@ -61,25 +61,28 @@ struct OverlayView: View {
         }
     }
 
+    private func getYOffset() -> CGFloat {
+        guard let layer = previewLayer else { return 0 }
+                
+        // Calculate the vertical crop offset
+        // When videoGravity is .resizeAspectFill, the layer might be larger than the screen
+        let layerHeight = layer.frame.height
+        let screenHeight: CGFloat = 770 // Your screen height
+        let yOffset = layerHeight - screenHeight
+        
+        return yOffset
+    }
+
     // MARK: - Helpers (VN -> metadata -> layer)
 
     @inline(__always)
     private func vnRectToMetadata(_ r: CGRect) -> CGRect {
-        // Vision normalized coordinates (origin top-left, Y down)
-        // Convert to metadata format (origin top-left, Y down)
-        return CGRect(
-            x: r.origin.x,
-            y: r.origin.y,
-            width: r.size.width,
-            height: r.size.height
-        )
+        return r
     }
 
     @inline(__always)
     private func vnPointToMetadata(_ p: CGPoint) -> CGPoint {
-        // Vision normalized coordinates (origin top-left, Y down)
-        // Convert to metadata format (origin top-left, Y down)
-        return CGPoint(x: p.x, y: 1 - p.y)
+        return p
     }
 
     private func convertVisionRect(_ vnRect: CGRect,
@@ -90,26 +93,30 @@ struct OverlayView: View {
     }
 
     private func convertVisionPoint(_ vnPoint: CGPoint,
-                                    layer: AVCaptureVideoPreviewLayer?) -> CGPoint {
+                                    layer: AVCaptureVideoPreviewLayer?,
+                                    screenSize: CGSize) -> CGPoint {
         guard let layer else { return .zero }
         let meta = vnPointToMetadata(vnPoint)
-        return layer.layerPointConverted(fromCaptureDevicePoint: meta)
+        let rect = CGRect(origin: meta, size: .zero)
+        let convertedRect = layer.layerRectConverted(fromMetadataOutputRect: rect)
+        
+        // Flip Y coordinate and add the preview layer's Y offset
+        return CGPoint(
+            x: convertedRect.origin.x,
+            y: screenSize.height - convertedRect.origin.y + getYOffset()
+        )
     }
 
     private func convertVisionRectangleToPath(_ rect: VNRectangleObservation,
-                                              layer: AVCaptureVideoPreviewLayer?) -> Path {
+                                              layer: AVCaptureVideoPreviewLayer?,
+                                              screenSize: CGSize) -> Path {
         guard let layer else { return Path() }
         
-        // Convert each corner point properly
-//        let tl = convertVisionPoint(rect.bottomRight, layer: layer)
-//        let tr = convertVisionPoint(rect.bottomLeft, layer: layer)
-//        let br = convertVisionPoint(rect.topLeft, layer: layer)
-//        let bl = convertVisionPoint(rect.topRight, layer: layer)
-        
-        let tl = convertVisionPoint(rect.topRight, layer: layer)
-        let tr = convertVisionPoint(rect.bottomRight, layer: layer)
-        let br = convertVisionPoint(rect.bottomLeft, layer: layer)
-        let bl = convertVisionPoint(rect.topLeft, layer: layer)
+        // Convert each corner point and flip Y coordinates
+        let tl = convertVisionPoint(rect.topLeft, layer: layer, screenSize: screenSize)
+        let tr = convertVisionPoint(rect.topRight, layer: layer, screenSize: screenSize)
+        let br = convertVisionPoint(rect.bottomRight, layer: layer, screenSize: screenSize)
+        let bl = convertVisionPoint(rect.bottomLeft, layer: layer, screenSize: screenSize)
 
         var path = Path()
         path.move(to: tl)
