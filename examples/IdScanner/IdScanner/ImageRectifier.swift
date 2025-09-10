@@ -15,20 +15,27 @@ class ImageRectifier {
             return image
         }
         
-        let imageSize = CGSize(width: cgImage.width, height: cgImage.height)
+        // Handle image orientation properly
+        let orientedImage = image.normalizedImage()
+        guard let orientedCGImage = orientedImage.cgImage else {
+            print("Failed to get oriented CGImage, returning original")
+            return image
+        }
+        
+        let imageSize = CGSize(width: orientedCGImage.width, height: orientedCGImage.height)
         print("Processing image of size: \(imageSize)")
         
         // Convert normalized coordinates to image coordinates
-        let topLeft = convertPoint(rectangle.topLeft, imageSize: imageSize)
-        let topRight = convertPoint(rectangle.topRight, imageSize: imageSize)
-        let bottomRight = convertPoint(rectangle.bottomRight, imageSize: imageSize)
-        let bottomLeft = convertPoint(rectangle.bottomLeft, imageSize: imageSize)
+        let topLeft = convertPointForOrientedImage(rectangle.topLeft, imageSize: imageSize)
+        let topRight = convertPointForOrientedImage(rectangle.topRight, imageSize: imageSize)
+        let bottomLeft = convertPointForOrientedImage(rectangle.bottomLeft, imageSize: imageSize)
+        let bottomRight = convertPointForOrientedImage(rectangle.bottomRight, imageSize: imageSize)
         
         print("Rectangle corners:")
         print("  TopLeft: \(topLeft)")
         print("  TopRight: \(topRight)")
-        print("  BottomRight: \(bottomRight)")
         print("  BottomLeft: \(bottomLeft)")
+        print("  BottomRight: \(bottomRight)")
         
         // Create the perspective correction filter
         guard let perspectiveFilter = CIFilter(name: "CIPerspectiveCorrection") else {
@@ -36,12 +43,12 @@ class ImageRectifier {
             return image
         }
         
-        let ciImage = CIImage(cgImage: cgImage)
+        let ciImage = CIImage(cgImage: orientedCGImage)
         perspectiveFilter.setValue(ciImage, forKey: kCIInputImageKey)
         perspectiveFilter.setValue(CIVector(cgPoint: topLeft), forKey: "inputTopLeft")
         perspectiveFilter.setValue(CIVector(cgPoint: topRight), forKey: "inputTopRight")
-        perspectiveFilter.setValue(CIVector(cgPoint: bottomRight), forKey: "inputBottomRight")
         perspectiveFilter.setValue(CIVector(cgPoint: bottomLeft), forKey: "inputBottomLeft")
+        perspectiveFilter.setValue(CIVector(cgPoint: bottomRight), forKey: "inputBottomRight")
         
         guard let outputImage = perspectiveFilter.outputImage else {
             print("Failed to get output from perspective filter, returning original")
@@ -54,18 +61,17 @@ class ImageRectifier {
             return image
         }
         
-        let rectifiedImage = UIImage(cgImage: rectifiedCGImage)
+        let rectifiedImage = UIImage(cgImage: rectifiedCGImage, scale: image.scale, orientation: .up)
         print("Successfully rectified image to size: \(rectifiedImage.size)")
         return rectifiedImage
     }
     
-    private static func convertPoint(_ normalizedPoint: CGPoint, imageSize: CGSize) -> CGPoint {
-        // Convert normalized Vision coordinates to actual image pixel coordinates
-        // Vision uses normalized coordinates (0-1) with origin at bottom-left
-        // Image coordinates use actual pixels with origin at top-left
+    private static func convertPointForOrientedImage(_ normalizedPoint: CGPoint, imageSize: CGSize) -> CGPoint {
+        // For properly oriented images, Vision coordinates map directly
+        // (0,0) = top-left, (1,1) = bottom-right
         return CGPoint(
             x: normalizedPoint.x * imageSize.width,
-            y: (1 - normalizedPoint.y) * imageSize.height
+            y: normalizedPoint.y * imageSize.height
         )
     }
     
@@ -101,5 +107,22 @@ class ImageRectifier {
         }
         
         return UIImage(cgImage: finalCGImage)
+    }
+    
+}
+
+// Extension to normalize image orientation
+extension UIImage {
+    func normalizedImage() -> UIImage {
+        if imageOrientation == .up {
+            return self
+        }
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(in: CGRect(origin: .zero, size: size))
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return normalizedImage ?? self
     }
 }
