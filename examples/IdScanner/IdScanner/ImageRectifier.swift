@@ -6,24 +6,20 @@ class ImageRectifier {
     static func rectify(image: UIImage, rectangle: VNRectangleObservation?) -> UIImage {
         // If no rectangle detected, return original image
         guard let rectangle = rectangle else {
-            print("No rectangle provided, returning original image")
             return image
         }
         
         guard let cgImage = image.cgImage else {
-            print("Failed to get CGImage, returning original")
             return image
         }
         
         // Handle image orientation properly
         let orientedImage = image.normalizedImage()
         guard let orientedCGImage = orientedImage.cgImage else {
-            print("Failed to get oriented CGImage, returning original")
             return image
         }
         
         let imageSize = CGSize(width: orientedCGImage.width, height: orientedCGImage.height)
-        print("Processing image of size: \(imageSize)")
         
         // Convert normalized coordinates to image coordinates
         let topLeft = convertPointForOrientedImage(rectangle.topLeft, imageSize: imageSize)
@@ -31,15 +27,8 @@ class ImageRectifier {
         let bottomLeft = convertPointForOrientedImage(rectangle.bottomLeft, imageSize: imageSize)
         let bottomRight = convertPointForOrientedImage(rectangle.bottomRight, imageSize: imageSize)
         
-        print("Rectangle corners:")
-        print("  TopLeft: \(topLeft)")
-        print("  TopRight: \(topRight)")
-        print("  BottomLeft: \(bottomLeft)")
-        print("  BottomRight: \(bottomRight)")
-        
         // Create the perspective correction filter
         guard let perspectiveFilter = CIFilter(name: "CIPerspectiveCorrection") else {
-            print("Failed to create perspective filter, returning original")
             return image
         }
         
@@ -51,18 +40,15 @@ class ImageRectifier {
         perspectiveFilter.setValue(CIVector(cgPoint: bottomRight), forKey: "inputBottomRight")
         
         guard let outputImage = perspectiveFilter.outputImage else {
-            print("Failed to get output from perspective filter, returning original")
             return image
         }
         
         let context = CIContext()
         guard let rectifiedCGImage = context.createCGImage(outputImage, from: outputImage.extent) else {
-            print("Failed to create rectified CGImage, returning original")
             return image
         }
         
         let rectifiedImage = UIImage(cgImage: rectifiedCGImage, scale: image.scale, orientation: .up)
-        print("Successfully rectified image to size: \(rectifiedImage.size)")
         return rectifiedImage
     }
     

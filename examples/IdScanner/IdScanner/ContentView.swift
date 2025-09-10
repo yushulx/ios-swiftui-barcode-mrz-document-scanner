@@ -68,13 +68,8 @@ struct CameraContainerView: View {
     var body: some View {
         CameraView(
             onImageCaptured: { image, ocrText in
-                print("🎯 CameraContainer: Image captured callback received")
-                print("🎯 CameraContainer: Image size: \(image.size)")
-                print("🎯 CameraContainer: OCR results: \(ocrText)")
-                
                 DispatchQueue.main.async {
                     let imageData = CapturedImageData(image: image, ocrResults: ocrText)
-                    print("🎯 CameraContainer: Navigating to ResultView")
                     navigationPath.append(imageData)
                 }
             }

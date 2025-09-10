@@ -14,11 +14,6 @@ final class CameraManager: NSObject, ObservableObject {
     private var latestSampleBuffer: CMSampleBuffer?
     private var captureCompletion: ((UIImage?) -> Void)?
 
-    // Debug (raw frame info)
-    @Published var currentFrameSize: CGSize = .zero
-    @Published var currentFrameThumbnail: UIImage?
-    @Published var frameOrientation: String = ""
-
     private let videoOutput = AVCaptureVideoDataOutput()
     private let sessionQueue = DispatchQueue(label: "camera.session.queue")
 
@@ -59,7 +54,6 @@ final class CameraManager: NSObject, ObservableObject {
         // Back camera input
         guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
               let videoInput = try? AVCaptureDeviceInput(device: camera) else {
-            print("Failed to create camera input")
             captureSession.commitConfiguration()
             return
         }
@@ -130,40 +124,25 @@ final class CameraManager: NSObject, ObservableObject {
         
         // Store the completion to be called when we get the next frame
         captureCompletion = completion
-        print("✅ CAPTURE: Will capture next available frame")
-    }
-
-    // Debug thumbnail from raw buffer (keeps native -90° look in portrait)
-    private func makeRawThumbnail(from pixelBuffer: CVPixelBuffer, maxSide: CGFloat = 100) -> UIImage? {
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
-        let context = CIContext()
-        let scale = min(maxSide / ciImage.extent.width, maxSide / ciImage.extent.height)
-        let scaled = ciImage.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
-        guard let cg = context.createCGImage(scaled, from: scaled.extent) else { return nil }
-        return UIImage(cgImage: cg)
     }
     
     // Convert sample buffer to properly oriented UIImage for capture
     private func imageFromSampleBuffer(_ sampleBuffer: CMSampleBuffer) -> UIImage? {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            print("❌ CAPTURE: Failed to get pixel buffer from sample buffer")
             return nil
         }
         
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
         
-        // Apply proper orientation transformation for back camera in portrait mode
-        // The raw frame is rotated -90° relative to portrait, so we need to rotate +90°
-        let rotated = ciImage.oriented(.right)
+        // Apply orientation correction for .right orientation
+        let orientedImage = ciImage.oriented(.right)
         
         let context = CIContext()
-        guard let cgImage = context.createCGImage(rotated, from: rotated.extent) else {
-            print("❌ CAPTURE: Failed to create CGImage from CIImage")
+        guard let cgImage = context.createCGImage(orientedImage, from: orientedImage.extent) else {
             return nil
         }
         
         let image = UIImage(cgImage: cgImage)
-        print("✅ CAPTURE: Created image with size: \(image.size)")
         return image
     }
 }
@@ -179,17 +158,14 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
         
         // If we have a pending capture request, fulfill it now
         if let completion = captureCompletion {
-            print("📸 CAPTURE: Processing frame capture request")
             captureCompletion = nil
             
             // Convert the sample buffer to UIImage
             if let image = imageFromSampleBuffer(sampleBuffer) {
-                print("✅ CAPTURE: Successfully created image from video frame")
                 DispatchQueue.main.async {
                     completion(image)
                 }
             } else {
-                print("❌ CAPTURE: Failed to create image from video frame")
                 DispatchQueue.main.async {
                     completion(nil)
                 }
@@ -198,18 +174,6 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
         
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-
-        // Raw buffer debug (no EXIF rotation applied)
-        let w = CVPixelBufferGetWidth(pixelBuffer)
-        let h = CVPixelBufferGetHeight(pixelBuffer)
-        if arc4random_uniform(30) == 0 { // lightweight sampling
-            let thumb = makeRawThumbnail(from: pixelBuffer)
-            DispatchQueue.main.async { [weak self] in
-                self?.currentFrameSize = CGSize(width: w, height: h)
-                self?.currentFrameThumbnail = thumb
-                self?.frameOrientation = "Vision: .right | Preview: portrait | Raw: \(w)x\(h)"
-            }
-        }
 
         // Vision handler: portrait + back camera => .right
         let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
@@ -245,7 +209,7 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
                 }
             }
         } catch {
-            print("Vision perform error: \(error)")
+            // Vision processing failed
         }
     }
 }
