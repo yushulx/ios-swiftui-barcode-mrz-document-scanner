@@ -1,0 +1,15 @@
+{
+  "originHash" : "ec3b50548d38c19404bf86829aef700ea7a6e5b1fbeba042d790028bd3eccd9e",
+  "pins" : [
+    {
+      "identity" : "mrz-scanner-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Dynamsoft/mrz-scanner-spm",
+      "state" : {
+        "revision" : "222d3a0159aba2bf829ff7fd51d20673bfde5c71",
+        "version" : "3.0.5200"
+      }
+    }
+  ],
+  "version" : 3
+}

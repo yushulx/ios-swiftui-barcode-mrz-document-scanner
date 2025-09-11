@@ -21,7 +21,7 @@ struct ContentView: View {
             .navigationTitle("ID Scanner")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: CapturedImageData.self) { imageData in
-                ResultView(image: imageData.image, ocrResults: imageData.ocrResults)
+                ResultView(image: imageData.image, ocrResults: imageData.ocrResults, mrzResults: imageData.mrzResults)
             }
             .sheet(isPresented: $showingPermissions) {
                 PermissionsView(permissionsManager: permissionsManager, isPresented: $showingPermissions)
@@ -49,15 +49,17 @@ struct ContentView: View {
 struct CapturedImageData: Hashable {
     let image: UIImage
     let ocrResults: [String]
+    let mrzResults: [String: String]
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(image.size.width)
         hasher.combine(image.size.height)
         hasher.combine(ocrResults)
+        hasher.combine(mrzResults.count)
     }
     
     static func == (lhs: CapturedImageData, rhs: CapturedImageData) -> Bool {
-        return lhs.image.size == rhs.image.size && lhs.ocrResults == rhs.ocrResults
+        return lhs.image.size == rhs.image.size && lhs.ocrResults == rhs.ocrResults && lhs.mrzResults == rhs.mrzResults
     }
 }
 
@@ -67,9 +69,9 @@ struct CameraContainerView: View {
     
     var body: some View {
         CameraView(
-            onImageCaptured: { image, ocrText in
+            onImageCaptured: { image, ocrText, mrzData in
                 DispatchQueue.main.async {
-                    let imageData = CapturedImageData(image: image, ocrResults: ocrText)
+                    let imageData = CapturedImageData(image: image, ocrResults: ocrText, mrzResults: mrzData)
                     navigationPath.append(imageData)
                 }
             }

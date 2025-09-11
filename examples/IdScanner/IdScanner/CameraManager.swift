@@ -2,13 +2,20 @@ import AVFoundation
 import UIKit
 import Vision
 import ImageIO
+import DynamsoftMRZScannerBundle
 
 final class CameraManager: NSObject, ObservableObject {
     @Published var captureSession = AVCaptureSession()
     @Published var previewLayer: AVCaptureVideoPreviewLayer?
     @Published var detectedFaces: [VNFaceObservation] = []
     @Published var detectedRectangles: [VNRectangleObservation] = []
+    @Published var mrzContour: [CGPoint] = []
+    @Published var mrzResults: [String: String] = [:]
     @Published var isSessionRunning = false
+    
+    // Image dimensions for coordinate conversion
+    @Published var imageWidth: Int = 0
+    @Published var imageHeight: Int = 0
     
     // Store the latest frame for capture
     private var latestSampleBuffer: CMSampleBuffer?
@@ -16,6 +23,7 @@ final class CameraManager: NSObject, ObservableObject {
 
     private let videoOutput = AVCaptureVideoDataOutput()
     private let sessionQueue = DispatchQueue(label: "camera.session.queue")
+    private let mrzQueue = DispatchQueue(label: "mrz.processing.queue", qos: .userInitiated)
 
     // Vision requests (reused)
     private let faceRequest = VNDetectFaceRectanglesRequest()
@@ -33,10 +41,19 @@ final class CameraManager: NSObject, ObservableObject {
     // Throttle UI publishes a bit
     private var lastPublishTime: CFTimeInterval = 0
     private let publishInterval: CFTimeInterval = 1.0 / 15.0
+    
+    // Throttle MRZ processing to avoid overwhelming the background queue
+    private var lastMRZProcessTime: CFTimeInterval = 0
+    private let mrzProcessInterval: CFTimeInterval = 1.0 / 5.0  // Process MRZ 5 times per second max
+    
+    // Dynamsoft MRZ Scanner
+    private let cvr = CaptureVisionRouter()
+    private let model = ParsedItemModel()
 
     override init() {
         super.init()
         setupCamera()
+        setLicense()
     }
 
     private func setupCamera() {
@@ -181,6 +198,11 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
                                             options: [:])
 
         do {
+            // Get width, height, and stride from pixel buffer
+            let width = CVPixelBufferGetWidth(pixelBuffer)
+            let height = CVPixelBufferGetHeight(pixelBuffer)
+            let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
+            
             try handler.perform([faceRequest, rectangleRequest])
 
             let faces = (faceRequest.results as? [VNFaceObservation]) ?? []
@@ -208,8 +230,96 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
                     self?.detectedRectangles = top1
                 }
             }
+            
+            // Process MRZ on background thread with proper data copying
+            if rectsFiltered.count > 0 {
+                // Only process MRZ if we detected some rectangles (potential documents)
+                // and throttle processing to avoid overwhelming the background queue
+                let now = CACurrentMediaTime()
+                if now - lastMRZProcessTime >= mrzProcessInterval {
+                    lastMRZProcessTime = now
+                    self.processMRZ(pixelBuffer: pixelBuffer, width: width, height: height, bytesPerRow: bytesPerRow)
+                }
+            }
+            
         } catch {
             // Vision processing failed
         }
+    }
+    
+    private func processMRZ(pixelBuffer: CVPixelBuffer, width: Int, height: Int, bytesPerRow: Int) {
+        // Create a copy of the pixel buffer data to avoid issues with background processing
+        CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
+        defer { CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly) }
+        
+        guard let baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer) else { return }
+        let byteCount = bytesPerRow * height
+        let pixelData = Data(bytes: baseAddress, count: byteCount)
+        
+        mrzQueue.async { [weak self] in
+            guard let self = self else { return }
+            
+            // Create ImageData for Dynamsoft SDK
+            let image = ImageData(bytes: pixelData,
+                                 width: UInt(width),
+                                 height: UInt(height),
+                                 stride: UInt(bytesPerRow),
+                                 format: ImagePixelFormat.ARGB8888,
+                                 orientation: 0,
+                                 tag: nil)
+            
+            // Process with MRZ scanner
+            let result = self.cvr.captureFromBuffer(image, templateName: "ReadPassportAndId")
+            
+            // Process MRZ results
+            var mrzData: [String: String] = [:]
+            if let item = result.parsedResult?.items?.first, self.model.isLegalMRZ(item) {
+                mrzData = [
+                    "Document Type": self.model.documentType,
+                    "Document Number": self.model.documentNumber,
+                    "Name": self.model.name,
+                    "Gender": self.model.gender,
+                    "Age": self.model.age != -1 ? String(self.model.age) : "Unknown",
+                    "Issuing State": self.model.issuingState,
+                    "Nationality": self.model.nationality,
+                    "Date of Birth": self.model.dateOfBirth,
+                    "Date of Expiry": self.model.dateOfExpiry,
+                ]
+            }
+            
+            // Process location contour
+            var contourPoints: [CGPoint] = []
+            if let location = result.recognizedTextLinesResult?.items?.first?.location {
+                let rawPoints = location.points.compactMap { ($0 as? NSValue)?.cgPointValue }
+                // Store raw points without transformation - let OverlayView handle coordinate conversion
+                contourPoints = rawPoints
+            }
+            
+            // Update UI on main thread with both contour and image dimensions
+            DispatchQueue.main.async {
+                self.mrzResults = mrzData
+                self.mrzContour = contourPoints
+                // Store image dimensions for coordinate conversion
+                self.imageWidth = width
+                self.imageHeight = height
+            }
+        }
+    }
+}
+
+extension CameraManager: LicenseVerificationListener {
+    
+    func onLicenseVerified(_ isSuccess: Bool, error: Error?) {
+        if !isSuccess {
+            if let error = error {
+                print("\(error.localizedDescription)")
+            }
+        }
+    }
+
+    func setLicense() {
+        LicenseManager.initLicense(
+            "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==",
+            verificationDelegate: self)
     }
 }

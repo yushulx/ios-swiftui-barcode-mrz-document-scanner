@@ -6,7 +6,7 @@ struct CameraView: View {
     @StateObject private var cameraManager = CameraManager()
     @State private var isProcessing = false
 
-    let onImageCaptured: (UIImage, [String]) -> Void
+    let onImageCaptured: (UIImage, [String], [String: String]) -> Void
 
     var body: some View {
         ZStack {
@@ -16,7 +16,10 @@ struct CameraView: View {
             OverlayView(
                 faces: cameraManager.detectedFaces,
                 rectangles: cameraManager.detectedRectangles,
-                previewLayer: cameraManager.previewLayer
+                mrzContour: cameraManager.mrzContour,
+                previewLayer: cameraManager.previewLayer,
+                imageWidth: cameraManager.imageWidth,
+                imageHeight: cameraManager.imageHeight
             )
             
             VStack {
@@ -62,7 +65,7 @@ struct CameraView: View {
                 guard rectified.size.width > 0 && rectified.size.height > 0 else {
                     // Fallback to original image
                     let ocr = OCRService.extractText(from: image)
-                    self.onImageCaptured(image, ocr)
+                    self.onImageCaptured(image, ocr, cameraManager.mrzResults)
                     self.isProcessing = false
                     return
                 }
@@ -71,7 +74,7 @@ struct CameraView: View {
                 let ocr = OCRService.extractText(from: rectified)
                 
                 // Call completion
-                self.onImageCaptured(rectified, ocr)
+                self.onImageCaptured(rectified, ocr, cameraManager.mrzResults)
                 self.isProcessing = false
             }
         }
@@ -81,8 +84,8 @@ struct CameraView: View {
 // MARK: - Preview
 struct CameraView_Previews: PreviewProvider {
     static var previews: some View {
-        CameraView { image, ocr in
-            print("Captured image with OCR: \(ocr)")
+        CameraView { image, ocr, mrzData in
+            print("Captured image with OCR: \(ocr), MRZ: \(mrzData)")
         }
     }
 }

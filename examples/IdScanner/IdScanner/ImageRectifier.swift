@@ -48,7 +48,7 @@ class ImageRectifier {
             return image
         }
         
-        let rectifiedImage = UIImage(cgImage: rectifiedCGImage, scale: image.scale, orientation: .up)
+        let rectifiedImage = UIImage(cgImage: rectifiedCGImage, scale: image.scale, orientation: .left)
         return rectifiedImage
     }
     
@@ -100,7 +100,7 @@ class ImageRectifier {
 // Extension to normalize image orientation
 extension UIImage {
     func normalizedImage() -> UIImage {
-        if imageOrientation == .up {
+        if imageOrientation == .left {
             return self
         }
         

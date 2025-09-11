@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		11189DEE2E7274E900766705 /* DynamsoftCaptureVisionBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 11189DED2E7274E900766705 /* DynamsoftCaptureVisionBundle */; };
+		11189DF02E7274E900766705 /* DynamsoftMRZScannerBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 11189DEF2E7274E900766705 /* DynamsoftMRZScannerBundle */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		11189D922E6FF5F000766705 /* IdScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IdScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11189DEE2E7274E900766705 /* DynamsoftCaptureVisionBundle in Frameworks */,
+				11189DF02E7274E900766705 /* DynamsoftMRZScannerBundle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = IdScanner;
 			packageProductDependencies = (
+				11189DED2E7274E900766705 /* DynamsoftCaptureVisionBundle */,
+				11189DEF2E7274E900766705 /* DynamsoftMRZScannerBundle */,
 			);
 			productName = IdScanner;
 			productReference = 11189D922E6FF5F000766705 /* IdScanner.app */;
@@ -94,6 +103,9 @@
 			);
 			mainGroup = 11189D892E6FF5F000766705;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				11189DEC2E7274E900766705 /* XCRemoteSwiftPackageReference "mrz-scanner-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 11189D932E6FF5F000766705 /* Products */;
 			projectDirPath = "";
@@ -328,6 +340,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		11189DEC2E7274E900766705 /* XCRemoteSwiftPackageReference "mrz-scanner-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Dynamsoft/mrz-scanner-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.5200;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		11189DED2E7274E900766705 /* DynamsoftCaptureVisionBundle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11189DEC2E7274E900766705 /* XCRemoteSwiftPackageReference "mrz-scanner-spm" */;
+			productName = DynamsoftCaptureVisionBundle;
+		};
+		11189DEF2E7274E900766705 /* DynamsoftMRZScannerBundle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11189DEC2E7274E900766705 /* XCRemoteSwiftPackageReference "mrz-scanner-spm" */;
+			productName = DynamsoftMRZScannerBundle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 11189D8A2E6FF5F000766705 /* Project object */;
 }

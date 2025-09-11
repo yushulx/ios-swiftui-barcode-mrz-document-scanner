@@ -5,7 +5,10 @@ import Vision
 struct OverlayView: View {
     let faces: [VNFaceObservation]
     let rectangles: [VNRectangleObservation]
+    let mrzContour: [CGPoint]
     let previewLayer: AVCaptureVideoPreviewLayer?
+    let imageWidth: Int
+    let imageHeight: Int
 
     var body: some View {
         GeometryReader { geometry in
@@ -54,6 +57,27 @@ struct OverlayView: View {
                             dot(.yellow, at: br)
                             dot(.orange, at: bl)
                         }
+                    }
+                }
+                
+                // MRZ Contour
+                if !mrzContour.isEmpty && imageWidth > 0 && imageHeight > 0 {
+                    let mrzPath = convertMRZContourToPath(
+                        mrzContour, 
+                        screenSize: geometry.size,
+                        imageWidth: imageWidth,
+                        imageHeight: imageHeight
+                    )
+                    mrzPath.stroke(Color.orange, lineWidth: 2)
+                    
+                    if mrzContour.count >= 4 {
+                        Text("MRZ")
+                            .font(.caption2).bold()
+                            .padding(4)
+                            .background(Color.orange.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(4)
+                            .position(x: geometry.size.width / 2, y: 50)
                     }
                 }
             }
@@ -132,5 +156,56 @@ struct OverlayView: View {
         if p != .zero {
             Circle().fill(color).frame(width: 8, height: 8).position(p)
         }
+    }
+    
+    private func convertMRZContourToPath(_ contour: [CGPoint], screenSize: CGSize, imageWidth: Int, imageHeight: Int) -> Path {
+        guard contour.count >= 4 else { return Path() }
+        
+        var path = Path()
+        
+        // Convert the first point
+        let firstPoint = convertMRZPoint(contour[0], screenSize: screenSize, imageWidth: imageWidth, imageHeight: imageHeight)
+        path.move(to: firstPoint)
+        
+        // Add lines to remaining points
+        for i in 1..<contour.count {
+            let point = convertMRZPoint(contour[i], screenSize: screenSize, imageWidth: imageWidth, imageHeight: imageHeight)
+            path.addLine(to: point)
+        }
+        
+        // Close the path
+        path.closeSubpath()
+        return path
+    }
+    
+    private func convertMRZPoint(_ point: CGPoint, screenSize: CGSize, imageWidth: Int, imageHeight: Int) -> CGPoint {
+        guard let previewLayer = previewLayer, imageWidth > 0, imageHeight > 0 else { 
+            return .zero 
+        }
+        
+        // MRZ coordinates from Dynamsoft are in camera pixel coordinates
+        // We need to account for the camera orientation (landscape) vs screen orientation (portrait)
+        
+        // For portrait mode with back camera, the image is rotated 90 degrees
+        // So we need to transform coordinates: (x,y) -> (height-y, x)
+        let rotatedX = CGFloat(imageHeight) - point.y
+        let rotatedY = point.x
+        
+        // Now normalize to [0,1] range like Vision framework
+        let normalizedX = rotatedX / CGFloat(imageHeight)
+        let normalizedY = rotatedY / CGFloat(imageWidth)
+        
+        // Create a normalized point (like Vision framework coordinates)
+        let normalizedPoint = CGPoint(x: normalizedX, y: normalizedY)
+        
+        // Convert using the preview layer's coordinate conversion method
+        let rect = CGRect(origin: normalizedPoint, size: .zero)
+        let convertedRect = previewLayer.layerRectConverted(fromMetadataOutputRect: rect)
+        
+        // Apply the same Y-flipping and offset adjustments as other Vision-based conversions
+        return CGPoint(
+            x: convertedRect.origin.x,
+            y: screenSize.height - convertedRect.origin.y + getYOffset()
+        )
     }
 }
