@@ -16,7 +16,7 @@ struct CameraView: View {
             OverlayView(
                 faces: cameraManager.detectedFaces,
                 rectangles: cameraManager.detectedRectangles,
-                mrzContour: cameraManager.mrzContour,
+                // Remove real-time MRZ contour display
                 previewLayer: cameraManager.previewLayer,
                 imageWidth: cameraManager.imageWidth,
                 imageHeight: cameraManager.imageHeight
@@ -43,7 +43,7 @@ struct CameraView: View {
             cameraManager.startSession()
         }
         .onDisappear {
-            cameraManager.stopSession()
+            cameraManager.cleanup()
         }
     }
     
@@ -63,19 +63,25 @@ struct CameraView: View {
                 
                 // Verify we have a valid rectified image
                 guard rectified.size.width > 0 && rectified.size.height > 0 else {
-                    // Fallback to original image
+                    // Fallback to original image - process MRZ and OCR
                     let ocr = OCRService.extractText(from: image)
-                    self.onImageCaptured(image, ocr, cameraManager.mrzResults)
-                    self.isProcessing = false
+                    
+                    // Process MRZ on the captured image
+                    self.cameraManager.processMRZOnImage(image) { mrzResults in
+                        self.onImageCaptured(image, ocr, mrzResults)
+                        self.isProcessing = false
+                    }
                     return
                 }
                 
                 // Process with OCR
                 let ocr = OCRService.extractText(from: rectified)
                 
-                // Call completion
-                self.onImageCaptured(rectified, ocr, cameraManager.mrzResults)
-                self.isProcessing = false
+                // Process MRZ on the rectified (normalized) image - much better results!
+                self.cameraManager.processMRZOnImage(rectified) { mrzResults in
+                    self.onImageCaptured(rectified, ocr, mrzResults)
+                    self.isProcessing = false
+                }
             }
         }
     }
