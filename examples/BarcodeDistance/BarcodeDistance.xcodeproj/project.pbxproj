@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		11C438282EA8B61B0034A4A9 /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 11C438272EA8B61B0034A4A9 /* DynamsoftBarcodeReader */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		11C437F42EA875590034A4A9 /* BarcodeDistance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcodeDistance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11C438282EA8B61B0034A4A9 /* DynamsoftBarcodeReader in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = BarcodeDistance;
 			packageProductDependencies = (
+				11C438272EA8B61B0034A4A9 /* DynamsoftBarcodeReader */,
 			);
 			productName = BarcodeDistance;
 			productReference = 11C437F42EA875590034A4A9 /* BarcodeDistance.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 11C437EB2EA875590034A4A9;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				11C438262EA8B61B0034A4A9 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 11C437F52EA875590034A4A9 /* Products */;
 			projectDirPath = "";
@@ -338,6 +347,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		11C438262EA8B61B0034A4A9 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Dynamsoft/barcode-reader-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.2.1000;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		11C438272EA8B61B0034A4A9 /* DynamsoftBarcodeReader */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11C438262EA8B61B0034A4A9 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
+			productName = DynamsoftBarcodeReader;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 11C437EC2EA875590034A4A9 /* Project object */;
 }
