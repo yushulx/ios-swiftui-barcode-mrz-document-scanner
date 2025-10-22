@@ -2,6 +2,7 @@
 
 A **SwiftUI**-based document scanning application featuring real-time detection, OCR, and MRZ processing capabilities. This app demonstrates modern iOS development with camera integration, computer vision, and document processing.
 
+https://github.com/user-attachments/assets/214ddb0b-240f-420b-922f-1ee797cca534
 
 ## ✨ Features
 
