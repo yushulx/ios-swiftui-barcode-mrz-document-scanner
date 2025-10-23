@@ -38,19 +38,36 @@ struct BarcodeAnnotationView: View {
                 .cornerRadius(6)
                 .lineLimit(2)
             
-            // Distance
-            HStack(spacing: 4) {
-                Image(systemName: "ruler")
-                    .font(.caption)
-                Text(formatDistance(barcode.distance))
-                    .font(.caption)
-                    .fontWeight(.bold)
+            // Distance and Module Size
+            HStack(spacing: 8) {
+                // Distance
+                HStack(spacing: 4) {
+                    Image(systemName: "ruler")
+                        .font(.caption)
+                    Text(formatDistance(barcode.distance))
+                        .font(.caption)
+                        .fontWeight(.bold)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Color.green.opacity(0.8))
+                .foregroundColor(.white)
+                .cornerRadius(4)
+                
+                // Module Size
+                HStack(spacing: 4) {
+                    Image(systemName: "square.grid.3x3")
+                        .font(.caption)
+                    Text("\(barcode.moduleSize)px")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Color.orange.opacity(0.8))
+                .foregroundColor(.white)
+                .cornerRadius(4)
             }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(Color.green.opacity(0.8))
-            .foregroundColor(.white)
-            .cornerRadius(4)
         }
         .position(x: barcode.position.x, y: barcode.position.y)
         .overlay(
@@ -63,7 +80,9 @@ struct BarcodeAnnotationView: View {
     }
     
     private func formatDistance(_ distance: Float) -> String {
-        if distance < 1.0 {
+        if distance < 0 {
+            return "N/A" // No distance available
+        } else if distance < 1.0 {
             return String(format: "%.0f cm", distance * 100)
         } else {
             return String(format: "%.2f m", distance)
@@ -78,7 +97,8 @@ struct BarcodeAnnotationView: View {
             type: "QR Code",
             distance: 0.75,
             position: CGPoint(x: 200, y: 300),
-            bounds: CGRect(x: 150, y: 250, width: 100, height: 100)
+            bounds: CGRect(x: 150, y: 250, width: 100, height: 100),
+            moduleSize: 15
         )
     ]
     

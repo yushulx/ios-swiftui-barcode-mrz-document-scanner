@@ -11,6 +11,7 @@ struct BarcodeDetection: Identifiable {
     let distance: Float
     let position: CGPoint
     let bounds: CGRect
+    let moduleSize: Int // Added module size for barcode quality/distance analysis
 }
 
 class ARBarcodeScannerCoordinator: NSObject, ARSCNViewDelegate, ARSessionDelegate {
@@ -111,6 +112,7 @@ class ARBarcodeScannerCoordinator: NSObject, ARSCNViewDelegate, ARSessionDelegat
                     let format = barcodeItem.formatString
                     let text = barcodeItem.text
                     let points = barcodeItem.location.points
+                    let moduleSize = barcodeItem.moduleSize
 
                     // Map points to a dictionary format
                     let pointArray: [[String: CGFloat]] = points.compactMap { point in
@@ -123,6 +125,7 @@ class ARBarcodeScannerCoordinator: NSObject, ARSCNViewDelegate, ARSessionDelegat
                         "format": format,
                         "text": text,
                         "points": pointArray,
+                        "moduleSize": moduleSize
                     ]
 
                     // Append barcode data to array
@@ -138,7 +141,18 @@ class ARBarcodeScannerCoordinator: NSObject, ARSCNViewDelegate, ARSessionDelegat
             guard let format = barcodeData["format"] as? String,
                   let text = barcodeData["text"] as? String,
                   let pointsArray = barcodeData["points"] as? [[String: CGFloat]] else {
+                print("Failed to extract basic barcode data")
                 continue
+            }
+            
+            // Handle moduleSize which might be UInt
+            let moduleSize: Int
+            if let uintSize = barcodeData["moduleSize"] as? UInt {
+                moduleSize = Int(uintSize)
+            } else if let intSize = barcodeData["moduleSize"] as? Int {
+                moduleSize = intSize
+            } else {
+                moduleSize = 1 // Default fallback
             }
             
             // Convert points to CGPoint array
@@ -210,16 +224,17 @@ class ARBarcodeScannerCoordinator: NSObject, ARSCNViewDelegate, ARSessionDelegat
             )
             
             // Calculate distance using ARKit hit test
-            if let distance = self.calculateDistance(at: normalizedCenter, frame: frame) {
-                let detection = BarcodeDetection(
-                    value: text,
-                    type: format,
-                    distance: distance,
-                    position: screenCenter,
-                    bounds: screenBounds
-                )
-                detections.append(detection)
-            }
+            let distance = self.calculateDistance(at: normalizedCenter, frame: frame) ?? -1.0 // Use -1 as fallback
+            
+            let detection = BarcodeDetection(
+                value: text,
+                type: format,
+                distance: distance,
+                position: screenCenter,
+                bounds: screenBounds,
+                moduleSize: moduleSize
+            )
+            detections.append(detection)   
         }
         
         // Update UI on main thread
