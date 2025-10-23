@@ -64,3 +64,5 @@ https://github.com/user-attachments/assets/301a477f-4990-4d95-9b9c-21b7b6ddc9be
    - Display the barcode type, value and module size
    - Show the distance measurement in real-time
 
+## Blog
+[Measuring Barcode Scanning Performance: Distance vs Module Size with iOS ARKit](https://www.dynamsoft.com/codepool/ios-barcode-scanner-distance-measure.html)
