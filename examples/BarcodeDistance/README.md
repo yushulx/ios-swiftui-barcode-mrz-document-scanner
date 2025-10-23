@@ -4,6 +4,8 @@ An iOS app that uses ARKit and **Dynamsoft Barcode Reader** to scan barcodes in 
 
 https://github.com/user-attachments/assets/301a477f-4990-4d95-9b9c-21b7b6ddc9be
 
+## Prerequisites
+- Obtain a [30-day free trial license](https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform) for Dynamsoft Barcode Reader.
 
 ## Features
 
@@ -47,10 +49,17 @@ https://github.com/user-attachments/assets/301a477f-4990-4d95-9b9c-21b7b6ddc9be
    - Green bounding box around the barcode
 
 ## Usage
-
-1. Open the app
-2. Point your iPhone camera at a barcode
-3. The app will automatically:
+1. Open the project in Xcode.
+2. Set the Dynamsoft license key in `ARBarcodeScanner.swift`:
+   ```swift
+   func setLicense() {
+        LicenseManager.initLicense(
+            "LICENSE-KEY",
+            verificationDelegate: self)
+    }
+   ```
+2. Build and run the app on a compatible iPhone device.
+3. Point your iPhone camera at a barcode. The app will automatically:
    - Detect the barcode
    - Display the barcode type, value and module size
    - Show the distance measurement in real-time
