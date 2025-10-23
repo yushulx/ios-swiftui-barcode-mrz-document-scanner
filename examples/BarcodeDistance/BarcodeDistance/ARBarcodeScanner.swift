@@ -240,12 +240,10 @@ class ARBarcodeScannerCoordinator: NSObject, ARSCNViewDelegate, ARSessionDelegat
             if let arView = self.arView {
                 pointSize = arView.bounds.size
                 screenScale = arView.contentScaleFactor
-                print("Using AR View bounds: \(pointSize), scale: \(screenScale)")
             } else if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first {
                 pointSize = window.bounds.size
                 screenScale = window.screen.scale
-                print("Using window bounds: \(pointSize), scale: \(screenScale)")
             }
         }
         
@@ -254,9 +252,6 @@ class ARBarcodeScannerCoordinator: NSObject, ARSCNViewDelegate, ARSessionDelegat
             width: pointSize.width * screenScale,
             height: pointSize.height * screenScale
         )
-        
-        // Log for debugging
-        print("AR View Point Size: \(pointSize), Pixel Size: \(pixelSize), Scale: \(screenScale)")
         
         return (pointSize: pointSize, pixelSize: pixelSize, scale: screenScale)
     }
