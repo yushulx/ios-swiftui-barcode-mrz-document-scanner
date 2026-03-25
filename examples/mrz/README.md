@@ -16,3 +16,5 @@ https://github.com/user-attachments/assets/09b6151d-c285-451b-9467-3079a2414c82
 
 3. Connect an iPhone or iPad to run the app. 
 
+## Blog
+[How to Build an iOS MRZ Scanner with SwiftUI and Dynamsoft Capture Vision](https://www.dynamsoft.com/codepool/ios-swiftui-mrz-scanner.html)
