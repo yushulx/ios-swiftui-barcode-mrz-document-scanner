@@ -1,0 +1,526 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00D3A8655961DB37655734A8 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		080B9FB83610CB65C0F3710D /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */; };
+		0FB0ACCA09BCFF16DB98ED00 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */; };
+		11522AFD2F88DEE900BF4677 /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 11522AFC2F88DEE900BF4677 /* DynamsoftBarcodeReader */; };
+		2A22B5084C00E406646CE330 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */; };
+		2D20CC5CC5A1368C2A869717 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		31EB994473BE04E270CEE6CF /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */; };
+		35F61B84E97E5F844B2C71EB /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
+		42B90F8D2EC516249F4CDF89 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		52F2D4FA009201E24A44B2E5 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */; };
+		5842E5737972C13CFE5737B6 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		634E63FA3E45CA10B87BE96A /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */; };
+		65BD859866706CA30EF9D2EF /* Pods_BarcodeBenchmark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19A3ADF0DCC0F01E250431A /* Pods_BarcodeBenchmark.framework */; };
+		6C97AB66909C32E3CF212E69 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		AA000001 /* BarcodeBenchmarkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000 /* BarcodeBenchmarkApp.swift */; };
+		AA000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002 /* ContentView.swift */; };
+		AA000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000004 /* Assets.xcassets */; };
+		AA000008 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000007 /* Preview Assets.xcassets */; };
+		AA00000A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000009 /* HomeView.swift */; };
+		AA00000C /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */; };
+		AA00000E /* ImageBenchmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000D /* ImageBenchmarkView.swift */; };
+		AA000010 /* VideoBenchmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000F /* VideoBenchmarkView.swift */; };
+		AA000012 /* BenchmarkResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011 /* BenchmarkResultView.swift */; };
+		AA000014 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */; };
+		AA000016 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */; };
+		AA000018 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */; };
+		AA00001A /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
+		AA00001C /* BenchmarkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B /* BenchmarkConfig.swift */; };
+		AA00001E /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		AA000020 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */; };
+		B3603D87E148BF61187C95B0 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
+		CD5047B2AD92A92BCA738996 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */; };
+		D08B22E80094175978D1F951 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */; };
+		F92F16D681D0B6F8CEA17322 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		16F0F7F91A95692244EF528D /* Pods-BarcodeBenchmark.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarcodeBenchmark.debug.xcconfig"; path = "Target Support Files/Pods-BarcodeBenchmark/Pods-BarcodeBenchmark.debug.xcconfig"; sourceTree = "<group>"; };
+		362708CD2285F103B28E99F5 /* Pods-BarcodeBenchmark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarcodeBenchmark.release.xcconfig"; path = "Target Support Files/Pods-BarcodeBenchmark/Pods-BarcodeBenchmark.release.xcconfig"; sourceTree = "<group>"; };
+		A19A3ADF0DCC0F01E250431A /* Pods_BarcodeBenchmark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BarcodeBenchmark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA000000 /* BarcodeBenchmarkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmarkApp.swift; sourceTree = "<group>"; };
+		AA000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AA000004 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA000006 /* Preview Content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Preview Content"; sourceTree = "<group>"; };
+		AA000007 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AA000009 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/BenchmarkViewModel.swift; sourceTree = "<group>"; };
+		AA00000D /* ImageBenchmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBenchmarkView.swift; sourceTree = "<group>"; };
+		AA00000F /* VideoBenchmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBenchmarkView.swift; sourceTree = "<group>"; };
+		AA000011 /* BenchmarkResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkResultView.swift; sourceTree = "<group>"; };
+		AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift; sourceTree = "<group>"; };
+		AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift; sourceTree = "<group>"; };
+		AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/Scanners/VisionScannerView.swift; sourceTree = "<group>"; };
+		AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Server/BenchmarkWebServer.swift; sourceTree = "<group>"; };
+		AA00001B /* BenchmarkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkConfig.swift; sourceTree = "<group>"; };
+		AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/BarcodeDetector.swift; sourceTree = "<group>"; };
+		AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/CameraPreviewView.swift; sourceTree = "<group>"; };
+		AA000021 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA000023 /* BarcodeBenchmark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcodeBenchmark.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8D7291D5640BACA6B731260 /* README.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = README.md; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA000100 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11522AFD2F88DEE900BF4677 /* DynamsoftBarcodeReader in Frameworks */,
+				65BD859866706CA30EF9D2EF /* Pods_BarcodeBenchmark.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		111ECC2C2F2CAC17004E69E4 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				AA000007 /* Preview Assets.xcassets */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		849663EE576E3D9A49FFC9B8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				16F0F7F91A95692244EF528D /* Pods-BarcodeBenchmark.debug.xcconfig */,
+				362708CD2285F103B28E99F5 /* Pods-BarcodeBenchmark.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A91E8C0C52548EDB682A06ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A19A3ADF0DCC0F01E250431A /* Pods_BarcodeBenchmark.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA000101 /* BarcodeBenchmark */ = {
+			isa = PBXGroup;
+			children = (
+				AA000000 /* BarcodeBenchmarkApp.swift */,
+				AA000002 /* ContentView.swift */,
+				AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */,
+				AA00001B /* BenchmarkConfig.swift */,
+				AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */,
+				AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */,
+				AA000102 /* Views */,
+				AA000103 /* Server */,
+				AA000004 /* Assets.xcassets */,
+				AA000006 /* Preview Content */,
+				AA000021 /* Info.plist */,
+			);
+			path = BarcodeBenchmark;
+			sourceTree = "<group>";
+		};
+		AA000102 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA000009 /* HomeView.swift */,
+				AA00000D /* ImageBenchmarkView.swift */,
+				AA00000F /* VideoBenchmarkView.swift */,
+				AA000011 /* BenchmarkResultView.swift */,
+				AA000104 /* Scanners */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AA000103 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		AA000104 /* Scanners */ = {
+			isa = PBXGroup;
+			children = (
+				AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */,
+				AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */,
+				AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */,
+			);
+			path = Scanners;
+			sourceTree = "<group>";
+		};
+		AA000106 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA000023 /* BarcodeBenchmark.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA000107 = {
+			isa = PBXGroup;
+			children = (
+				AA000101 /* BarcodeBenchmark */,
+				AA000106 /* Products */,
+				111ECC2C2F2CAC17004E69E4 /* Recovered References */,
+				849663EE576E3D9A49FFC9B8 /* Pods */,
+				A91E8C0C52548EDB682A06ED /* Frameworks */,
+				AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */,
+				F8D7291D5640BACA6B731260 /* README.md */,
+				AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */,
+				AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */,
+				AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */,
+				AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */,
+				AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */,
+				AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA000200 /* BarcodeBenchmark */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA000201 /* Build configuration list for PBXNativeTarget "BarcodeBenchmark" */;
+			buildPhases = (
+				94C740EB1E6194D42E28E7A0 /* [CP] Check Pods Manifest.lock */,
+				AA000202 /* Sources */,
+				AA000100 /* Frameworks */,
+				AA000203 /* Resources */,
+				EEBD9328F5F88BD6E8A3E141 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BarcodeBenchmark;
+			packageProductDependencies = (
+				11522AFC2F88DEE900BF4677 /* DynamsoftBarcodeReader */,
+			);
+			productName = BarcodeBenchmark;
+			productReference = AA000023 /* BarcodeBenchmark.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA000300 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					AA000200 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = AA000301 /* Build configuration list for PBXProject "BarcodeBenchmark" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA000107;
+			packageReferences = (
+				11522AFB2F88DEE900BF4677 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */,
+			);
+			productRefGroup = AA000106 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA000200 /* BarcodeBenchmark */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA000203 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000008 /* Preview Assets.xcassets in Resources */,
+				AA000005 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		94C740EB1E6194D42E28E7A0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BarcodeBenchmark-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EEBD9328F5F88BD6E8A3E141 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BarcodeBenchmark/Pods-BarcodeBenchmark-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BarcodeBenchmark/Pods-BarcodeBenchmark-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BarcodeBenchmark/Pods-BarcodeBenchmark-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA000202 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000003 /* ContentView.swift in Sources */,
+				AA000001 /* BarcodeBenchmarkApp.swift in Sources */,
+				AA00000A /* HomeView.swift in Sources */,
+				AA00000C /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */,
+				AA00000E /* ImageBenchmarkView.swift in Sources */,
+				AA000010 /* VideoBenchmarkView.swift in Sources */,
+				AA000012 /* BenchmarkResultView.swift in Sources */,
+				AA000014 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */,
+				AA000016 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */,
+				AA000018 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */,
+				AA00001A /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
+				AA00001C /* BenchmarkConfig.swift in Sources */,
+				AA00001E /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				AA000020 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */,
+				080B9FB83610CB65C0F3710D /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */,
+				31EB994473BE04E270CEE6CF /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */,
+				52F2D4FA009201E24A44B2E5 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */,
+				D08B22E80094175978D1F951 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */,
+				42B90F8D2EC516249F4CDF89 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				0FB0ACCA09BCFF16DB98ED00 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */,
+				00D3A8655961DB37655734A8 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				6C97AB66909C32E3CF212E69 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				B3603D87E148BF61187C95B0 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
+				2D20CC5CC5A1368C2A869717 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				5842E5737972C13CFE5737B6 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				634E63FA3E45CA10B87BE96A /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */,
+				F92F16D681D0B6F8CEA17322 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */,
+				2A22B5084C00E406646CE330 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */,
+				CD5047B2AD92A92BCA738996 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */,
+				35F61B84E97E5F844B2C71EB /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA000400 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA000401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA000402 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16F0F7F91A95692244EF528D /* Pods-BarcodeBenchmark.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BarcodeBenchmark/Preview Content\"";
+				DEVELOPMENT_TEAM = E5D9GMM365;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BarcodeBenchmark/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs camera access to scan barcodes for benchmarking";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs photo library access to select images and videos for benchmarking";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiao.BarcodeBenchmark;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA000403 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 362708CD2285F103B28E99F5 /* Pods-BarcodeBenchmark.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"BarcodeBenchmark/Preview Content\"";
+				DEVELOPMENT_TEAM = E5D9GMM365;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BarcodeBenchmark/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs camera access to scan barcodes for benchmarking";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs photo library access to select images and videos for benchmarking";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xiao.BarcodeBenchmark;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA000201 /* Build configuration list for PBXNativeTarget "BarcodeBenchmark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000402 /* Debug */,
+				AA000403 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA000301 /* Build configuration list for PBXProject "BarcodeBenchmark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000400 /* Debug */,
+				AA000401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		11522AFB2F88DEE900BF4677 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Dynamsoft/barcode-reader-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.1200;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		11522AFC2F88DEE900BF4677 /* DynamsoftBarcodeReader */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11522AFB2F88DEE900BF4677 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
+			productName = DynamsoftBarcodeReader;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AA000300 /* Project object */;
+}

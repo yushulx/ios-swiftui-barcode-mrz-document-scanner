@@ -1,0 +1,59 @@
+# BarcodeBenchmark iOS
+
+An iOS application that benchmarks barcode scanning performance across three SDKs side-by-side:
+
+| SDK | Type | Color |
+|-----|------|-------|
+| **Dynamsoft Barcode Reader** | Commercial | Blue overlay |
+| **Google ML Kit** | Free | Green overlay |
+| **Apple Vision** | Native iOS | Purple overlay |
+
+## Features
+
+### Benchmark Modes
+| Mode | Description |
+|------|-------------|
+| **Image** | Pick an image from the photo library; all 3 SDKs decode it and report per-frame time |
+| **Video** | Process every frame of a video and compare multi-frame throughput |
+| **Live Camera** | Real-time camera feed with bounding-box overlays per scanner |
+
+### Live Camera Overlay
+Each scanner view draws colored bounding boxes around every detected barcode in real time, with a format label pill above each box (e.g. `QR_CODE`, `CODE_128`). Overlays are cleared automatically when no barcode is in view.
+
+### Remote Benchmark (Web Server)
+- Built-in HTTP server on port 8080
+- Upload images or videos from a desktop browser
+- Batch-process multiple files without touching the device
+
+### Resolution Config
+Select **720P** (1280 × 720) or **1080P** (1920 × 1080) before starting any camera test.
+
+## Requirements
+
+- iOS 16.0+
+- Xcode 15.0+
+- Swift 5.0+
+- CocoaPods (for Google ML Kit)
+
+## Setup
+
+### 1. Install Google ML Kit via CocoaPods
+
+ML Kit is not available through Swift Package Manager, so it is installed via CocoaPods.
+
+```bash
+cd BarcodeBenchmarkiOS
+pod install
+```
+
+Then **open `BarcodeBenchmark.xcworkspace`** (not `.xcodeproj`) for all subsequent builds.
+
+### 2. Dynamsoft Barcode Reader (SPM — automatic)
+
+The `barcode-reader-spm` package (`v11.4.1200`) is already declared in `project.pbxproj`. Xcode resolves it automatically on first build.
+
+Request a [30-day free key](https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform).
+
+### 3. Apple Vision
+
+Native iOS framework — no additional setup required.

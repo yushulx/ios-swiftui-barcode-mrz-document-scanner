@@ -1,0 +1,16 @@
+# BarcodeBenchmark iOS - CocoaPods configuration
+# Required for Google ML Kit Barcode Scanning (not available via SPM)
+#
+# Setup:
+#   1. Install CocoaPods: sudo gem install cocoapods
+#   2. Run: pod install
+#   3. Open BarcodeBenchmark.xcworkspace (NOT .xcodeproj) in Xcode
+
+platform :ios, '16.0'
+
+target 'BarcodeBenchmark' do
+  use_frameworks!
+
+  # Google ML Kit Barcode Scanning
+  pod 'GoogleMLKit/BarcodeScanning', '8.0.0'
+end
