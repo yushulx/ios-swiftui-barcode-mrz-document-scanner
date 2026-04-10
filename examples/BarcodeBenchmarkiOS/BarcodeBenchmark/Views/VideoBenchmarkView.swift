@@ -8,6 +8,8 @@
 import SwiftUI
 import PhotosUI
 import AVKit
+import CoreTransferable
+import UniformTypeIdentifiers
 
 struct VideoBenchmarkView: View {
     @EnvironmentObject var viewModel: BenchmarkViewModel
@@ -18,6 +20,8 @@ struct VideoBenchmarkView: View {
     @State private var thumbnailImage: UIImage?
     @State private var videoDuration: Double = 0
     @State private var totalFrames = 0
+    @State private var importedVideoURL: URL?
+    @State private var errorMessage: String?
     
     var body: some View {
         ScrollView {
@@ -39,6 +43,14 @@ struct VideoBenchmarkView: View {
             if isRunningBenchmark {
                 loadingOverlay
             }
+        }
+        .alert("Video Benchmark Error", isPresented: errorAlertBinding) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(errorMessage ?? "Unknown error")
+        }
+        .onDisappear {
+            cleanupImportedVideo()
         }
     }
     
@@ -167,7 +179,9 @@ struct VideoBenchmarkView: View {
         guard let item = item else { return }
         
         do {
-            if let videoURL = try await item.loadTransferable(type: URL.self) {
+            if let importedMovie = try await item.loadTransferable(type: ImportedMovie.self) {
+                cleanupImportedVideo()
+                let videoURL = importedMovie.url
                 let asset = AVAsset(url: videoURL)
                 let duration = try await asset.load(.duration)
                 
@@ -187,21 +201,32 @@ struct VideoBenchmarkView: View {
                     thumbnailImage = thumbnail
                     videoDuration = durationSeconds
                     totalFrames = frames
+                    importedVideoURL = videoURL
+                    errorMessage = nil
+                }
+            } else {
+                await MainActor.run {
+                    errorMessage = "The selected video could not be imported."
                 }
             }
         } catch {
-            print("Failed to load video: \(error)")
+            await MainActor.run {
+                errorMessage = "Failed to load video: \(error.localizedDescription)"
+            }
         }
     }
     
     // MARK: - Run Benchmark
     private func runBenchmark() async {
         guard let videoURL = viewModel.selectedVideoURL else { return }
+        var didCompleteBenchmark = false
         
         await MainActor.run {
             isRunningBenchmark = true
             viewModel.reset()
+            viewModel.selectedVideoURL = videoURL
             progress = 0
+            errorMessage = nil
         }
         
         // Extract frames
@@ -215,6 +240,9 @@ struct VideoBenchmarkView: View {
                 from: videoURL,
                 interval: BenchmarkConfig.frameInterval
             )
+            guard !frames.isEmpty else {
+                throw DetectionError.detectionFailed("No frames could be extracted from the selected video.")
+            }
             
             let totalFrameCount = frames.count
             
@@ -251,14 +279,19 @@ struct VideoBenchmarkView: View {
                 startProgress: 0.8,
                 endProgress: 1.0
             )
+            didCompleteBenchmark = true
             
         } catch {
-            print("Video processing failed: \(error)")
+            await MainActor.run {
+                errorMessage = "Video processing failed: \(error.localizedDescription)"
+            }
         }
         
         await MainActor.run {
             isRunningBenchmark = false
-            viewModel.navigateToResults()
+            if didCompleteBenchmark {
+                viewModel.navigateToResults()
+            }
         }
     }
     
@@ -337,6 +370,41 @@ struct VideoBenchmarkView: View {
         let mins = Int(seconds) / 60
         let secs = Int(seconds) % 60
         return "\(mins):\(String(format: "%02d", secs))"
+    }
+    
+    private var errorAlertBinding: Binding<Bool> {
+        Binding(
+            get: { errorMessage != nil },
+            set: { isPresented in
+                if !isPresented {
+                    errorMessage = nil
+                }
+            }
+        )
+    }
+    
+    private func cleanupImportedVideo() {
+        guard let importedVideoURL else { return }
+        try? FileManager.default.removeItem(at: importedVideoURL)
+        self.importedVideoURL = nil
+    }
+}
+
+private struct ImportedMovie: Transferable {
+    let url: URL
+    
+    static var transferRepresentation: some TransferRepresentation {
+        FileRepresentation(importedContentType: .movie) { received in
+            let fileManager = FileManager.default
+            let sourceURL = received.file
+            let pathExtension = sourceURL.pathExtension.isEmpty ? "mov" : sourceURL.pathExtension
+            let destinationURL = fileManager.temporaryDirectory
+                .appendingPathComponent(UUID().uuidString)
+                .appendingPathExtension(pathExtension)
+            
+            try fileManager.copyItem(at: sourceURL, to: destinationURL)
+            return Self(url: destinationURL)
+        }
     }
 }
 
