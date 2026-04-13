@@ -34,6 +34,7 @@ struct BenchmarkResultView: View {
                 dynamsoftResultsSection
                 mlkitResultsSection
                 visionResultsSection
+                zxingcppResultsSection
                 
                 // Back Button
                 backButton
@@ -96,6 +97,14 @@ struct BenchmarkResultView: View {
                     time: viewModel.visionResult?.totalTimeMs ?? 0,
                     maxTime: maxTime
                 )
+                
+                // ZXing-CPP
+                timeRow(
+                    color: .orange,
+                    name: "ZXing-CPP",
+                    time: viewModel.zxingcppResult?.totalTimeMs ?? 0,
+                    maxTime: maxTime
+                )
             }
         }
         .padding()
@@ -153,7 +162,8 @@ struct BenchmarkResultView: View {
         let times: [Int64] = [
             viewModel.dynamsoftResult?.totalTimeMs ?? 0,
             viewModel.mlkitResult?.totalTimeMs ?? 0,
-            viewModel.visionResult?.totalTimeMs ?? 0
+            viewModel.visionResult?.totalTimeMs ?? 0,
+            viewModel.zxingcppResult?.totalTimeMs ?? 0
         ]
         return times.max() ?? 1
     }
@@ -189,6 +199,13 @@ struct BenchmarkResultView: View {
                     color: .purple,
                     name: "Vision",
                     count: viewModel.visionResult?.barcodes.count ?? 0
+                )
+                
+                // ZXing-CPP
+                countCard(
+                    color: .orange,
+                    name: "ZXing-CPP",
+                    count: viewModel.zxingcppResult?.barcodes.count ?? 0
                 )
             }
         }
@@ -270,6 +287,15 @@ struct BenchmarkResultView: View {
             color: .purple,
             title: "Apple Vision Barcodes",
             barcodes: viewModel.visionResult?.barcodes ?? []
+        )
+    }
+    
+    // MARK: - ZXing-CPP Results Section
+    private var zxingcppResultsSection: some View {
+        resultSection(
+            color: .orange,
+            title: "ZXing-CPP Barcodes",
+            barcodes: viewModel.zxingcppResult?.barcodes ?? []
         )
     }
     

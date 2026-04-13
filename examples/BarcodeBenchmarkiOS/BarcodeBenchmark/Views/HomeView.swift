@@ -54,7 +54,7 @@ struct HomeView: View {
                 .font(.title)
                 .fontWeight(.bold)
             
-            Text("Compare Dynamsoft vs MLKit vs Apple Vision")
+            Text("Compare Dynamsoft vs MLKit vs Apple Vision vs ZXing-CPP")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -143,6 +143,19 @@ struct HomeView: View {
                 viewModel.reset()
                 viewModel.benchmarkMode = .camera
                 viewModel.navigate(to: .visionScanner)
+            }
+            
+            // ZXing-CPP Camera
+            NavigationCard(
+                icon: "Z",
+                iconColor: .white,
+                iconBackground: Color.orange,
+                title: "ZXing-CPP Camera",
+                subtitle: "Open-source C++ barcode library"
+            ) {
+                viewModel.reset()
+                viewModel.benchmarkMode = .camera
+                viewModel.navigate(to: .zxingcppScanner)
             }
         }
     }

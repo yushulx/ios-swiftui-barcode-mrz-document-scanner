@@ -34,6 +34,7 @@ class BenchmarkViewModel: ObservableObject {
     @Published var dynamsoftResult: BenchmarkResult?
     @Published var mlkitResult: BenchmarkResult?
     @Published var visionResult: BenchmarkResult?
+    @Published var zxingcppResult: BenchmarkResult?
     
     // MARK: - Camera Scan Results
     @Published var cameraScanResults: [BarcodeInfo] = []
@@ -47,11 +48,13 @@ class BenchmarkViewModel: ObservableObject {
     lazy var dynamsoftDetector = DynamsoftBarcodeDetector()
     lazy var mlkitDetector = MLKitBarcodeDetector()
     lazy var visionDetector = VisionBarcodeDetector()
+    lazy var zxingcppDetector = ZXingCppBarcodeDetector()
     
     func reset() {
         dynamsoftResult = nil
         mlkitResult = nil
         visionResult = nil
+        zxingcppResult = nil
         cameraScanResults.removeAll()
         sourceFileName = nil
         selectedImage = nil

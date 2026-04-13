@@ -225,6 +225,27 @@ struct ImageBenchmarkView: View {
             print("Vision detection failed: \(error)")
         }
         
+        // Run ZXing-CPP Benchmark
+        await MainActor.run {
+            statusMessage = "Processing with ZXing-CPP..."
+        }
+        do {
+            let startTime = Date()
+            let barcodes = try await viewModel.zxingcppDetector.detectBarcodes(in: image)
+            let endTime = Date()
+            let timeMs = Int64((endTime.timeIntervalSince(startTime) * 1000))
+            
+            await MainActor.run {
+                var result = BenchmarkResult(engineName: "ZXing-CPP")
+                result.framesProcessed = 1
+                result.totalTimeMs = timeMs
+                result.barcodes = barcodes.map { BarcodeInfo(format: $0.format, text: $0.text, decodeTimeMs: timeMs) }
+                viewModel.zxingcppResult = result
+            }
+        } catch {
+            print("ZXing-CPP detection failed: \(error)")
+        }
+        
         await MainActor.run {
             isRunningBenchmark = false
             viewModel.navigateToResults()

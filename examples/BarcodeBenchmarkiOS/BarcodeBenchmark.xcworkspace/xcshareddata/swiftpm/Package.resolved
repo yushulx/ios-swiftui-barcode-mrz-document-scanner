@@ -1,5 +1,5 @@
 {
-  "originHash" : "e479ac3489d07185eea51c51786a3a0500114b37328d3a608d1cfe1093f68b67",
+  "originHash" : "43a2a40924a2ff90d3a7d6cc42511211de4fc8f68a5bf7a3d5728d83fc0c3689",
   "pins" : [
     {
       "identity" : "barcode-reader-spm",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "aff21665d9c6f0dfccebb845e821aee227e567dc",
         "version" : "3.4.1200"
+      }
+    },
+    {
+      "identity" : "zxing-cpp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zxing-cpp/zxing-cpp",
+      "state" : {
+        "revision" : "d6068bcebeb8fd9f0d35a99b00d202be86a14dbe",
+        "version" : "2.3.0"
       }
     }
   ],

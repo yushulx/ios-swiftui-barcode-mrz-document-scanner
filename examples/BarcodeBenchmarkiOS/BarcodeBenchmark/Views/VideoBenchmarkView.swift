@@ -257,7 +257,7 @@ struct VideoBenchmarkView: View {
                 frames: frames,
                 totalFrames: totalFrameCount,
                 startProgress: 0.2,
-                endProgress: 0.5
+                endProgress: 0.4
             )
             
             // Run MLKit Benchmark
@@ -266,14 +266,24 @@ struct VideoBenchmarkView: View {
                 engineName: "MLKit",
                 frames: frames,
                 totalFrames: totalFrameCount,
-                startProgress: 0.5,
-                endProgress: 0.8
+                startProgress: 0.4,
+                endProgress: 0.6
             )
             
             // Run Apple Vision Benchmark
             await runDetectorBenchmark(
                 detector: viewModel.visionDetector,
                 engineName: "Apple Vision",
+                frames: frames,
+                totalFrames: totalFrameCount,
+                startProgress: 0.6,
+                endProgress: 0.8
+            )
+            
+            // Run ZXing-CPP Benchmark
+            await runDetectorBenchmark(
+                detector: viewModel.zxingcppDetector,
+                engineName: "ZXing-CPP",
                 frames: frames,
                 totalFrames: totalFrameCount,
                 startProgress: 0.8,
@@ -360,6 +370,8 @@ struct VideoBenchmarkView: View {
                 viewModel.mlkitResult = result
             case "Apple Vision":
                 viewModel.visionResult = result
+            case "ZXing-CPP":
+                viewModel.zxingcppResult = result
             default:
                 break
             }

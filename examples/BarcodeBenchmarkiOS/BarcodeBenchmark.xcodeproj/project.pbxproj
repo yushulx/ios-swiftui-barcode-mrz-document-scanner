@@ -8,28 +8,47 @@
 
 /* Begin PBXBuildFile section */
 		00D3A8655961DB37655734A8 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		0582CD63B50BC846D944D0DF /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
 		080B9FB83610CB65C0F3710D /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */; };
+		0E773BAE76F2C14F61EC1AC2 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		0F8DF2248E3081214000F1B1 /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */; };
 		0FB0ACCA09BCFF16DB98ED00 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */; };
 		11522AFD2F88DEE900BF4677 /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 11522AFC2F88DEE900BF4677 /* DynamsoftBarcodeReader */; };
+		11522AFE2F88DEE900BF4678 /* ZXingCpp in Frameworks */ = {isa = PBXBuildFile; productRef = 11522AFC2F88DEE900BF4678 /* ZXingCpp */; };
+		183E46F5BF8F356BD7D13468 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
 		2A22B5084C00E406646CE330 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */; };
+		2B7DE66F5B5899A21D923972 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */; };
 		2D20CC5CC5A1368C2A869717 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		313231F3D49A0E4AC00F9C53 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
 		31EB994473BE04E270CEE6CF /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */; };
 		35F61B84E97E5F844B2C71EB /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
+		38CE56719C571B6E38B5C4FE /* BarcodeBenchmark/Views/VideoBenchmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000F /* BarcodeBenchmark/Views/VideoBenchmarkView.swift */; };
+		3E185E8AB9624DA791ED15BE /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
 		42B90F8D2EC516249F4CDF89 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		52F07B508693126593396823 /* ZXingCppScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35249F24235417ABA5377450 /* ZXingCppScannerView.swift */; };
 		52F2D4FA009201E24A44B2E5 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */; };
 		5842E5737972C13CFE5737B6 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		59A065BBB165FA760B46A059 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */; };
 		634E63FA3E45CA10B87BE96A /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */; };
 		65BD859866706CA30EF9D2EF /* Pods_BarcodeBenchmark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19A3ADF0DCC0F01E250431A /* Pods_BarcodeBenchmark.framework */; };
+		66B3640538372D95E81E8861 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
+		6C8A6D517468BFF2650FD816 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
 		6C97AB66909C32E3CF212E69 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		7AB11B1880AE5AF867125614 /* BarcodeBenchmark/Views/ImageBenchmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000D /* BarcodeBenchmark/Views/ImageBenchmarkView.swift */; };
+		7D548A44C267B5E91F899887 /* BarcodeBenchmark/Views/HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000009 /* BarcodeBenchmark/Views/HomeView.swift */; };
+		7E9C8FABBF971E15052AD24D /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
+		9749DB0D89F68D24D046623A /* BarcodeBenchmark/Views/HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000009 /* BarcodeBenchmark/Views/HomeView.swift */; };
+		98CCA157AD40FC568728D9CC /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		9BD841D43F8CC038D40CC799 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
 		AA000001 /* BarcodeBenchmarkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000000 /* BarcodeBenchmarkApp.swift */; };
-		AA000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002 /* ContentView.swift */; };
+		AA000003 /* BarcodeBenchmark/ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002 /* BarcodeBenchmark/ContentView.swift */; };
 		AA000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000004 /* Assets.xcassets */; };
 		AA000008 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000007 /* Preview Assets.xcassets */; };
-		AA00000A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000009 /* HomeView.swift */; };
+		AA00000A /* BarcodeBenchmark/Views/HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000009 /* BarcodeBenchmark/Views/HomeView.swift */; };
 		AA00000C /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */; };
-		AA00000E /* ImageBenchmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000D /* ImageBenchmarkView.swift */; };
-		AA000010 /* VideoBenchmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000F /* VideoBenchmarkView.swift */; };
-		AA000012 /* BenchmarkResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011 /* BenchmarkResultView.swift */; };
+		AA00000E /* BarcodeBenchmark/Views/ImageBenchmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000D /* BarcodeBenchmark/Views/ImageBenchmarkView.swift */; };
+		AA000010 /* BarcodeBenchmark/Views/VideoBenchmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00000F /* BarcodeBenchmark/Views/VideoBenchmarkView.swift */; };
+		AA000012 /* BarcodeBenchmark/Views/BenchmarkResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011 /* BarcodeBenchmark/Views/BenchmarkResultView.swift */; };
 		AA000014 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */; };
 		AA000016 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */; };
 		AA000018 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */; };
@@ -37,26 +56,33 @@
 		AA00001C /* BenchmarkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001B /* BenchmarkConfig.swift */; };
 		AA00001E /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
 		AA000020 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */; };
+		B11BC76212C10A7D0FC5A73B /* ZXingCppScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35249F24235417ABA5377450 /* ZXingCppScannerView.swift */; };
 		B3603D87E148BF61187C95B0 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
 		CD5047B2AD92A92BCA738996 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */; };
 		D08B22E80094175978D1F951 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */; };
+		D29C783369E3055F8D88CED4 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
+		D37769259F18F8CF8A724E2A /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
+		DE88357F3A3CE464CC04AD1E /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */; };
+		E0B4F0D05E6795BEAAA0474C /* BarcodeBenchmark/ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002 /* BarcodeBenchmark/ContentView.swift */; };
+		F5AC1D0E741EEF4FA6B2C311 /* BarcodeBenchmark/Views/BenchmarkResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000011 /* BarcodeBenchmark/Views/BenchmarkResultView.swift */; };
 		F92F16D681D0B6F8CEA17322 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		16F0F7F91A95692244EF528D /* Pods-BarcodeBenchmark.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarcodeBenchmark.debug.xcconfig"; path = "Target Support Files/Pods-BarcodeBenchmark/Pods-BarcodeBenchmark.debug.xcconfig"; sourceTree = "<group>"; };
+		35249F24235417ABA5377450 /* ZXingCppScannerView.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; lastKnownFileType = sourcecode.swift; name = ZXingCppScannerView.swift; path = BarcodeBenchmark/Views/Scanners/ZXingCppScannerView.swift; sourceTree = SOURCE_ROOT; };
 		362708CD2285F103B28E99F5 /* Pods-BarcodeBenchmark.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarcodeBenchmark.release.xcconfig"; path = "Target Support Files/Pods-BarcodeBenchmark/Pods-BarcodeBenchmark.release.xcconfig"; sourceTree = "<group>"; };
 		A19A3ADF0DCC0F01E250431A /* Pods_BarcodeBenchmark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BarcodeBenchmark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA000000 /* BarcodeBenchmarkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmarkApp.swift; sourceTree = "<group>"; };
-		AA000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AA000002 /* BarcodeBenchmark/ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/ContentView.swift; sourceTree = "<group>"; };
 		AA000004 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA000006 /* Preview Content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Preview Content"; sourceTree = "<group>"; };
 		AA000007 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		AA000009 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		AA000009 /* BarcodeBenchmark/Views/HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/HomeView.swift; sourceTree = "<group>"; };
 		AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/BenchmarkViewModel.swift; sourceTree = "<group>"; };
-		AA00000D /* ImageBenchmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBenchmarkView.swift; sourceTree = "<group>"; };
-		AA00000F /* VideoBenchmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoBenchmarkView.swift; sourceTree = "<group>"; };
-		AA000011 /* BenchmarkResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkResultView.swift; sourceTree = "<group>"; };
+		AA00000D /* BarcodeBenchmark/Views/ImageBenchmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/ImageBenchmarkView.swift; sourceTree = "<group>"; };
+		AA00000F /* BarcodeBenchmark/Views/VideoBenchmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/VideoBenchmarkView.swift; sourceTree = "<group>"; };
+		AA000011 /* BarcodeBenchmark/Views/BenchmarkResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/BenchmarkResultView.swift; sourceTree = "<group>"; };
 		AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift; sourceTree = "<group>"; };
 		AA000015 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift; sourceTree = "<group>"; };
 		AA000017 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeBenchmark/Views/Scanners/VisionScannerView.swift; sourceTree = "<group>"; };
@@ -75,6 +101,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11522AFD2F88DEE900BF4677 /* DynamsoftBarcodeReader in Frameworks */,
+				11522AFE2F88DEE900BF4678 /* ZXingCpp in Frameworks */,
 				65BD859866706CA30EF9D2EF /* Pods_BarcodeBenchmark.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,7 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				AA000000 /* BarcodeBenchmarkApp.swift */,
-				AA000002 /* ContentView.swift */,
+				AA000002 /* BarcodeBenchmark/ContentView.swift */,
 				AA00000B /* BarcodeBenchmark/BenchmarkViewModel.swift */,
 				AA00001B /* BenchmarkConfig.swift */,
 				AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */,
@@ -129,10 +156,10 @@
 		AA000102 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				AA000009 /* HomeView.swift */,
-				AA00000D /* ImageBenchmarkView.swift */,
-				AA00000F /* VideoBenchmarkView.swift */,
-				AA000011 /* BenchmarkResultView.swift */,
+				AA000009 /* BarcodeBenchmark/Views/HomeView.swift */,
+				AA00000D /* BarcodeBenchmark/Views/ImageBenchmarkView.swift */,
+				AA00000F /* BarcodeBenchmark/Views/VideoBenchmarkView.swift */,
+				AA000011 /* BarcodeBenchmark/Views/BenchmarkResultView.swift */,
 				AA000104 /* Scanners */,
 			);
 			path = Views;
@@ -180,6 +207,12 @@
 				AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */,
 				AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */,
 				AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */,
+				AA00000F /* BarcodeBenchmark/Views/VideoBenchmarkView.swift */,
+				AA00000D /* BarcodeBenchmark/Views/ImageBenchmarkView.swift */,
+				AA000009 /* BarcodeBenchmark/Views/HomeView.swift */,
+				AA000011 /* BarcodeBenchmark/Views/BenchmarkResultView.swift */,
+				35249F24235417ABA5377450 /* ZXingCppScannerView.swift */,
+				AA000002 /* BarcodeBenchmark/ContentView.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -203,6 +236,7 @@
 			name = BarcodeBenchmark;
 			packageProductDependencies = (
 				11522AFC2F88DEE900BF4677 /* DynamsoftBarcodeReader */,
+				11522AFC2F88DEE900BF4678 /* ZXingCpp */,
 			);
 			productName = BarcodeBenchmark;
 			productReference = AA000023 /* BarcodeBenchmark.app */;
@@ -234,6 +268,7 @@
 			mainGroup = AA000107;
 			packageReferences = (
 				11522AFB2F88DEE900BF4677 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */,
+				11522AFB2F88DEE900BF4678 /* XCRemoteSwiftPackageReference "zxing-cpp" */,
 			);
 			productRefGroup = AA000106 /* Products */;
 			projectDirPath = "";
@@ -307,13 +342,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA000003 /* ContentView.swift in Sources */,
+				AA000003 /* BarcodeBenchmark/ContentView.swift in Sources */,
 				AA000001 /* BarcodeBenchmarkApp.swift in Sources */,
-				AA00000A /* HomeView.swift in Sources */,
+				AA00000A /* BarcodeBenchmark/Views/HomeView.swift in Sources */,
 				AA00000C /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */,
-				AA00000E /* ImageBenchmarkView.swift in Sources */,
-				AA000010 /* VideoBenchmarkView.swift in Sources */,
-				AA000012 /* BenchmarkResultView.swift in Sources */,
+				AA00000E /* BarcodeBenchmark/Views/ImageBenchmarkView.swift in Sources */,
+				AA000010 /* BarcodeBenchmark/Views/VideoBenchmarkView.swift in Sources */,
+				AA000012 /* BarcodeBenchmark/Views/BenchmarkResultView.swift in Sources */,
 				AA000014 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */,
 				AA000016 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */,
 				AA000018 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */,
@@ -337,6 +372,30 @@
 				2A22B5084C00E406646CE330 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */,
 				CD5047B2AD92A92BCA738996 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */,
 				35F61B84E97E5F844B2C71EB /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
+				2B7DE66F5B5899A21D923972 /* BarcodeBenchmark/Views/Scanners/VisionScannerView.swift in Sources */,
+				D37769259F18F8CF8A724E2A /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				DE88357F3A3CE464CC04AD1E /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */,
+				59A065BBB165FA760B46A059 /* BarcodeBenchmark/Views/Scanners/MLKitScannerView.swift in Sources */,
+				183E46F5BF8F356BD7D13468 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				38CE56719C571B6E38B5C4FE /* BarcodeBenchmark/Views/VideoBenchmarkView.swift in Sources */,
+				7AB11B1880AE5AF867125614 /* BarcodeBenchmark/Views/ImageBenchmarkView.swift in Sources */,
+				0F8DF2248E3081214000F1B1 /* BarcodeBenchmark/BenchmarkViewModel.swift in Sources */,
+				9749DB0D89F68D24D046623A /* BarcodeBenchmark/Views/HomeView.swift in Sources */,
+				F5AC1D0E741EEF4FA6B2C311 /* BarcodeBenchmark/Views/BenchmarkResultView.swift in Sources */,
+				6C8A6D517468BFF2650FD816 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
+				0E773BAE76F2C14F61EC1AC2 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				3E185E8AB9624DA791ED15BE /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				7E9C8FABBF971E15052AD24D /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
+				0582CD63B50BC846D944D0DF /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				98CCA157AD40FC568728D9CC /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				B11BC76212C10A7D0FC5A73B /* ZXingCppScannerView.swift in Sources */,
+				D29C783369E3055F8D88CED4 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
+				E0B4F0D05E6795BEAAA0474C /* BarcodeBenchmark/ContentView.swift in Sources */,
+				52F07B508693126593396823 /* ZXingCppScannerView.swift in Sources */,
+				7D548A44C267B5E91F899887 /* BarcodeBenchmark/Views/HomeView.swift in Sources */,
+				66B3640538372D95E81E8861 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
+				9BD841D43F8CC038D40CC799 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				313231F3D49A0E4AC00F9C53 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +571,14 @@
 				minimumVersion = 11.4.1200;
 			};
 		};
+		11522AFB2F88DEE900BF4678 /* XCRemoteSwiftPackageReference "zxing-cpp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zxing-cpp/zxing-cpp";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -519,6 +586,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 11522AFB2F88DEE900BF4677 /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftBarcodeReader;
+		};
+		11522AFC2F88DEE900BF4678 /* ZXingCpp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11522AFB2F88DEE900BF4678 /* XCRemoteSwiftPackageReference "zxing-cpp" */;
+			productName = ZXingCpp;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

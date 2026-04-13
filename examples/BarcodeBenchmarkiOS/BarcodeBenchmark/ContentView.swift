@@ -25,6 +25,8 @@ struct ContentView: View {
                         MLKitScannerView()
                     case .visionScanner:
                         VisionScannerView()
+                    case .zxingcppScanner:
+                        ZXingCppScannerView()
                     case .results:
                         BenchmarkResultView()
                     }
@@ -41,6 +43,7 @@ enum Route: Hashable {
     case dynamsoftScanner
     case mlkitScanner
     case visionScanner
+    case zxingcppScanner
     case results
 }
 
