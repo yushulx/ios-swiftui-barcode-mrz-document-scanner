@@ -65,3 +65,7 @@ Native iOS framework — no additional setup required.
 ### 4. ZXing-CPP (SPM — automatic)
 
 The `zxing-cpp` package (`v2.3.0+`) is already declared in `project.pbxproj`. Xcode resolves it automatically on first build. See the [ZXing-CPP iOS wrapper](https://github.com/zxing-cpp/zxing-cpp/tree/master/wrappers/ios) for details.
+
+
+## Blog
+[iOS Barcode SDK Benchmark: Dynamsoft vs ML Kit, Apple Vision, and ZXing-CPP in SwiftUI](https://www.dynamsoft.com/codepool/ios-barcode-scanner-benchmark-app-swiftui.html)
