@@ -9,6 +9,8 @@ An iOS application that benchmarks barcode scanning performance across four SDKs
 | **Apple Vision** | Native iOS | Purple overlay |
 | **ZXing-CPP** | Open source | Orange overlay |
 
+https://github.com/user-attachments/assets/3fb3b202-ff92-4501-a0e6-316871efd95a
+
 ## Features
 
 ### Benchmark Modes
