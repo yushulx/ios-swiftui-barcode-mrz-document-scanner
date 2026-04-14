@@ -58,7 +58,8 @@ For commercial MRZ features, configure your Dynamsoft license in `CameraManager.
 LicenseManager.initLicense("YOUR_LICENSE_KEY", verificationDelegate: self)
 ```
 
-
+## Blog
+[Swift iOS MRZ Scanner: Build an ID Card Reader with Face Detection, OCR, and Document Scanning](https://www.dynamsoft.com/codepool/ios-id-scanner-app-development.html)
 
 
 
