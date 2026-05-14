@@ -42,3 +42,5 @@ xcodebuild -project DynamsoftDocumentScanner.xcodeproj -scheme DynamsoftDocument
 - The app links the `DynamsoftCaptureVisionBundle` framework.
 - The app initializes the SDK in `DynamsoftDocumentScannerApp.swift`. Replace the license string with your own license if needed.
 
+## Blog
+[Build a SwiftUI iOS Document Scanner with Stable Auto Capture and PDF Export](https://www.dynamsoft.com/codepool/build-mobile-document-scanner-ios-app.html)
