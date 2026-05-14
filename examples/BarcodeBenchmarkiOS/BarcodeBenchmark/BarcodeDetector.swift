@@ -24,7 +24,7 @@ class DynamsoftBarcodeDetector: NSObject, BarcodeDetector, LicenseVerificationLi
         cvr = CaptureVisionRouter()
         super.init()
         // Use a trial license key. Request a permanent key at https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform
-        LicenseManager.initLicense("DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==", verificationDelegate: self)
+        LicenseManager.initLicense("DLS2eyJoYW5kc2hha2VDb2RlIjoiMjM0ODEwLU1qTTBPREV3TFZSeWFXRnNVSEp2YWciLCJtYWluU2VydmVyVVJMIjoiaHR0cHM6Ly9tZGxzLmR5bmFtc29mdG9ubGluZS5jb20vIiwib3JnYW5pemF0aW9uSUQiOiIyMzQ4MTAiLCJzdGFuZGJ5U2VydmVyVVJMIjoiaHR0cHM6Ly9zZGxzLmR5bmFtc29mdG9ubGluZS5jb20vIiwiY2hlY2tDb2RlIjoxNzYwOTE2OTkyfQ==", verificationDelegate: self)
     }
 
     func onLicenseVerified(_ isSuccess: Bool, error: Error?) {

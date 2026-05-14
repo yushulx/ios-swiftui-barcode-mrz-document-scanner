@@ -58,6 +58,7 @@
 		AA000020 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */; };
 		B11BC76212C10A7D0FC5A73B /* ZXingCppScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35249F24235417ABA5377450 /* ZXingCppScannerView.swift */; };
 		B3603D87E148BF61187C95B0 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
+		BEFA77C967E63CC3985B1941 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001D /* BarcodeBenchmark/BarcodeDetector.swift */; };
 		CD5047B2AD92A92BCA738996 /* BarcodeBenchmark/CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00001F /* BarcodeBenchmark/CameraPreviewView.swift */; };
 		D08B22E80094175978D1F951 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000013 /* BarcodeBenchmark/Views/Scanners/DynamsoftScannerView.swift */; };
 		D29C783369E3055F8D88CED4 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000019 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift */; };
@@ -396,6 +397,7 @@
 				66B3640538372D95E81E8861 /* BarcodeBenchmark/Server/BenchmarkWebServer.swift in Sources */,
 				9BD841D43F8CC038D40CC799 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
 				313231F3D49A0E4AC00F9C53 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
+				BEFA77C967E63CC3985B1941 /* BarcodeBenchmark/BarcodeDetector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

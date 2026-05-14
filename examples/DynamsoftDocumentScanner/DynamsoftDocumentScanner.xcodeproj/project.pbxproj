@@ -1,0 +1,366 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A00000000000000000000011 /* DynamsoftDocumentScannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000001 /* DynamsoftDocumentScannerApp.swift */; };
+		A00000000000000000000012 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000002 /* ContentView.swift */; };
+		B10000000000000000000001 /* ScannerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000001 /* ScannerModels.swift */; };
+		B10000000000000000000002 /* DocumentScannerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000002 /* DocumentScannerStore.swift */; };
+		B10000000000000000000003 /* ScannerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000003 /* ScannerScreen.swift */; };
+		B10000000000000000000004 /* ScannerSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000004 /* ScannerSheets.swift */; };
+		B10000000000000000000005 /* CameraScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000005 /* CameraScannerView.swift */; };
+		B10000000000000000000006 /* QuadStabilizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000006 /* QuadStabilizer.swift */; };
+		B10000000000000000000007 /* ScannerGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000007 /* ScannerGeometry.swift */; };
+		B10000000000000000000008 /* UIImageProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000008 /* UIImageProcessing.swift */; };
+		C10000000000000000000001 /* DynamsoftCaptureVisionBundle in Frameworks */ = {isa = PBXBuildFile; productRef = C40000000000000000000001 /* DynamsoftCaptureVisionBundle */; };
+		C10000000000000000000002 /* DynamsoftVINModel in Frameworks */ = {isa = PBXBuildFile; productRef = C40000000000000000000002 /* DynamsoftVINModel */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		32E78535152D67A6F41DD43C /* build-mobile-document-scanner-ios-app-dynamsoft-capture-vision.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; lastKnownFileType = net.daringfireball.markdown; name = "build-mobile-document-scanner-ios-app-dynamsoft-capture-vision.md"; path = "build-mobile-document-scanner-ios-app-dynamsoft-capture-vision.md"; sourceTree = SOURCE_ROOT; };
+		6996453EAD131955A866DFAB /* README.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = README.md; sourceTree = SOURCE_ROOT; };
+		A00000000000000000000001 /* DynamsoftDocumentScannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamsoftDocumentScannerApp.swift; sourceTree = "<group>"; };
+		A00000000000000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A00000000000000000000003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A00000000000000000000004 /* DynamsoftDocumentScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamsoftDocumentScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B20000000000000000000001 /* ScannerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerModels.swift; sourceTree = "<group>"; };
+		B20000000000000000000002 /* DocumentScannerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerStore.swift; sourceTree = "<group>"; };
+		B20000000000000000000003 /* ScannerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerScreen.swift; sourceTree = "<group>"; };
+		B20000000000000000000004 /* ScannerSheets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerSheets.swift; sourceTree = "<group>"; };
+		B20000000000000000000005 /* CameraScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerView.swift; sourceTree = "<group>"; };
+		B20000000000000000000006 /* QuadStabilizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadStabilizer.swift; sourceTree = "<group>"; };
+		B20000000000000000000007 /* ScannerGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerGeometry.swift; sourceTree = "<group>"; };
+		B20000000000000000000008 /* UIImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageProcessing.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A00000000000000000000020 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C10000000000000000000001 /* DynamsoftCaptureVisionBundle in Frameworks */,
+				C10000000000000000000002 /* DynamsoftVINModel in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08592C2221C8580CF47ADCFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000030 = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000031 /* DynamsoftDocumentScanner */,
+				A00000000000000000000032 /* Products */,
+				08592C2221C8580CF47ADCFD /* Frameworks */,
+				6996453EAD131955A866DFAB /* README.md */,
+				32E78535152D67A6F41DD43C /* build-mobile-document-scanner-ios-app-dynamsoft-capture-vision.md */,
+			);
+			sourceTree = "<group>";
+		};
+		A00000000000000000000031 /* DynamsoftDocumentScanner */ = {
+			isa = PBXGroup;
+			children = (
+				B30000000000000000000001 /* Models */,
+				B30000000000000000000002 /* Store */,
+				B30000000000000000000003 /* Views */,
+				B30000000000000000000004 /* Scanner */,
+				B30000000000000000000005 /* Utilities */,
+				A00000000000000000000001 /* DynamsoftDocumentScannerApp.swift */,
+				A00000000000000000000002 /* ContentView.swift */,
+				A00000000000000000000003 /* Info.plist */,
+			);
+			path = DynamsoftDocumentScanner;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000032 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000004 /* DynamsoftDocumentScanner.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000001 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000001 /* ScannerModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000002 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000002 /* DocumentScannerStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000003 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000003 /* ScannerScreen.swift */,
+				B20000000000000000000004 /* ScannerSheets.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000004 /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000005 /* CameraScannerView.swift */,
+				B20000000000000000000006 /* QuadStabilizer.swift */,
+			);
+			path = Scanner;
+			sourceTree = "<group>";
+		};
+		B30000000000000000000005 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000007 /* ScannerGeometry.swift */,
+				B20000000000000000000008 /* UIImageProcessing.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A00000000000000000000040 /* DynamsoftDocumentScanner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000050 /* Build configuration list for PBXNativeTarget "DynamsoftDocumentScanner" */;
+			buildPhases = (
+				A00000000000000000000021 /* Sources */,
+				A00000000000000000000020 /* Frameworks */,
+				A00000000000000000000022 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DynamsoftDocumentScanner;
+			packageProductDependencies = (
+				C40000000000000000000001 /* DynamsoftCaptureVisionBundle */,
+				C40000000000000000000002 /* DynamsoftVINModel */,
+			);
+			productName = DynamsoftDocumentScanner;
+			productReference = A00000000000000000000004 /* DynamsoftDocumentScanner.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A00000000000000000000060 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					A00000000000000000000040 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+				};
+			};
+			buildConfigurationList = A00000000000000000000061 /* Build configuration list for PBXProject "DynamsoftDocumentScanner" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A00000000000000000000030;
+			packageReferences = (
+				C30000000000000000000001 /* XCRemoteSwiftPackageReference "capture-vision-spm" */,
+			);
+			productRefGroup = A00000000000000000000032 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A00000000000000000000040 /* DynamsoftDocumentScanner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A00000000000000000000022 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A00000000000000000000021 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000011 /* DynamsoftDocumentScannerApp.swift in Sources */,
+				A00000000000000000000012 /* ContentView.swift in Sources */,
+				B10000000000000000000001 /* ScannerModels.swift in Sources */,
+				B10000000000000000000002 /* DocumentScannerStore.swift in Sources */,
+				B10000000000000000000003 /* ScannerScreen.swift in Sources */,
+				B10000000000000000000004 /* ScannerSheets.swift in Sources */,
+				B10000000000000000000005 /* CameraScannerView.swift in Sources */,
+				B10000000000000000000006 /* QuadStabilizer.swift in Sources */,
+				B10000000000000000000007 /* ScannerGeometry.swift in Sources */,
+				B10000000000000000000008 /* UIImageProcessing.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A00000000000000000000070 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A00000000000000000000071 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A00000000000000000000072 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = E5D9GMM365;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DynamsoftDocumentScanner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yushulx.DynamsoftDocumentScanner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A00000000000000000000073 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = E5D9GMM365;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = DynamsoftDocumentScanner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yushulx.DynamsoftDocumentScanner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A00000000000000000000050 /* Build configuration list for PBXNativeTarget "DynamsoftDocumentScanner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000072 /* Debug */,
+				A00000000000000000000073 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000061 /* Build configuration list for PBXProject "DynamsoftDocumentScanner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000070 /* Debug */,
+				A00000000000000000000071 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C30000000000000000000001 /* XCRemoteSwiftPackageReference "capture-vision-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Dynamsoft/capture-vision-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.4.1200;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C40000000000000000000001 /* DynamsoftCaptureVisionBundle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C30000000000000000000001 /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
+			productName = DynamsoftCaptureVisionBundle;
+		};
+		C40000000000000000000002 /* DynamsoftVINModel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C30000000000000000000001 /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
+			productName = DynamsoftVINModel;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A00000000000000000000060 /* Project object */;
+}
