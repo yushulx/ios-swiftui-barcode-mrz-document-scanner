@@ -2,6 +2,8 @@
 
 SwiftUI iOS document scanner with live camera capture, multi-page review, crop adjustment, and PDF or image export.
 
+https://github.com/user-attachments/assets/f4d2b775-8f56-4c5c-834f-0f74338f1c12
+
 ## Features
 
 - Live camera scanning with Dynamsoft Capture Vision
