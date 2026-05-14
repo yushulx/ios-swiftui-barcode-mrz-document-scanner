@@ -35,6 +35,7 @@ struct CameraScannerView: UIViewControllerRepresentable {
         private unowned let store: DocumentScannerStore
         private let router = CaptureVisionRouter()
         private let stabilizer: QuadStabilizer
+        private let resultCrossFilter = MultiFrameResultCrossFilter()
 
         private var cameraEnhancer: CameraEnhancer?
         private var latestCandidate: CaptureCandidate?
@@ -72,6 +73,10 @@ struct CameraScannerView: UIViewControllerRepresentable {
                 cameraEnhancer.setResolution(.resolution1080P)
                 try? router.setInput(cameraEnhancer)
             }
+
+            resultCrossFilter.enableResultCrossVerification(.detectedQuad, isEnabled: true)
+            resultCrossFilter.enableResultCrossVerification(.deskewedImage, isEnabled: true)
+            router.addResultFilter(resultCrossFilter)
 
             configureTemplate()
             router.addResultReceiver(self)
