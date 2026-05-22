@@ -2,6 +2,8 @@
 
 A SwiftUI app that scans Machine Readable Zones (MRZ) on passports and ID cards in real-time using the device camera. Built with **Dynamsoft Capture Vision** SDK.
 
+https://github.com/user-attachments/assets/0e8fe148-13f2-4385-beb8-49846a955aec
+
 ## Features
 
 - **Real-time MRZ recognition** — Reads passports (TD3), ID cards (TD1/TD2), and visas automatically
