@@ -78,3 +78,6 @@ Drawing overlays use the `CameraView`'s `DrawingLayer` API:
 | ID Card | TD1 | 3 lines × 30 characters |
 | ID Card | TD2 | 2 lines × 36 characters |
 | Visa | MRVA/MRVB | 2 lines × 44 or 36 characters |
+
+## Blog
+[How to Build an iOS MRZ Scanner with SwiftUI: Real-Time Passport and ID Card Recognition](https://www.dynamsoft.com/codepool/ios-mrz-scanner-swiftui-face-detection.html)
