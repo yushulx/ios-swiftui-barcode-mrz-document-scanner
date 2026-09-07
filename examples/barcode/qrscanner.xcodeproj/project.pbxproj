@@ -3,222 +3,131 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1182D72127CF59050084ED7E /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1182D72027CF59050084ED7E /* CameraManager.swift */; };
-		1182D72327CF62D20084ED7E /* DynamsoftCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1182D72227CF62D20084ED7E /* DynamsoftCameraView.swift */; };
-		11B2F9C727C64F2E0073F145 /* qrscannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B2F9C627C64F2E0073F145 /* qrscannerApp.swift */; };
-		11B2F9C927C64F2E0073F145 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B2F9C827C64F2E0073F145 /* ContentView.swift */; };
-		11B2F9CB27C64F2F0073F145 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11B2F9CA27C64F2F0073F145 /* Assets.xcassets */; };
-		11B2F9CE27C64F2F0073F145 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11B2F9CD27C64F2F0073F145 /* Preview Assets.xcassets */; };
-		47C3ABE12BB3F10A005A4326 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3ABE02BB3F10A005A4326 /* AppDelegate.swift */; };
-		4F0A377A0832543DE149D411 /* Pods_qrscanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DED2AE6D0F053071EA10D453 /* Pods_qrscanner.framework */; };
+		A0000000000000000000A10B /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = A0000000000000000000A10D /* DynamsoftBarcodeReader */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1182D72027CF59050084ED7E /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
-		1182D72227CF62D20084ED7E /* DynamsoftCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamsoftCameraView.swift; sourceTree = "<group>"; };
-		11B2F9C327C64F2E0073F145 /* qrscanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qrscanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		11B2F9C627C64F2E0073F145 /* qrscannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qrscannerApp.swift; sourceTree = "<group>"; };
-		11B2F9C827C64F2E0073F145 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		11B2F9CA27C64F2F0073F145 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		11B2F9CD27C64F2F0073F145 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		133EE71FB4278506D4ED4DDC /* Pods-qrscanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qrscanner.release.xcconfig"; path = "Target Support Files/Pods-qrscanner/Pods-qrscanner.release.xcconfig"; sourceTree = "<group>"; };
-		47C3ABE02BB3F10A005A4326 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		959F74922011223C7DDB6AE3 /* Pods-qrscanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qrscanner.debug.xcconfig"; path = "Target Support Files/Pods-qrscanner/Pods-qrscanner.debug.xcconfig"; sourceTree = "<group>"; };
-		DED2AE6D0F053071EA10D453 /* Pods_qrscanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_qrscanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0000000000000000000A104 /* qrscanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qrscanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A0000000000000000000A102 /* qrscanner */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = qrscanner;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		11B2F9C027C64F2E0073F145 /* Frameworks */ = {
+		A0000000000000000000A108 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F0A377A0832543DE149D411 /* Pods_qrscanner.framework in Frameworks */,
+				A0000000000000000000A10B /* DynamsoftBarcodeReader in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		11B2F9BA27C64F2E0073F145 = {
+		A0000000000000000000A101 = {
 			isa = PBXGroup;
 			children = (
-				11B2F9C527C64F2E0073F145 /* qrscanner */,
-				11B2F9C427C64F2E0073F145 /* Products */,
-				488DB96666864F2121FF6DAF /* Pods */,
-				48ED927BC6F2C9503C77D77B /* Frameworks */,
+				A0000000000000000000A102 /* qrscanner */,
+				A0000000000000000000A103 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		11B2F9C427C64F2E0073F145 /* Products */ = {
+		A0000000000000000000A103 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				11B2F9C327C64F2E0073F145 /* qrscanner.app */,
+				A0000000000000000000A104 /* qrscanner.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		11B2F9C527C64F2E0073F145 /* qrscanner */ = {
-			isa = PBXGroup;
-			children = (
-				47C3ABE02BB3F10A005A4326 /* AppDelegate.swift */,
-				11B2F9C627C64F2E0073F145 /* qrscannerApp.swift */,
-				11B2F9C827C64F2E0073F145 /* ContentView.swift */,
-				11B2F9CA27C64F2F0073F145 /* Assets.xcassets */,
-				11B2F9CC27C64F2F0073F145 /* Preview Content */,
-				1182D72027CF59050084ED7E /* CameraManager.swift */,
-				1182D72227CF62D20084ED7E /* DynamsoftCameraView.swift */,
-			);
-			path = qrscanner;
-			sourceTree = "<group>";
-		};
-		11B2F9CC27C64F2F0073F145 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				11B2F9CD27C64F2F0073F145 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		488DB96666864F2121FF6DAF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				959F74922011223C7DDB6AE3 /* Pods-qrscanner.debug.xcconfig */,
-				133EE71FB4278506D4ED4DDC /* Pods-qrscanner.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		48ED927BC6F2C9503C77D77B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DED2AE6D0F053071EA10D453 /* Pods_qrscanner.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		11B2F9C227C64F2E0073F145 /* qrscanner */ = {
+		A0000000000000000000A105 /* qrscanner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11B2F9D127C64F2F0073F145 /* Build configuration list for PBXNativeTarget "qrscanner" */;
 			buildPhases = (
-				4B98E175F46AD85A6074FC02 /* [CP] Check Pods Manifest.lock */,
-				11B2F9BF27C64F2E0073F145 /* Sources */,
-				11B2F9C027C64F2E0073F145 /* Frameworks */,
-				11B2F9C127C64F2E0073F145 /* Resources */,
-				3DBEF834324465BB260D9060 /* [CP] Embed Pods Frameworks */,
+				A0000000000000000000A107 /* Sources */,
+				A0000000000000000000A108 /* Frameworks */,
+				A0000000000000000000A109 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				A0000000000000000000A102 /* qrscanner */,
+			);
 			name = qrscanner;
+			packageProductDependencies = (
+				A0000000000000000000A10D /* DynamsoftBarcodeReader */,
+			);
 			productName = qrscanner;
-			productReference = 11B2F9C327C64F2E0073F145 /* qrscanner.app */;
+			productReference = A0000000000000000000A104 /* qrscanner.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		11B2F9BB27C64F2E0073F145 /* Project object */ = {
+		A0000000000000000000A106 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					11B2F9C227C64F2E0073F145 = {
-						CreatedOnToolsVersion = 13.2.1;
+					A0000000000000000000A105 = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
 			buildConfigurationList = 11B2F9BE27C64F2E0073F145 /* Build configuration list for PBXProject "qrscanner" */;
-			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 11B2F9BA27C64F2E0073F145;
-			productRefGroup = 11B2F9C427C64F2E0073F145 /* Products */;
+			mainGroup = A0000000000000000000A101;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A0000000000000000000A10C /* XCRemoteSwiftPackageReference "barcode-reader-spm" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A0000000000000000000A103 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				11B2F9C227C64F2E0073F145 /* qrscanner */,
+				A0000000000000000000A105 /* qrscanner */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		11B2F9C127C64F2E0073F145 /* Resources */ = {
+		A0000000000000000000A109 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11B2F9CE27C64F2F0073F145 /* Preview Assets.xcassets in Resources */,
-				11B2F9CB27C64F2F0073F145 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		3DBEF834324465BB260D9060 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-qrscanner/Pods-qrscanner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-qrscanner/Pods-qrscanner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-qrscanner/Pods-qrscanner-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4B98E175F46AD85A6074FC02 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-qrscanner-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		11B2F9BF27C64F2E0073F145 /* Sources */ = {
+		A0000000000000000000A107 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11B2F9C927C64F2E0073F145 /* ContentView.swift in Sources */,
-				1182D72127CF59050084ED7E /* CameraManager.swift in Sources */,
-				11B2F9C727C64F2E0073F145 /* qrscannerApp.swift in Sources */,
-				47C3ABE12BB3F10A005A4326 /* AppDelegate.swift in Sources */,
-				1182D72327CF62D20084ED7E /* DynamsoftCameraView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,20 +255,17 @@
 		};
 		11B2F9D227C64F2F0073F145 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 959F74922011223C7DDB6AE3 /* Pods-qrscanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"qrscanner/Preview Content\"";
-				DEVELOPMENT_TEAM = W6PESGXW9M;
+				DEVELOPMENT_TEAM = E5D9GMM365;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Can I use the camera please?";
-				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
-				INFOPLIST_KEY_NSPrincipalClass = "Can I use the mic please?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -370,7 +276,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dynamsoft.qrscanner;
+				PRODUCT_BUNDLE_IDENTIFIER = dynamsoft.yushulx.qrscanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -380,20 +286,17 @@
 		};
 		11B2F9D327C64F2F0073F145 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 133EE71FB4278506D4ED4DDC /* Pods-qrscanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"qrscanner/Preview Content\"";
-				DEVELOPMENT_TEAM = W6PESGXW9M;
+				DEVELOPMENT_TEAM = E5D9GMM365;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Can I use the camera please?";
-				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
-				INFOPLIST_KEY_NSPrincipalClass = "Can I use the mic please?";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -404,7 +307,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dynamsoft.qrscanner;
+				PRODUCT_BUNDLE_IDENTIFIER = dynamsoft.yushulx.qrscanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -434,6 +337,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+/* Begin XCRemoteSwiftPackageReference section */
+		A0000000000000000000A10C /* XCRemoteSwiftPackageReference "barcode-reader-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Dynamsoft/barcode-reader-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.2000;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A0000000000000000000A10D /* DynamsoftBarcodeReader */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0000000000000000000A10C /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
+			productName = DynamsoftBarcodeReader;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 11B2F9BB27C64F2E0073F145 /* Project object */;
+	rootObject = A0000000000000000000A106 /* Project object */;
 }

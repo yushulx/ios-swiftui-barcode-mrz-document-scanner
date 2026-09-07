@@ -8,22 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject private var cameraManager = CameraManager(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-    
+    @ObservedObject private var cameraManager = CameraManager()
+    @ObservedObject private var licenseState = LicenseState.shared
+
     var body: some View {
-        ZStack() {
-            DynamsoftCameraView(cameraManager: cameraManager).onAppear() {
-                cameraManager.viewDidAppear()
-            }.onDisappear(){
-                cameraManager.viewDidDisappear()
-            }
+        ZStack {
+            DynamsoftCameraView(cameraManager: cameraManager)
+                .ignoresSafeArea()
+                .onAppear() {
+                    cameraManager.viewDidAppear()
+                }.onDisappear(){
+                    cameraManager.viewDidDisappear()
+                }
+
             VStack {
-                Text("iOS QR Code Scanner").font(.title).foregroundColor(.orange)
+                Text("iOS QR Code Scanner")
+                    .font(.title)
+                    .foregroundColor(.orange)
+                    .padding(.top, 8)
+
                 Spacer()
             }
-            
-//            Text(cameraManager.results).font(.subheadline).foregroundColor(.blue).fontWeight(.heavy)
-            
+        }
+        .alert("License Error", isPresented: $licenseState.isErrorPresented) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(licenseState.errorMessage)
         }
     }
 }
