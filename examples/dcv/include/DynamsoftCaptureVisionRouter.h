@@ -19,13 +19,15 @@
 #endif
 
 #include "DynamsoftCore.h"
-#include "DynamsoftLabelRecognizer.h"
+#include "DynamsoftLicense.h"
 #include "DynamsoftBarcodeReader.h"
+#ifndef ONLY_DBR
+#include "DynamsoftLabelRecognizer.h"
 #include "DynamsoftDocumentNormalizer.h"
 #include "DynamsoftCodeParser.h"
-#include "DynamsoftLicense.h"
+#endif
 
-#define DCV_VERSION                  "2.4.20.2248"
+#define DCV_VERSION                  "3.6.10.8373"
 
 /**Enumeration section*/
 
@@ -65,7 +67,7 @@ typedef enum ImageSourceState
 
 /**Structures section*/
 #pragma pack(push)
-#pragma pack(1)
+#pragma pack(4)
 
 /**
 * The `SimplifiedCaptureVisionSettings` struct contains settings for capturing and recognizing images with the `CCaptureVisionRouter` class.
@@ -73,11 +75,9 @@ typedef enum ImageSourceState
 typedef struct tagSimplifiedCaptureVisionSettings
 {
 	/**
-	 * Specifies the type(s) of CapturedItem(s) that will be captured.
-	 *
-	 * @values The value should be a bitwise OR combination of one or more CapturedResultItemType
+	 * Specifies whether to output the original image.
 	 */
-	int capturedResultItemTypes;
+	int outputOriginalImage;
 
 	/**
 	 * Specifies the region of interest (ROI) where the image capture and recognition will take place.
@@ -111,7 +111,9 @@ typedef struct tagSimplifiedCaptureVisionSettings
 	/**
 	 * Specifies the settings for label recognition.
 	 */
+#ifndef ONLY_DBR
 	SimplifiedLabelRecognizerSettings labelSettings;
+#endif
 	/**
 	 * @brief Minimum time interval (in milliseconds) allowed between consecutive image captures.
 	 *
@@ -132,7 +134,9 @@ typedef struct tagSimplifiedCaptureVisionSettings
 	/**
 	 * Specifies the settings for document normalization.
 	 */
+#ifndef ONLY_DBR
 	SimplifiedDocumentNormalizerSettings documentSettings;
+#endif
 
 	/**
 	 * Reserved for future use.
@@ -153,12 +157,18 @@ class CaptureVisionInner;
 
 namespace dynamsoft
 {
+	namespace utility
+	{
+		class CFileFetcher;
+	}
 	namespace cvr
 	{
+#pragma pack(push)
+#pragma pack(4)
 		/**
-		* The CCapturedResult class represents the result of a capture operation on an image. Internally, CaptureResult stores an array that contains multiple items, each of which may be a barcode, text line, detected quad, normalized image, original image, parsed item, etc.
+		* The CCapturedResult class represents the result of a capture operation on an image. Internally, CaptureResult stores an array that contains multiple items, each of which may be a barcode, text line, detected quad, deskewed image, original image, parsed item, etc.
 		*/
-		class CVR_API CCapturedResult
+		class CVR_API CCapturedResult : public CCapturedResultBase
 		{
 		protected:
 			/**
@@ -167,30 +177,6 @@ namespace dynamsoft
 			virtual ~CCapturedResult() {};
 
 		public:
-			/**
-			* Gets the hash ID of the original image.
-			*
-			* @return Returns the hash ID of the original image as a null-terminated string. You are not required to release the memory pointed to by the returned pointer.
-			*
-			*/
-			virtual const char* GetOriginalImageHashId() const = 0;
-
-			/**
-			 * Gets a pointer to the CImageTag object containing the tag of the original image.
-			 *
-			 * @return Returns a pointer to the CImageTag object containing the tag of the original image. You are not required to release the memory pointed to by the returned pointer.
-			 *
-			 */
-			virtual const CImageTag* GetOriginalImageTag() const = 0;
-
-			/**
-			 * Get the rotation transformation matrix of the original image relative to the rotated image.
-			 *
-			 * @param [out] matrix A double array which represents the rotation transform matrix.
-			 *
-			 */
-			virtual void GetRotationTransformMatrix(double matrix[9]) const = 0;
-
 			/**
 			 * Gets the number of items in the captured result.
 			 *
@@ -230,22 +216,6 @@ namespace dynamsoft
 			virtual bool HasItem(const CCapturedResultItem* item) const = 0;
 
 			/**
-			 * Gets the error code of the capture operation.
-			 *
-			 * @return Returns the error code of the capture operation.
-			 *
-			 */
-			virtual int GetErrorCode() const = 0;
-
-			/**
-			 * Gets the error message of the capture operation as a null-terminated string.
-			 *
-			 * @return Returns the error message of the capture operation as a null-terminated string. You are not required to release the memory pointed to by the returned pointer.
-			 *
-			 */
-			virtual const char* GetErrorString() const = 0;
-
-			/**
 			 * Gets a pointer to the CCapturedResultItem object at the specified index.
 			 *
 			 * @param [in] index The index of the item to retrieve.
@@ -282,23 +252,16 @@ namespace dynamsoft
 			 * @return Returns a pointer to the CRecognizedTextLinesResult object containing the recognized text line items.
 			 * @remark Do not forget to release the memory pointed to by the returned pointer.
 			 */
+#ifndef ONLY_DBR
 			virtual dlr::CRecognizedTextLinesResult* GetRecognizedTextLinesResult() const = 0;
 
 			/**
-			 * Gets the detected quads items from the `CCapturedResult`.
+			 * Gets the document result items from the `CCapturedResult`.
 			 *
-			 * @return Returns a pointer to the CDetectedQuadsResult object containing the detected quads items.
+			 * @return Returns a pointer to the CProcessedDocumentResult object containing the detected quadrilateral, deskewed image and enhanced image items.
 			 * @remark Do not forget to release the memory pointed to by the returned pointer.
 			 */
-			virtual ddn::CDetectedQuadsResult* GetDetectedQuadsResult() const = 0;
-
-			/**
-			 * Gets the normalized images items from the `CCapturedResult`.
-			 *
-			 * @return Returns a pointer to the CNormalizedImagesResult object containing the normalized images items.
-			 * @remark Do not forget to release the memory pointed to by the returned pointer.
-			 */
-			virtual ddn::CNormalizedImagesResult* GetNormalizedImagesResult() const = 0;
+			virtual ddn::CProcessedDocumentResult* GetProcessedDocumentResult() const = 0;
 
 			/**
 			 * Gets the parsed result items from the `CCapturedResult`.
@@ -307,6 +270,7 @@ namespace dynamsoft
 			 * @remark Do not forget to release the memory pointed to by the returned pointer.
 			 */
 			virtual dcp::CParsedResult* GetParsedResult() const = 0;
+#endif
 
 			/**
 			 * Add a specific item to the array in the captured result.
@@ -317,6 +281,57 @@ namespace dynamsoft
 			 *
 			 */
 			virtual int AddItem(const CCapturedResultItem* item) = 0;
+		};
+
+		class CVR_API CCapturedResultArray
+		{
+		protected:
+			/**
+			* Destructor
+			*/
+			virtual ~CCapturedResultArray() {};
+
+		public:
+			/**
+			 * Gets the number of captured results.
+			 *
+			 * @return Returns the number of captured results. Each captured result represents a collection of CCapturedResultItem objects in an image.
+			 *
+			 */
+			virtual int GetResultsCount() const = 0;
+
+			/**
+			 * Gets a pointer to the CCapturedResult object at the specified index.
+			 *
+			 * @param [in] index The index of the result to retrieve.
+			 *
+			 * @return Returns a pointer to the CCapturedResult object at the specified index.
+			 *
+			 */
+			virtual const CCapturedResult* GetResult(int index) const = 0;
+
+			/**
+			 * Gets a pointer to the CCapturedResult object at the specified index.
+			 *
+			 * @param [in] index The index of the result to retrieve.
+			 *
+			 * @return Returns a pointer to the CCapturedResult object at the specified index.
+			 *
+			 */
+			virtual const CCapturedResult* operator[](int index) const = 0;
+
+			/**
+			 * Increases the reference count of the CCapturedResultArray object.
+			 *
+			 * @return An object of CCapturedResultArray.
+			 */
+			virtual CCapturedResultArray* Retain() = 0;
+
+			/**
+			* Decreases the reference count of the CCapturedResultArray object.
+			*
+			*/
+			virtual void Release() = 0;
 		};
 
 		/**
@@ -380,6 +395,7 @@ namespace dynamsoft
 			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
 			*
 			*/
+#ifndef ONLY_DBR
 			virtual void OnLocalizedTextLinesReceived(dlr::intermediate_results::CLocalizedTextLinesUnit *pResult, const IntermediateResultExtraInfo* info);
 
 			/**
@@ -401,13 +417,14 @@ namespace dynamsoft
 			virtual void OnDetectedQuadsReceived(ddn::intermediate_results::CDetectedQuadsUnit *pResult, const IntermediateResultExtraInfo* info);
 
 			/**
-			* Called when normalized images have been received.
+			* Called when deskewed images have been received.
 			*
-			* @param [in] pResult A pointer to the CNormalizedImagesUnit object that contains the result.
+			* @param [in] pResult A pointer to the CDeskewedImageUnit object that contains the result.
 			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
 			*
 			*/
-			virtual void OnNormalizedImagesReceived(ddn::intermediate_results::CNormalizedImagesUnit *pResult, const IntermediateResultExtraInfo* info);
+			virtual void OnDeskewedImageReceived(ddn::intermediate_results::CDeskewedImageUnit *pResult, const IntermediateResultExtraInfo* info);
+#endif
 
 			/**
 			* Called when colour image units have been received.
@@ -419,13 +436,13 @@ namespace dynamsoft
 			virtual void OnColourImageUnitReceived(CColourImageUnit *pResult, const IntermediateResultExtraInfo* info);
 
 			/**
-			* Called when scaled-down colour image units have been received.
+			* Called when scaled colour image units have been received.
 			*
-			* @param [in] pResult A pointer to the received scaled-down colour image unit.
+			* @param [in] pResult A pointer to the received scaled colour image unit.
 			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
 			*
 			*/
-			virtual void OnScaledDownColourImageUnitReceived(CScaledDownColourImageUnit *pResult, const IntermediateResultExtraInfo* info);
+			virtual void OnScaledColourImageUnitReceived(CScaledColourImageUnit *pResult, const IntermediateResultExtraInfo* info);
 
 			/**
 			* Called when grayscale image units have been received.
@@ -542,6 +559,7 @@ namespace dynamsoft
 			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
 			*
 			*/
+#ifndef ONLY_DBR
 			virtual void OnLongLinesUnitReceived(ddn::intermediate_results::CLongLinesUnit *pResult, const IntermediateResultExtraInfo* info);
 
 			/**
@@ -561,7 +579,7 @@ namespace dynamsoft
 			*
 			*/
 			virtual void OnCandidateQuadEdgesUnitReceived(ddn::intermediate_results::CCandidateQuadEdgesUnit *pResult, const IntermediateResultExtraInfo* info);
-
+#endif
 			/**
 			* Called when candidate barcode zones units have been received.
 			*
@@ -572,13 +590,13 @@ namespace dynamsoft
 			virtual void OnCandidateBarcodeZonesUnitReceived(dbr::intermediate_results::CCandidateBarcodeZonesUnit *pResult, const IntermediateResultExtraInfo* info);
 
 			/**
-			* Called when scaled up barcode image units have been received.
+			* Called when scaled barcode image units have been received.
 			*
-			* @param [in] pResult A pointer to the received scaled up barcode image unit.
+			* @param [in] pResult A pointer to the received scaled barcode image unit.
 			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
 			*
 			*/
-			virtual void OnScaledUpBarcodeImageUnitReceived(dbr::intermediate_results::CScaledUpBarcodeImageUnit *pResult, const IntermediateResultExtraInfo* info);
+			virtual void OnScaledBarcodeImageUnitReceived(dbr::intermediate_results::CScaledBarcodeImageUnit *pResult, const IntermediateResultExtraInfo* info);
 
 			/**
 			* Called when deformation resisted barcode image units have been received.
@@ -599,14 +617,42 @@ namespace dynamsoft
 			virtual void OnComplementedBarcodeImageUnitReceived(dbr::intermediate_results::CComplementedBarcodeImageUnit *pResult, const IntermediateResultExtraInfo* info);
 
 			/**
-			* Called when raw text lines have been received.
+			* Called when raw text lines units have been received.
 			*
 			* @param [in] pResult A pointer to the CRawTextLinesUnit object that contains the result.
 			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
 			*
 			*/
-			virtual void OnRawTextLinesReceived(dlr::intermediate_results::CRawTextLinesUnit *pResult, const IntermediateResultExtraInfo* info);
+#ifndef ONLY_DBR
+			virtual void OnRawTextLinesUnitReceived(dlr::intermediate_results::CRawTextLinesUnit *pResult, const IntermediateResultExtraInfo* info);
 
+			/**
+			* Called when logic lines units have been received.
+			*
+			* @param [in] pResult A pointer to the CLogicLinesUnit object that contains the result.
+			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
+			*
+			*/
+			virtual void OnLogicLinesUnitReceived(ddn::intermediate_results::CLogicLinesUnit *pResult, const IntermediateResultExtraInfo* info);
+
+			/**
+			* Called when enhanced images have been received.
+			*
+			* @param [in] pResult A pointer to the CEnhancedImageUnit object that contains the result.
+			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
+			*
+			*/
+			virtual void OnEnhancedImageReceived(ddn::intermediate_results::CEnhancedImageUnit *pResult, const IntermediateResultExtraInfo* info);
+#endif
+
+			/**
+			* Called when all tasks for the target ROI are completed and the results are deduplicated.
+			*
+			* @param [in] pResult A pointer to the CIntermediateResult object that contains the result.
+			* @param [in] info A pointer to the IntermediateResultExtraInfo object that contains the extra info of intermediate result.
+			*
+			*/
+			virtual void OnTargetROIResultsReceived(CIntermediateResult *pResult, const IntermediateResultExtraInfo* info);
 
 			virtual const char* GetEncryptedString();
 
@@ -627,7 +673,11 @@ namespace dynamsoft
 			*
 			* @remark It is for internal calls of function modules such as DynamsoftBarcodeReader, DynamsoftLabelRecognizer and DynamsoftDocumentNormalizer.
 			*/
-			virtual void OnTaskResultsReceivedInner(CIntermediateResult *pResult, const IntermediateResultExtraInfo* info) final;
+			virtual void OnTaskResultsReceivedInner(CIntermediateResult* pResult, const IntermediateResultExtraInfo* info) final;
+
+			virtual void OnSectionStarted(CIntermediateResultUnit* pUnit, const IntermediateResultExtraInfo* info) final;
+
+			virtual void OnBarcodeDecodingSectionStarted(dbr::intermediate_results::CLocalizedBarcodesUnit* pResult, const IntermediateResultExtraInfo* info);
 		};
 
 		/**
@@ -667,10 +717,14 @@ namespace dynamsoft
 			*
 			*/
 			virtual CImageData* GetOriginalImage(const char* imageHashId) = 0;
+
+			virtual void AddOriginalImageToCache(const char* imageHashId) = 0;
+
+			virtual void RemoveOriginalImageFromCache(const char* imageHashId) = 0;
 		};
 
 		/**
-		* The `CCapturedResultReceiver` class is responsible for receiving captured results. It contains several callback functions for different types of results, including original image, decoded barcodes, recognized text lines, detected quads, normalized images, and parsed results.
+		* The `CCapturedResultReceiver` class is responsible for receiving captured results. It contains several callback functions for different types of results, including original image, decoded barcodes, recognized text lines, detected quads, deskewed images, and parsed results.
 		*/
 		class CVR_API CCapturedResultReceiver
 		{
@@ -722,7 +776,7 @@ namespace dynamsoft
 			virtual void OnCapturedResultReceived(CCapturedResult* pResult);
 
 			/**
-			* Callback function for original image results. It will be called once for each original image result.
+			* Callback function for original image result. It will be called once for each original image result.
 			*
 			* @param [in] pResult The original image result.
 			*
@@ -743,23 +797,16 @@ namespace dynamsoft
 			* @param [in] pResult The recognized text lines result.
 			*
 			*/
+#ifndef ONLY_DBR
 			virtual void OnRecognizedTextLinesReceived(dlr::CRecognizedTextLinesResult* pResult);
 
 			/**
-			* Callback function for detected quads results. It will be called once for each detected quads result.
+			* Callback function for processed document results. It will be called once for each processed document result.
 			*
-			* @param [in] pResult The detected quads result.
-			*
-			*/
-			virtual void OnDetectedQuadsReceived(ddn::CDetectedQuadsResult* pResult);
-
-			/**
-			* Callback function for normalized images results. It will be called once for each normalized images result.
-			*
-			* @param [in] pResult The normalized images result.
+			* @param [in] pResult The processed document result.
 			*
 			*/
-			virtual void OnNormalizedImagesReceived(ddn::CNormalizedImagesResult* pResult);
+			virtual void OnProcessedDocumentResultReceived(ddn::CProcessedDocumentResult* pResult);
 
 			/**
 			* Callback function for parsed results. It will be called once for each parsed result.
@@ -768,11 +815,13 @@ namespace dynamsoft
 			*
 			*/
 			virtual void OnParsedResultsReceived(dcp::CParsedResult* pResult);
+#endif
 
 		};
 
+		class CVR_API CCaptureVisionRouter;
 		/**
-		* The `CCapturedResultFilter` class is responsible for filtering captured results. It contains several callback functions for different types of results, including original image, decoded barcodes, recognized text lines, detected quads, normalized images, and parsed results.
+		* The `CCapturedResultFilter` class is responsible for filtering captured results. It contains several callback functions for different types of results, including original image, decoded barcodes, recognized text lines, detected quads, deskewed images, and parsed results.
 		*/
 		class CVR_API CCapturedResultFilter
 		{
@@ -816,7 +865,7 @@ namespace dynamsoft
 			void SetName(const char* name);
 
 			/**
-			* Callback function for original image results. It will be called once for each original image result.
+			* Callback function for original image result. It will be called once for each original image result.
 			*
 			* @param [in] pResult The original image result.
 			*
@@ -837,23 +886,16 @@ namespace dynamsoft
 			* @param [in] pResult The recognized text lines result.
 			*
 			*/
+#ifndef ONLY_DBR
 			virtual void OnRecognizedTextLinesReceived(dlr::CRecognizedTextLinesResult* pResult);
 
 			/**
-			* Callback function for detected quads results. It will be called once for each detected quads result.
+			* Callback function for processed document results. It will be called once for each processed document result.
 			*
-			* @param [in] pResult The detected quads result.
-			*
-			*/
-			virtual void OnDetectedQuadsReceived(ddn::CDetectedQuadsResult* pResult);
-
-			/**
-			* Callback function for normalized images results. It will be called once for each normalized images result.
-			*
-			* @param [in] pResult The normalized images result.
+			* @param [in] pResult The processed document result.
 			*
 			*/
-			virtual void OnNormalizedImagesReceived(ddn::CNormalizedImagesResult* pResult);
+			virtual void OnProcessedDocumentResultReceived(ddn::CProcessedDocumentResult* pResult);
 
 			/**
 			* Callback function for parsed results. It will be called once for each parsed result.
@@ -862,6 +904,7 @@ namespace dynamsoft
 			*
 			*/
 			virtual void OnParsedResultsReceived(dcp::CParsedResult* pResult);
+#endif
 
 			virtual void ClearStatus();
 
@@ -869,7 +912,9 @@ namespace dynamsoft
 			* Initializes the filter. It will be called by Capture Vision Router before using the filter.
 			*
 			*/
-			virtual void Init();
+			virtual void Init(CCaptureVisionRouter* router = nullptr);
+
+			virtual const char* GetEncryptedString();
 
 		};
 
@@ -1017,7 +1062,9 @@ namespace dynamsoft
 			*
 			* @return Returns the buffered character items.
 			*/
+#ifndef ONLY_DBR
 			virtual dlr::CBufferedCharacterItemSet* GetBufferedCharacterItemSet() const = 0;
+#endif
 		};
 
 		/**
@@ -1044,7 +1091,7 @@ namespace dynamsoft
 			* Loads and initializes a template from a string.
 			*
 			* @param [in] content The string containing the template.
-			* @param [in] errorMsgBuffer A buffer for error messages.
+			* @param [in,out] errorMsgBuffer A buffer for error messages.
 			* @param [in] errorMsgBufferLen The length of the error message buffer.
 			*
 			* @return Returns an error code. Zero indicates success.
@@ -1056,7 +1103,7 @@ namespace dynamsoft
 			* Loads and initializes a template from a file.
 			*
 			* @param [in] filePath The path to the file containing the template.
-			* @param [in] errorMsgBuffer A buffer for error messages.
+			* @param [in,out] errorMsgBuffer A buffer for error messages.
 			* @param [in] errorMsgBufferLen The length of the error message buffer.
 			*
 			* @return Returns an error code. Zero indicates success.
@@ -1068,23 +1115,25 @@ namespace dynamsoft
 			* Exports a specific template to a string.
 			*
 			* @param [in] templateName The name of the template to export.
+			* @param [in] includeDefaultValues Specifies whether to include default values in the exported template.
 			* @param [out] pErrorCode An error code.
 			*
-			* @return Returns a string containing the exported template. The string is allocated by the SDK and must be freed by calling `FreeString`.
+			* @return Returns a string containing the exported template. The string is allocated by the SDK and must be freed by calling `CoreModule::FreeBytes`.
 			*
 			*/
-			char* OutputSettings(const char* templateName, int* pErrorCode = NULL);
+			char* OutputSettings(const char* templateName, bool includeDefaultValues = false, int* pErrorCode = NULL);
 
 			/**
 			* Exports a specific template to a file.
 			*
 			* @param [in] templateName The name of the template to export.
 			* @param [in] filePath The path to the output file.
+			* @param [in] includeDefaultValues Specifies whether to include default values in the exported template.
 			*
 			* @return Returns an error code. Zero indicates success.
 			*
 			*/
-			int OutputSettingsToFile(const char* templateName, const char* filePath);
+			int OutputSettingsToFile(const char* templateName, const char* filePath, bool includeDefaultValues = false);
 
 			/**
 			* Retrieves a simplified version of the capture settings for a specific template.
@@ -1102,7 +1151,7 @@ namespace dynamsoft
 			*
 			* @param [in] templateName The name of the template to update.
 			* @param [in] settings A pointer to a `SimplifiedCaptureVisionSettings` object.
-			* @param [in] errorMsgBuffer A buffer for error messages.
+			* @param [in,out] errorMsgBuffer A buffer for error messages.
 			* @param [in] errorMsgBufferLen The length of the error message buffer.
 			*
 			* @return Returns an error code. Zero indicates success.
@@ -1117,9 +1166,9 @@ namespace dynamsoft
 			int ResetSettings();
 
 			/**
-			* Process an image or file to derive important information. It can optionally use a specified template for the capture.
+			* Processes an image file to derive important information. It can optionally use a specified template for the capture.
 			*
-			* @param [in] filePath Specifies the path of the file to process.
+			* @param [in] filePath Specifies the path of the file to be processed.
 			* @param [in] templateName Specifies the template to use for capturing. Default value is an empty string which means the factory default template.
 			*
 			* @return Returns a pointer to a `CCapturedResult` object containing the captured result.
@@ -1128,7 +1177,7 @@ namespace dynamsoft
 			CCapturedResult* Capture(const char* filePath, const char* templateName = "");
 
 			/**
-			* Process an image or file to derive important information. It can optionally use a specified template for the capture.
+			* Processes an image file in memory to derive important information. It can optionally use a specified template for the capture.
 			*
 			* @param [in] fileBytes Specifies the memory location containing the image to be processed.
 			* @param [in] fileSize Specifies the size of the image in bytes.
@@ -1140,15 +1189,41 @@ namespace dynamsoft
 			CCapturedResult* Capture(const unsigned char* fileBytes, int fileSize, const char* templateName = "");
 
 			/**
-			* Process an image or file to derive important information. It can optionally use a specified template for the capture.
+			* Processes an image data to derive important information. It can optionally use a specified template for the capture.
 			*
-			* @param [in] pImageData Specifies the image data to process.
+			* @param [in] pImageData Specifies the image data to be processed.
 			* @param [in] templateName Specifies the template to use for capturing. Default value is an empty string which means the factory default template.
 			*
 			* @return Returns a pointer to a `CCapturedResult` object containing the captured result.
 			*
 			*/
 			CCapturedResult* Capture(const CImageData* pImageData, const char* templateName = "");
+
+			/**
+			* Processes a multi-page image file to derive important information. It can optionally use a specified template for the capture.
+			*
+			* @param [in] filePath Specifies the path of the file to be processed.
+			* @param [in] templateName Specifies the template to use for capturing. Default value is an empty string which means the factory default template.
+			*
+			* @return Returns a pointer to a `CCapturedResultArray` object containing the captured result.
+			*
+			*/
+			CCapturedResultArray* CaptureMultiPages(const char* filePath, const char* templateName = "");
+
+			/**
+			* Processes a multi-page image file in memory to derive important information. It can optionally use a specified template for the capture.
+			*
+			* @param [in] fileBytes Specifies the memory location containing the image to be processed.
+			* @param [in] fileSize Specifies the size of the image in bytes.
+			* @param [in] templateName Specifies the template to use for capturing. Default value is an empty string which means the factory default template.
+			*
+			* @return Returns a pointer to a `CCapturedResultArray` object containing the captured result.
+			*
+			*/
+			CCapturedResultArray* CaptureMultiPages(const unsigned char* fileBytes, int fileSize, const char* templateName = "");
+			 
+
+			CCapturedResultArray* CaptureMultiPages(utility::CFileFetcher* fileFetcher,  const char* templateName = "");
 
 			/**
 			* Sets an image source to provide images for consecutive processing.
@@ -1255,7 +1330,7 @@ namespace dynamsoft
 			*
 			* @param [in] waitForThreadExit Indicates whether to wait for the capture process to complete before returning. The default value is false.
 			*
-			* @param [out] errorMsgBuffer Stores any error messages generated during the capturing process. If no buffer is provided, the error messages will not be output.
+			* @param [in,out] errorMsgBuffer Stores any error messages generated during the capturing process. If no buffer is provided, the error messages will not be output.
 			*
 			* @param [in] errorMsgBufferLen Specifies the length of the provided error message buffer. If no buffer is provided, this parameter is ignored.
 			*
@@ -1309,9 +1384,57 @@ namespace dynamsoft
 			*/
 			CBufferedItemsManager* GetBufferedItemsManager();
 
+			int GetParameterTemplateCount();
+			// @param [in] index The index of the parameter template array.
+			// @param [in,out] nameBuffer The buffer is allocated by caller and the recommended nameBufferLen is 256. The template name will be copied to the buffer.
+			// @param [in] nameBufferLen The length of allocated buffer.
+			int GetParameterTemplateName(const int index, char nameBuffer[], int nameBufferLen);
+
+			/**
+			* Appends a deep learning model to the memory buffer.
+			*
+			* @param [in] modelName The name of the model.
+			* @param [in] modelBytes The bytes of the model.
+			* @param [in] modelBytesLength The length of the model bytes.
+			* @param [in] maxModelInstances The max instances created for the model.
+			*
+			* @return Returns 0 if succeeds, nonzero otherwise.
+			*/
+			static int AppendDLModelBuffer(const char* modelName, const unsigned char* modelBytes, int modelBytesLength, int maxModelInstances);
+
+			/**
+			* Clears all deep learning models from buffer to free up memory.
+			*
+			*/
+			static void ClearDLModelBuffers();
+
+			/**
+			* Deprecated. Will be removed in future versions. Use AppendDLModelBuffer instead.
+			*
+			*/
+			static int AppendModelBuffer(const char* modelName, const unsigned char* modelBytes, int modelBytesLength, int maxModelInstances);
+
+			/**
+			* Switch the capturing template during the image processing workflow.
+			*
+			* @param [in] templateName The name of the new capturing template to apply.
+			* @param [in,out] errorMsgBuffer A buffer for error messages.
+			* @param [in] errorMsgBufferLen The length of the error message buffer.
+			*
+			* @return Returns an error code. Zero indicates success.
+			*/
+			int SwitchCapturingTemplate(const char* templateName, char errorMsgBuffer[] = NULL, const int errorMsgBufferLen = 0);
+
+			/*
+			* Sets the global number of threads used internally for model execution.
+			*
+			* @param [in] intraOpNumThreads Number of threads used internally for model execution. Valid range: [0, 256]
+			*                               If the value is outside the range [0, 256], it will be treated as 0 (default).
+			*/
+			static void SetGlobalIntraOpNumThreads(int intraOpNumThreads = 0);
 		private:
-			CCaptureVisionRouter(const CCaptureVisionRouter& r);
-			CCaptureVisionRouter& operator=(const CCaptureVisionRouter& r);
+			CCaptureVisionRouter(const CCaptureVisionRouter& r) = delete;
+			CCaptureVisionRouter& operator=(const CCaptureVisionRouter& r) = delete;
 		};
 
 		/**
@@ -1327,6 +1450,7 @@ namespace dynamsoft
 			 */
 			static const char* GetVersion();
 		};
+#pragma pack(pop)
 	}
 }
 #endif

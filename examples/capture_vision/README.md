@@ -13,6 +13,10 @@ This sample demonstrates how to build a macOS & iOS barcode scanner with SwiftUI
 ## Prerequisites
 - Click [here](https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform) to apply for a 30-day FREE Trial license.
 
+## SDK Versions
+- **macOS**: Dynamsoft Capture Vision C++ SDK `3.6.10` (Barcode Reader `11.6.10`), bundled under `../dcv`. The app decodes each camera frame with the built-in `ReadBarcodes_Default` preset template through the `CaptureVisionWrapper` bridging layer (`dcv.mm`). The SDK loads its preset templates and models from `Templates/` and `Models/` next to its dylibs (`Contents/Frameworks`); the `Copy Dynamsoft Resources` build phase copies `../dcv/resource/{Templates,Models}` into `Contents/Resources` and symlinks them into `Contents/Frameworks` (same approach as [flutter_barcode_sdk_macos](https://github.com/yushulx/flutter_barcode_sdk/tree/main/packages/flutter_barcode_sdk_macos)). macOS 15.7 or later.
+- **iOS**: Dynamsoft Capture Vision `3.6.2000` via [capture-vision-spm](https://github.com/Dynamsoft/capture-vision-spm) (`DynamsoftCaptureVisionBundle`). Barcode decoding runs on the raw `BGRA` video frame with `CaptureVisionRouter.captureFromBuffer(...)`.
+
 ## Usage
 1. Set the license key in `CameraViewController.swift`:
 

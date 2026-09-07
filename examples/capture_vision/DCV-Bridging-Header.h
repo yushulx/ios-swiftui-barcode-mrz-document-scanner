@@ -7,7 +7,6 @@
 #ifdef __cplusplus
 #include "DynamsoftCaptureVisionRouter.h"
 #include "DynamsoftUtility.h"
-#include "template.h"
 
 // Use namespaces conditionally to avoid polluting global namespace
 using namespace dynamsoft::license;

@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Dynamsoft/capture-vision-spm",
       "state" : {
-        "revision" : "53c4da1c665eef54098cd0473188f757e83bb6d0",
-        "version" : "2.4.2000"
+        "revision" : "af7bc5c967474d8962216983b6573d2fc966a41d",
+        "version" : "3.6.2000"
       }
     }
   ],

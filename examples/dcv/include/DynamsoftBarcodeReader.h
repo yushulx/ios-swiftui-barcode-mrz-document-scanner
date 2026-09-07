@@ -1,30 +1,24 @@
 #pragma once
 
 #if !defined(_WIN32) && !defined(_WIN64)
-
-#ifdef __EMSCRIPTEN__
-#define DBR_API __attribute__((used))
-#else
 #define DBR_API __attribute__((visibility("default")))
-#endif
-
-#ifdef __APPLE__
-#else
+#if !defined(__APPLE__)
 typedef signed char BOOL;
 #endif
 typedef void* HANDLE;
 #include <stddef.h>
-#else
-#ifdef DBR_EXPORTS
+#else //windows
+#if defined(DBR_EXPORTS)
 #define DBR_API __declspec(dllexport)
 #else
 #define DBR_API __declspec(dllimport)
 #endif
 #include <windows.h>
 #endif
+
 #include "DynamsoftCore.h"
 
-#define DBR_VERSION "10.4.20.2248"
+#define DBR_VERSION "11.6.10.8373"
 
 /**Enumeration section*/
 
@@ -44,7 +38,7 @@ enum BarcodeFormat : unsigned long long
 	/**Use the default barcode format settings*/
 	BF_DEFAULT = 0xFE3BFFFF,
 
-	/**Combined value of BF_CODABAR, BF_CODE_128, BF_CODE_39, BF_CODE_39_Extended, BF_CODE_93, BF_EAN_13, BF_EAN_8, INDUSTRIAL_25, BF_ITF, BF_UPC_A, BF_UPC_E, BF_MSI_CODE;  */
+	/**Combined value of BF_CODABAR, BF_CODE_128, BF_CODE_39, BF_CODE_39_Extended, BF_CODE_93, BF_EAN_13, BF_EAN_8, INDUSTRIAL_25, BF_ITF, BF_UPC_A, BF_UPC_E, BF_MSI_CODE, BF_CODE_11;  */
 	BF_ONED = 0x003007FF,
 
 	/**Combined value of BF_GS1_DATABAR_OMNIDIRECTIONAL, BF_GS1_DATABAR_TRUNCATED, BF_GS1_DATABAR_STACKED, BF_GS1_DATABAR_STACKED_OMNIDIRECTIONAL, BF_GS1_DATABAR_EXPANDED, BF_GS1_DATABAR_EXPANDED_STACKED, BF_GS1_DATABAR_LIMITED*/
@@ -98,7 +92,7 @@ enum BarcodeFormat : unsigned long long
 	/**GS1 Databar Expanded*/
 	BF_GS1_DATABAR_EXPANDED = 0x8000,
 
-	/**GS1 Databar Expaned Stacked*/
+	/**GS1 Databar Expanded Stacked*/
 	BF_GS1_DATABAR_EXPANDED_STACKED = 0x10000,
 
 	/**GS1 Databar Limited*/
@@ -148,8 +142,21 @@ enum BarcodeFormat : unsigned long long
 
 	/*Matrix 25*/
 	BF_MATRIX_25 = 0x1000000000,
+	
+	/**
+	 * Telepen barcode format.
+	 * Designed primarily for library and membership systems, it can encode
+	 * the full ASCII character set, offering a high-density barcode solution.
+	 */
+	BF_TELEPEN = 0x2000000000,
 
-	/**Combined value of BF2_USPSINTELLIGENTMAIL, BF2_POSTNET, BF2_PLANET, BF2_AUSTRALIANPOST, BF2_RM4SCC.*/
+	/**
+	 * Telepen Numeric barcode format.
+	 * A variation of the Telepen format optimized for encoding numeric data only.
+	 */
+	BF_TELEPEN_NUMERIC = 0x4000000000,
+
+	/**Combined value of BF_USPSINTELLIGENTMAIL, BF_POSTNET, BF_PLANET, BF_AUSTRALIANPOST, BF_RM4SCC, BF_KIX.*/
 	BF_POSTALCODE = 0x3F0000000000000,
 
 	/**Nonstandard barcode */
@@ -220,11 +227,18 @@ typedef enum LocalizationMode
 	/**Localizes 1D barcodes fast. Check @ref LM for available argument settings. */
 	LM_ONED_FAST_SCAN = 0x100,
 
+	/** Localizes barcodes by utilizing a neural network model. */
+	LM_NEURAL_NETWORK = 0X200,
+
 	/**Reserved setting for localization mode.*/
 #if defined(_WIN32) || defined(_WIN64)
 	LM_REV = 0x80000000,
+	/**Placeholder value with no functional meaning.*/
+	LM_END = 0xFFFFFFFF,
 #else
 	LM_REV = -2147483648,
+	/**Placeholder value with no functional meaning.*/
+	LM_END = -1,
 #endif
 
 	/**Skips localization. */
@@ -266,13 +280,19 @@ typedef enum DeblurMode
 	/**Performs deblur process using the sharpening and smoothing algorithm.*/
 	DM_SHARPENING_SMOOTHING = 0x100,
 
+	// add in v11.0.10
+	/**Performs deblur process by utilizing a neural network model. */
+	DM_NEURAL_NETWORK = 0x200,
+
 	/**Reserved setting for deblur mode.*/
 #if defined(_WIN32) || defined(_WIN64)
 	DM_REV = 0x80000000,
+	/**Placeholder value with no functional meaning.*/
+	DM_END = 0xFFFFFFFF,
 #else
 	DM_REV = -2147483648,
+	DM_END = -1,
 #endif
-
 	/**Skips the deblur process.*/
 	DM_SKIP = 0x00
 }DeblurMode;
@@ -319,7 +339,7 @@ typedef enum ExtendedBarcodeResultType
 /**Structures section*/
 
 #pragma pack(push)
-#pragma pack(1)
+#pragma pack(4)
 
 /**
 * The SimplifiedBarcodeReaderSettings struct contains settings for barcode decoding. It is a sub-parameter of SimplifiedCaptureVisionSettings.
@@ -362,7 +382,7 @@ typedef struct tagSimplifiedBarcodeReaderSettings
 	/**Set the maximum available threads count in one barcode decoding task.*/
 	int maxThreadsInOneTask;
 
-	/**Set the threshold for image shrinking. If the shorter edge size exceeds the specified threshold value,
+	/**Set the threshold for image shrinking. If the shorter edge size exceeds the specified threshold value, 
 	* the library will calculate the resized height and width of the image and and perform shrinking.
 	*/
 	int scaleDownThreshold;
@@ -383,11 +403,13 @@ namespace dynamsoft
 {
 	namespace dbr
 	{
+#pragma pack(push)
+#pragma pack(4)
 		/**
 		 * The `CBarcodeDetails` class represents the details of a barcode. It is an abstract base class.
 		 *
 		 */
-		class DBR_API CBarcodeDetails 
+		class DBR_API CBarcodeDetails
 		{
 		public:
 			/**
@@ -399,7 +421,7 @@ namespace dynamsoft
 		/**
 		 * The `COneDCodeDetails` class represents detailed information about a one-dimensional barcode. It inherits from the `CBarcodeDetails` class.
 		 */
-		class DBR_API COneDCodeDetails :public CBarcodeDetails 
+		class DBR_API COneDCodeDetails :public CBarcodeDetails
 		{
 		public:
 			/**
@@ -461,7 +483,7 @@ namespace dynamsoft
 		 * The `CQRCodeDetails` class represents the details of a QR Code barcode. It is derived from the `CBarcodeDetails` class and contains various attributes related to the QR Code barcode.
 		 *
 		 */
-		class DBR_API CQRCodeDetails : public CBarcodeDetails 
+		class DBR_API CQRCodeDetails : public CBarcodeDetails
 		{
 		public:
 			CQRCodeDetails(int _rows = -1, int _columns = -1, QRCodeErrorCorrectionLevel _level = QRECL_ERROR_CORRECTION_H,
@@ -514,7 +536,7 @@ namespace dynamsoft
 		 * The `CPDF417Details` class represents a barcode in PDF417 format. It inherits from the `CBarcodeDetails` class and contains information about the row count, column count, and error correction level of the barcode.
 		 *
 		 */
-		class DBR_API CPDF417Details :public CBarcodeDetails 
+		class DBR_API CPDF417Details :public CBarcodeDetails
 		{
 		public:
 			CPDF417Details(int _rows = -1, int _columns = -1, int _level = -1,
@@ -551,7 +573,7 @@ namespace dynamsoft
 		 * The `CDataMatrixDetails` class represents the details of a DataMatrix barcode. It is derived from the `CBarcodeDetails` class and contains various attributes related to the DataMatrix barcode.
 		 *
 		 */
-		class DBR_API CDataMatrixDetails : public CBarcodeDetails 
+		class DBR_API CDataMatrixDetails : public CBarcodeDetails
 		{
 		public:
 			CDataMatrixDetails(int _rows = -1, int _columns = -1, int _dataRegionRows = -1,
@@ -577,7 +599,7 @@ namespace dynamsoft
 		 * The `CAztecDetails` class represents a barcode in Aztec format. It inherits from the `CBarcodeDetails` class and contains information about the row count, column count, and layer number of the barcode.
 		 *
 		 */
-		class DBR_API CAztecDetails :public CBarcodeDetails 
+		class DBR_API CAztecDetails :public CBarcodeDetails
 		{
 		public:
 			CAztecDetails(int _rows = -1, int _columns = -1, int _layerNumber = -1);
@@ -591,6 +613,36 @@ namespace dynamsoft
 			/*A negative number (-1, -2, -3, -4) specifies a compact Aztec code.
 			 *A positive number (1, 2, .. 32) specifies a normal(full-rang) Aztec code */
 			int layerNumber;
+		};
+
+		/**
+		 * Represents the Extended Channel Interpretation (ECI) information within a barcode.
+		 *
+		 * Each ECI segment specifies the character encoding used for a portion of the decoded bytes.
+		 * The charset names follow the IANA character set registry (e.g. "UTF-8", "ISO-8859-1").
+		 */
+		class DBR_API CECISegment
+		{
+		public:
+			/**
+			 * ECI assignment number as defined by ISO/IEC 15424.
+			 */
+			int eciValue;
+
+			/**
+			 * Charset encoding name defined by IANA (e.g. "UTF-8", "ISO-8859-1").
+			 */
+			const char* charsetEncoding;
+
+			/**
+			 * Start index of this ECI segment in the decoded barcode bytes.
+			 */
+			int startIndex;
+
+			/**
+			 * Length (in bytes) of this segment within the decoded barcode bytes.
+			 */
+			int length;
 		};
 
 		namespace intermediate_results
@@ -654,6 +706,18 @@ namespace dynamsoft
 				 *
 				 */
 				virtual void SetPossibleFormats(unsigned long long possibleFormats) = 0;
+
+				/**
+				 * Sets the location of the localized barcode element.
+				 *
+				 * @param location The location of the localized barcode element.
+				 * @return Returns 0 if success, otherwise an error code.
+				 */
+				virtual int SetLocation(const CQuadrilateral& location) = 0;
+
+				virtual void MarkAsDecoded() = 0;
+
+				virtual bool IsDecoded() const = 0;
 			};
 
 			class DBR_API CExtendedBarcodeResult;
@@ -808,6 +872,29 @@ namespace dynamsoft
 				 *
 				 */
 				virtual void SetConfidence(int confidence) = 0;
+
+				/**
+				 * Sets the location of the decoded barcode element.
+				 *
+				 * @param location The location of the decoded barcode element.
+				 * @return Returns 0 if success, otherwise an error code.
+				 */
+				virtual int SetLocation(const CQuadrilateral& location) = 0;
+
+				/**
+				 * Gets the number of ECI segments in the barcode.
+				 *
+				 * @return The count of ECI segments. Returns 0 if no ECI information is present.
+				 */
+				virtual int GetECISegmentsCount() const = 0;
+
+				/**
+				 * Gets the ECI segment at the specified index.
+				 *
+				 * @param index The zero-based index of the ECI segment to retrieve.
+				 * @return A pointer to the CECISegment object, or NULL if the index is out of range.
+				 */
+				virtual const CECISegment* GetECISegment(int index) const = 0;
 			};
 
 			/**
@@ -1056,33 +1143,37 @@ namespace dynamsoft
 				 * @return Returns 0 if successful, otherwise returns a negative value.
 				 */
 				virtual int SetLocalizedBarcode(int index, const CLocalizedBarcodeElement* element, const double matrixToOriginalImage[9] = IDENTITY_MATRIX) = 0;
+				
+				virtual CLocalizedBarcodeElement* GetLocalizedBarcode(int index) = 0;
+
+				virtual CLocalizedBarcodeElement* operator[](int index) = 0;
 			};
 
 			/**
-			 * The `CScaledUpBarcodeImageUnit` class represents a unit that contains scaled up barcode image. It inherits from the `CIntermediateResultUnit` class.
+			 * The `CScaledBarcodeImageUnit` class represents a unit that contains scaled barcode image. It inherits from the `CIntermediateResultUnit` class.
 			 *
 			 */
-			class DBR_API CScaledUpBarcodeImageUnit : public CIntermediateResultUnit
+			class DBR_API CScaledBarcodeImageUnit : public CIntermediateResultUnit
 			{
 			protected:
 				/**
 				 * Destructor
 				 */
-				virtual ~CScaledUpBarcodeImageUnit() {};
+				virtual ~CScaledBarcodeImageUnit() {};
 
 			public:
 				/**
-				 * Gets the scaled up barcode image data.
+				 * Gets the scaled barcode image data.
 				 *
-				 * @return Returns a pointer to the scaled up image of the barcode.
+				 * @return Returns a pointer to the scaled image of the barcode.
 				 *
 				 */
 				virtual const CImageData* GetImageData() const = 0;
 
 				/**
-				 * @brief Sets the scaled up image data.
+				 * @brief Sets the scaled image data.
 				 *
-				 * @param imgData The pointer to the scaled up image data.
+				 * @param imgData The pointer to the scaled image data.
 				 * @return Returns 0 if successful, otherwise returns a negative value.
 				 */
 				virtual int SetImageData(const CImageData* imgData) = 0;
@@ -1206,7 +1297,7 @@ namespace dynamsoft
 				virtual CDeformationResistedBarcode GetDeformationResistedBarcode() const = 0;
 
 				/**
-				 * @brief Set the deformation resisted barcode object
+				 * @brief Sets the deformation resisted barcode object
 				 *
 				 * @param barcode The deformation resisted barcode object
 				 * @param matrixToOriginalImage The matrix to original image.
@@ -1310,6 +1401,8 @@ namespace dynamsoft
 				 * @return Returns 0 if successful, otherwise returns a negative value.
 				 */
 				virtual int SetDecodedBarcode(const CDecodedBarcodeElement* element, const double matrixToOriginalImage[9] = IDENTITY_MATRIX) = 0;
+
+				virtual int RemoveDecodedBarcode(int index) = 0;
 			};
 		}
 
@@ -1430,13 +1523,29 @@ namespace dynamsoft
 			 *
 			 */
 			virtual int SetLocation(const CQuadrilateral& location) = 0;
+
+			/**
+			 * Gets the number of ECI segments in the barcode.
+			 *
+			 * @return The count of ECI segments. Returns 0 if no ECI information is present.
+			 */
+			virtual int GetECISegmentsCount() const = 0;
+
+			/**
+			 * Gets the ECI segment at the specified index.
+			 *
+			 * @param index The zero-based index of the ECI segment to retrieve.
+			 * @return A pointer to the CECISegment object, or NULL if the index is out of range.
+			 */
+			virtual const CECISegment* GetECISegment(int index) const = 0;
+
 		};
 
 		/**
 		 * The `CDecodedBarcodesResult` class represents the result of a barcode reading process. It provides access to information about the decoded barcodes, the source image, and any errors that occurred during the barcode reading process.
 		 *
 		 */
-		class DBR_API CDecodedBarcodesResult 
+		class DBR_API CDecodedBarcodesResult : public CCapturedResultBase
 		{
 		protected:
 			/**
@@ -1445,30 +1554,6 @@ namespace dynamsoft
 			virtual ~CDecodedBarcodesResult() {};
 
 		public:
-			/**
-			 * Gets the hash ID of the original image.
-			 *
-			 * @return Returns a pointer to a null-terminated string containing the hash ID of the original image.
-			 *
-			 */
-			virtual const char* GetOriginalImageHashId()const = 0;
-
-			/**
-			 * Gets the tag of the original image.
-			 *
-			 * @return Returns a pointer to a CImageTag object representing the tag of the original image.
-			 *
-			 */
-			virtual const CImageTag* GetOriginalImageTag()const = 0;
-
-			/**
-			 * Get the rotation transformation matrix of the original image relative to the rotated image.
-			 *
-			 * @param [out] matrix A double array which represents the rotation transform matrix.
-			 *
-			 */
-			virtual void GetRotationTransformMatrix(double matrix[9]) const = 0;
-
 			/**
 			 * Gets the number of decoded barcode items in the barcode reading result.
 			 *
@@ -1488,7 +1573,7 @@ namespace dynamsoft
 			virtual const CBarcodeResultItem* GetItem(int index) const = 0;
 
 			/**
-			 * Remove a specific item from the array in the barcodes.
+			 * Removes a specific item from the array in the barcodes.
 			 *
 			 * @param [in] item The specific item to remove.
 			 *
@@ -1498,7 +1583,7 @@ namespace dynamsoft
 			virtual int RemoveItem(const CBarcodeResultItem* item) = 0;
 
 			/**
-			 * Check if the item is present in the array.
+			 * Checks if the item is present in the array.
 			 *
 			 * @param [in] item The specific item to check.
 			 *
@@ -1506,22 +1591,6 @@ namespace dynamsoft
 			 *
 			 */
 			virtual bool HasItem(const CBarcodeResultItem* item) const = 0;
-
-			/**
-			 * Gets the error code of the barcode reading result, if an error occurred.
-			 *
-			 * @return Returns the error code of the barcode reading result, or 0 if no error occurred.
-			 *
-			 */
-			virtual int GetErrorCode()const = 0;
-
-			/**
-			 * Gets the error message of the barcode reading result, if an error occurred.
-			 *
-			 * @return Returns a pointer to a null-terminated string containing the error message of the barcode reading result, or a pointer to an empty string if no error occurred.
-			 *
-			 */
-			virtual const char* GetErrorString()const = 0;
 
 			/**
 			 * Gets the decoded barcode result item at the specified index.
@@ -1571,20 +1640,20 @@ namespace dynamsoft
 			static const char* GetVersion();
 
 			/**
-			 * Create a Decoded Barcode Element object.
+			 * Creates a Decoded Barcode Element object.
 			 *
 			 * @return An object of CDecodedBarcodeElement
 			 */
 			static intermediate_results::CDecodedBarcodeElement* CreateDecodedBarcodeElement();
 
 			/**
-			 * Create a Localized Barcode Element object.
+			 * Creates a Localized Barcode Element object.
 			 *
 			 * @return An object of CLocalizedBarcodeElement
 			 */
 			static intermediate_results::CLocalizedBarcodeElement* CreateLocalizedBarcodeElement();
 		};
-
+#pragma pack(pop)
 	}
 }
 #endif

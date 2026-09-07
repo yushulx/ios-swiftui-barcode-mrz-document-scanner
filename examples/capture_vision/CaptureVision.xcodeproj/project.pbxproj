@@ -7,21 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11B0E3902CEECE9300E3748D /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E38F2CEECE9300E3748D /* DynamsoftBarcodeReader */; };
-		11B0E3922CEECE9300E3748D /* DynamsoftCameraEnhancer in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3912CEECE9300E3748D /* DynamsoftCameraEnhancer */; };
-		11B0E3942CEECE9300E3748D /* DynamsoftCaptureVisionRouter in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3932CEECE9300E3748D /* DynamsoftCaptureVisionRouter */; };
-		11B0E3962CEECE9300E3748D /* DynamsoftCodeParser in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3952CEECE9300E3748D /* DynamsoftCodeParser */; };
-		11B0E3982CEECE9300E3748D /* DynamsoftCodeParserDedicator in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3972CEECE9300E3748D /* DynamsoftCodeParserDedicator */; };
-		11B0E39A2CEECE9300E3748D /* DynamsoftCore in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3992CEECE9300E3748D /* DynamsoftCore */; };
-		11B0E39C2CEECE9300E3748D /* DynamsoftDocumentNormalizer in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E39B2CEECE9300E3748D /* DynamsoftDocumentNormalizer */; };
-		11B0E39E2CEECE9300E3748D /* DynamsoftImageProcessing in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E39D2CEECE9300E3748D /* DynamsoftImageProcessing */; };
-		11B0E3A02CEECE9300E3748D /* DynamsoftLabelRecognizer in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E39F2CEECE9300E3748D /* DynamsoftLabelRecognizer */; };
-		11B0E3A22CEECE9300E3748D /* DynamsoftLicense in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3A12CEECE9300E3748D /* DynamsoftLicense */; };
-		11B0E3A42CEECE9300E3748D /* DynamsoftMRZ in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3A32CEECE9300E3748D /* DynamsoftMRZ */; };
-		11B0E3A62CEECE9300E3748D /* DynamsoftNeuralNetwork in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3A52CEECE9300E3748D /* DynamsoftNeuralNetwork */; };
-		11B0E3A82CEECE9300E3748D /* DynamsoftUtility in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3A72CEECE9300E3748D /* DynamsoftUtility */; };
-		11B0E3AA2CEECE9300E3748D /* DynamsoftVIN in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3A92CEECE9300E3748D /* DynamsoftVIN */; };
-		11BD8F752CF45E2900C904FA /* libDynamicPdfCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F672CF45E2900C904FA /* libDynamicPdfCore.dylib */; platformFilters = (macos, ); };
+		11B0E3AC2CEECE9300E3748D /* DynamsoftCaptureVisionBundle in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E3AB2CEECE9300E3748D /* DynamsoftCaptureVisionBundle */; };
 		11BD8F762CF45E2900C904FA /* libDynamsoftCaptureVisionRouter.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F692CF45E2900C904FA /* libDynamsoftCaptureVisionRouter.dylib */; platformFilters = (macos, ); };
 		11BD8F772CF45E2900C904FA /* libDynamsoftBarcodeReader.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F682CF45E2900C904FA /* libDynamsoftBarcodeReader.dylib */; platformFilters = (macos, ); };
 		11BD8F782CF45E2900C904FA /* libDynamsoftLicense.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F702CF45E2900C904FA /* libDynamsoftLicense.dylib */; platformFilters = (macos, ); };
@@ -29,15 +15,14 @@
 		11BD8F7A2CF45E2900C904FA /* libDynamsoftCodeParserDedicator.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F6B2CF45E2900C904FA /* libDynamsoftCodeParserDedicator.dylib */; platformFilters = (macos, ); };
 		11BD8F7B2CF45E2900C904FA /* libDynamicPdf.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F662CF45E2900C904FA /* libDynamicPdf.dylib */; platformFilters = (macos, ); };
 		11BD8F7C2CF45E2900C904FA /* libDynamsoftUtility.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F722CF45E2900C904FA /* libDynamsoftUtility.dylib */; platformFilters = (macos, ); };
-		11BD8F7D2CF45E2900C904FA /* libDynamicImagex64.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F652CF45E2900C904FA /* libDynamicImagex64.dylib */; platformFilters = (macos, ); };
+		11BD8F7D2CF45E2900C904FA /* libDynamsoftIdentityUtility.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F652CF45E2900C904FA /* libDynamsoftIdentityUtility.dylib */; platformFilters = (macos, ); };
 		11BD8F7E2CF45E2900C904FA /* libDynamsoftNeuralNetwork.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F712CF45E2900C904FA /* libDynamsoftNeuralNetwork.dylib */; platformFilters = (macos, ); };
 		11BD8F7F2CF45E2900C904FA /* libDynamsoftCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F6C2CF45E2900C904FA /* libDynamsoftCore.dylib */; platformFilters = (macos, ); };
 		11BD8F802CF45E2900C904FA /* libDynamsoftImageProcessing.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F6E2CF45E2900C904FA /* libDynamsoftImageProcessing.dylib */; platformFilters = (macos, ); };
 		11BD8F812CF45E2900C904FA /* libDynamsoftLabelRecognizer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F6F2CF45E2900C904FA /* libDynamsoftLabelRecognizer.dylib */; platformFilters = (macos, ); };
 		11BD8F822CF45E2900C904FA /* libDynamsoftCodeParser.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F6A2CF45E2900C904FA /* libDynamsoftCodeParser.dylib */; platformFilters = (macos, ); };
-		11BD8F832CF45E8B00C904FA /* libDynamicImagex64.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F652CF45E2900C904FA /* libDynamicImagex64.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		11BD8F832CF45E8B00C904FA /* libDynamsoftIdentityUtility.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F652CF45E2900C904FA /* libDynamsoftIdentityUtility.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		11BD8F842CF45E8B00C904FA /* libDynamicPdf.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F662CF45E2900C904FA /* libDynamicPdf.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		11BD8F852CF45E8B00C904FA /* libDynamicPdfCore.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F672CF45E2900C904FA /* libDynamicPdfCore.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		11BD8F862CF45E8B00C904FA /* libDynamsoftBarcodeReader.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F682CF45E2900C904FA /* libDynamsoftBarcodeReader.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		11BD8F872CF45E8B00C904FA /* libDynamsoftCaptureVisionRouter.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F692CF45E2900C904FA /* libDynamsoftCaptureVisionRouter.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		11BD8F882CF45E8B00C904FA /* libDynamsoftCodeParser.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F6A2CF45E2900C904FA /* libDynamsoftCodeParser.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -59,9 +44,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				11BD8F832CF45E8B00C904FA /* libDynamicImagex64.dylib in CopyFiles */,
+				11BD8F832CF45E8B00C904FA /* libDynamsoftIdentityUtility.dylib in CopyFiles */,
 				11BD8F842CF45E8B00C904FA /* libDynamicPdf.dylib in CopyFiles */,
-				11BD8F852CF45E8B00C904FA /* libDynamicPdfCore.dylib in CopyFiles */,
 				11BD8F862CF45E8B00C904FA /* libDynamsoftBarcodeReader.dylib in CopyFiles */,
 				11BD8F872CF45E8B00C904FA /* libDynamsoftCaptureVisionRouter.dylib in CopyFiles */,
 				11BD8F882CF45E8B00C904FA /* libDynamsoftCodeParser.dylib in CopyFiles */,
@@ -97,9 +81,8 @@
 		11BD8F602CF45E2900C904FA /* DynamsoftLabelRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftLabelRecognizer.h; sourceTree = "<group>"; };
 		11BD8F612CF45E2900C904FA /* DynamsoftLicense.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftLicense.h; sourceTree = "<group>"; };
 		11BD8F622CF45E2900C904FA /* DynamsoftUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftUtility.h; sourceTree = "<group>"; };
-		11BD8F652CF45E2900C904FA /* libDynamicImagex64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicImagex64.dylib; sourceTree = "<group>"; };
+		11BD8F652CF45E2900C904FA /* libDynamsoftIdentityUtility.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftIdentityUtility.dylib; sourceTree = "<group>"; };
 		11BD8F662CF45E2900C904FA /* libDynamicPdf.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicPdf.dylib; sourceTree = "<group>"; };
-		11BD8F672CF45E2900C904FA /* libDynamicPdfCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicPdfCore.dylib; sourceTree = "<group>"; };
 		11BD8F682CF45E2900C904FA /* libDynamsoftBarcodeReader.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftBarcodeReader.dylib; sourceTree = "<group>"; };
 		11BD8F692CF45E2900C904FA /* libDynamsoftCaptureVisionRouter.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftCaptureVisionRouter.dylib; sourceTree = "<group>"; };
 		11BD8F6A2CF45E2900C904FA /* libDynamsoftCodeParser.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftCodeParser.dylib; sourceTree = "<group>"; };
@@ -111,10 +94,11 @@
 		11BD8F702CF45E2900C904FA /* libDynamsoftLicense.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftLicense.dylib; sourceTree = "<group>"; };
 		11BD8F712CF45E2900C904FA /* libDynamsoftNeuralNetwork.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftNeuralNetwork.dylib; sourceTree = "<group>"; };
 		11BD8F722CF45E2900C904FA /* libDynamsoftUtility.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftUtility.dylib; sourceTree = "<group>"; };
-		11BD8FC92CF56D5100C904FA /* template.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = template.h; sourceTree = "<group>"; };
+		11BD8F912CF45E2900C904FA /* DynamsoftIdentityUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftIdentityUtility.h; sourceTree = "<group>"; };
 		11DBB10A2CE499970071C317 /* CaptureVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11DBB19B2CEAD2EF0071C317 /* DCV-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DCV-Bridging-Header.h"; sourceTree = "<group>"; };
 		11DBB1BF2CEAE6E00071C317 /* dcv.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = dcv.mm; sourceTree = "<group>"; };
+		2A878759C34AAD4866D7A646 /* README.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -130,12 +114,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11B0E3A42CEECE9300E3748D /* DynamsoftMRZ in Frameworks */,
-				11B0E3942CEECE9300E3748D /* DynamsoftCaptureVisionRouter in Frameworks */,
-				11B0E3A02CEECE9300E3748D /* DynamsoftLabelRecognizer in Frameworks */,
-				11B0E39C2CEECE9300E3748D /* DynamsoftDocumentNormalizer in Frameworks */,
-				11B0E3962CEECE9300E3748D /* DynamsoftCodeParser in Frameworks */,
-				11BD8F752CF45E2900C904FA /* libDynamicPdfCore.dylib in Frameworks */,
 				11BD8F762CF45E2900C904FA /* libDynamsoftCaptureVisionRouter.dylib in Frameworks */,
 				11BD8F772CF45E2900C904FA /* libDynamsoftBarcodeReader.dylib in Frameworks */,
 				11BD8F782CF45E2900C904FA /* libDynamsoftLicense.dylib in Frameworks */,
@@ -143,21 +121,13 @@
 				11BD8F7A2CF45E2900C904FA /* libDynamsoftCodeParserDedicator.dylib in Frameworks */,
 				11BD8F7B2CF45E2900C904FA /* libDynamicPdf.dylib in Frameworks */,
 				11BD8F7C2CF45E2900C904FA /* libDynamsoftUtility.dylib in Frameworks */,
-				11BD8F7D2CF45E2900C904FA /* libDynamicImagex64.dylib in Frameworks */,
+				11BD8F7D2CF45E2900C904FA /* libDynamsoftIdentityUtility.dylib in Frameworks */,
 				11BD8F7E2CF45E2900C904FA /* libDynamsoftNeuralNetwork.dylib in Frameworks */,
 				11BD8F7F2CF45E2900C904FA /* libDynamsoftCore.dylib in Frameworks */,
 				11BD8F802CF45E2900C904FA /* libDynamsoftImageProcessing.dylib in Frameworks */,
 				11BD8F812CF45E2900C904FA /* libDynamsoftLabelRecognizer.dylib in Frameworks */,
 				11BD8F822CF45E2900C904FA /* libDynamsoftCodeParser.dylib in Frameworks */,
-				11B0E3902CEECE9300E3748D /* DynamsoftBarcodeReader in Frameworks */,
-				11B0E39E2CEECE9300E3748D /* DynamsoftImageProcessing in Frameworks */,
-				11B0E3982CEECE9300E3748D /* DynamsoftCodeParserDedicator in Frameworks */,
-				11B0E3A82CEECE9300E3748D /* DynamsoftUtility in Frameworks */,
-				11B0E3922CEECE9300E3748D /* DynamsoftCameraEnhancer in Frameworks */,
-				11B0E3A22CEECE9300E3748D /* DynamsoftLicense in Frameworks */,
-				11B0E3AA2CEECE9300E3748D /* DynamsoftVIN in Frameworks */,
-				11B0E3A62CEECE9300E3748D /* DynamsoftNeuralNetwork in Frameworks */,
-				11B0E39A2CEECE9300E3748D /* DynamsoftCore in Frameworks */,
+				11B0E3AC2CEECE9300E3748D /* DynamsoftCaptureVisionBundle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +142,7 @@
 				11BD8F5C2CF45E2900C904FA /* DynamsoftCodeParser.h */,
 				11BD8F5D2CF45E2900C904FA /* DynamsoftCore.h */,
 				11BD8F5E2CF45E2900C904FA /* DynamsoftDocumentNormalizer.h */,
+				11BD8F912CF45E2900C904FA /* DynamsoftIdentityUtility.h */,
 				11BD8F5F2CF45E2900C904FA /* DynamsoftImageProcessing.h */,
 				11BD8F602CF45E2900C904FA /* DynamsoftLabelRecognizer.h */,
 				11BD8F612CF45E2900C904FA /* DynamsoftLicense.h */,
@@ -183,9 +154,8 @@
 		11BD8F732CF45E2900C904FA /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				11BD8F652CF45E2900C904FA /* libDynamicImagex64.dylib */,
+				11BD8F652CF45E2900C904FA /* libDynamsoftIdentityUtility.dylib */,
 				11BD8F662CF45E2900C904FA /* libDynamicPdf.dylib */,
-				11BD8F672CF45E2900C904FA /* libDynamicPdfCore.dylib */,
 				11BD8F682CF45E2900C904FA /* libDynamsoftBarcodeReader.dylib */,
 				11BD8F692CF45E2900C904FA /* libDynamsoftCaptureVisionRouter.dylib */,
 				11BD8F6A2CF45E2900C904FA /* libDynamsoftCodeParser.dylib */,
@@ -216,11 +186,11 @@
 			children = (
 				11BD8F742CF45E2900C904FA /* dcv */,
 				11DBB1BF2CEAE6E00071C317 /* dcv.mm */,
-				11BD8FC92CF56D5100C904FA /* template.h */,
 				11DBB19B2CEAD2EF0071C317 /* DCV-Bridging-Header.h */,
 				11DBB10C2CE499970071C317 /* CaptureVision */,
 				11DBB1DB2CEB14B40071C317 /* Frameworks */,
 				11DBB10B2CE499970071C317 /* Products */,
+				2A878759C34AAD4866D7A646 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -251,6 +221,7 @@
 				11DBB1082CE499970071C317 /* Resources */,
 				11DBB1CF2CEB0A2F0071C317 /* CopyFiles */,
 				11DBB1F32CEB165B0071C317 /* CopyFiles */,
+				11DBB2012CEB2F2F0071C317 /* Copy Dynamsoft Resources */,
 			);
 			buildRules = (
 			);
@@ -261,20 +232,7 @@
 			);
 			name = CaptureVision;
 			packageProductDependencies = (
-				11B0E38F2CEECE9300E3748D /* DynamsoftBarcodeReader */,
-				11B0E3912CEECE9300E3748D /* DynamsoftCameraEnhancer */,
-				11B0E3932CEECE9300E3748D /* DynamsoftCaptureVisionRouter */,
-				11B0E3952CEECE9300E3748D /* DynamsoftCodeParser */,
-				11B0E3972CEECE9300E3748D /* DynamsoftCodeParserDedicator */,
-				11B0E3992CEECE9300E3748D /* DynamsoftCore */,
-				11B0E39B2CEECE9300E3748D /* DynamsoftDocumentNormalizer */,
-				11B0E39D2CEECE9300E3748D /* DynamsoftImageProcessing */,
-				11B0E39F2CEECE9300E3748D /* DynamsoftLabelRecognizer */,
-				11B0E3A12CEECE9300E3748D /* DynamsoftLicense */,
-				11B0E3A32CEECE9300E3748D /* DynamsoftMRZ */,
-				11B0E3A52CEECE9300E3748D /* DynamsoftNeuralNetwork */,
-				11B0E3A72CEECE9300E3748D /* DynamsoftUtility */,
-				11B0E3A92CEECE9300E3748D /* DynamsoftVIN */,
+				11B0E3AB2CEECE9300E3748D /* DynamsoftCaptureVisionBundle */,
 			);
 			productName = CaptureVision;
 			productReference = 11DBB10A2CE499970071C317 /* CaptureVision.app */;
@@ -327,6 +285,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		11DBB2012CEB2F2F0071C317 /* Copy Dynamsoft Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				$SRCROOT/../dcv/resource/Templates,
+				$SRCROOT/../dcv/resource/Models,
+			);
+			name = "Copy Dynamsoft Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Templates",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Models",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Templates",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Dynamsoft C++ SDK loads its preset templates (Templates/) and models\n# (Models/) from the directory containing its dylibs (Contents/Frameworks).\n# Copy them into Contents/Resources and expose them via symlinks so that\n# code signing stays intact. macOS only; on iOS the framework bundles them.\nif [ \"${PLATFORM_NAME}\" = \"macosx\" ] && [ -d \"$SRCROOT/../dcv/resource\" ]; then\n  rsync -a \"$SRCROOT/../dcv/resource/Templates/\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Templates/\"\n  rsync -a \"$SRCROOT/../dcv/resource/Models/\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Models/\"\n  mkdir -p \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n  ln -sfn \"../Resources/Templates\" \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Templates\"\n  ln -sfn \"../Resources/Models\" \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Models\"\nfi";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		11DBB1062CE499970071C317 /* Sources */ = {
@@ -464,8 +450,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CaptureVision/Preview Content\"";
-				DEVELOPMENT_TEAM = W6PESGXW9M;
+				DEVELOPMENT_TEAM = E5D9GMM365;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = ../dcv;
@@ -487,7 +474,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/../dcv/libs",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MACOSX_DEPLOYMENT_TARGET = 15.7;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dynamsoft.CaptureVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -513,8 +500,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CaptureVision/Preview Content\"";
-				DEVELOPMENT_TEAM = W6PESGXW9M;
+				DEVELOPMENT_TEAM = E5D9GMM365;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = ../dcv;
@@ -536,7 +524,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/../dcv/libs",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MACOSX_DEPLOYMENT_TARGET = 15.7;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dynamsoft.CaptureVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -580,81 +568,16 @@
 			repositoryURL = "https://github.com/Dynamsoft/capture-vision-spm";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.4.2000;
+				minimumVersion = 3.6.2000;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		11B0E38F2CEECE9300E3748D /* DynamsoftBarcodeReader */ = {
+		11B0E3AB2CEECE9300E3748D /* DynamsoftCaptureVisionBundle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftBarcodeReader;
-		};
-		11B0E3912CEECE9300E3748D /* DynamsoftCameraEnhancer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftCameraEnhancer;
-		};
-		11B0E3932CEECE9300E3748D /* DynamsoftCaptureVisionRouter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftCaptureVisionRouter;
-		};
-		11B0E3952CEECE9300E3748D /* DynamsoftCodeParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftCodeParser;
-		};
-		11B0E3972CEECE9300E3748D /* DynamsoftCodeParserDedicator */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftCodeParserDedicator;
-		};
-		11B0E3992CEECE9300E3748D /* DynamsoftCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftCore;
-		};
-		11B0E39B2CEECE9300E3748D /* DynamsoftDocumentNormalizer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftDocumentNormalizer;
-		};
-		11B0E39D2CEECE9300E3748D /* DynamsoftImageProcessing */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftImageProcessing;
-		};
-		11B0E39F2CEECE9300E3748D /* DynamsoftLabelRecognizer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftLabelRecognizer;
-		};
-		11B0E3A12CEECE9300E3748D /* DynamsoftLicense */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftLicense;
-		};
-		11B0E3A32CEECE9300E3748D /* DynamsoftMRZ */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftMRZ;
-		};
-		11B0E3A52CEECE9300E3748D /* DynamsoftNeuralNetwork */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftNeuralNetwork;
-		};
-		11B0E3A72CEECE9300E3748D /* DynamsoftUtility */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftUtility;
-		};
-		11B0E3A92CEECE9300E3748D /* DynamsoftVIN */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11B0E38E2CEECE9300E3748D /* XCRemoteSwiftPackageReference "capture-vision-spm" */;
-			productName = DynamsoftVIN;
+			productName = DynamsoftCaptureVisionBundle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

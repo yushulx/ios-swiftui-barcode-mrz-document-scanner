@@ -35,15 +35,6 @@
   if (self) {
     cvr = new CCaptureVisionRouter(); // Initialize the C++ object
   }
-
-  char errorMsgBuffer[512];
-  int ret = cvr->InitSettings(jsonString.c_str(), errorMsgBuffer,
-                              sizeof(errorMsgBuffer));
-
-  if (ret != 0) {
-    NSString *errorMessage = [NSString stringWithUTF8String:errorMsgBuffer];
-    NSLog(@"Init setting failed: %@", errorMessage);
-  }
   return self;
 }
 
@@ -59,8 +50,9 @@
       new CImageData(stride * height, (unsigned char *)baseAddress, width,
                      height, stride, sdkPixelFormat);
 
-  // Call C++ method
-  CCapturedResult *result = cvr->Capture(imageStruct, "");
+  // Call C++ method: decode with the built-in barcode-only preset template.
+  CCapturedResult *result =
+      cvr->Capture(imageStruct, CPresetTemplate::PT_READ_BARCODES);
 
   if (result->GetErrorCode() != 0) {
     NSLog(@"Error code: %d", result->GetErrorCode());
@@ -80,7 +72,8 @@
     const CBarcodeResultItem *barcodeResultItem = barcodeResult->GetItem(j);
     const char *format = barcodeResultItem->GetFormatString();
     const char *text = barcodeResultItem->GetText();
-    CPoint *points = barcodeResultItem->GetLocation().points;
+    CQuadrilateral quad = barcodeResultItem->GetLocation(); // Keep alive before use
+    CPoint *points = quad.points;
     NSLog(@"Result %d", j + 1);
     NSLog(@"Barcode Format: %s", barcodeResultItem->GetFormatString());
     NSLog(@"Barcode Text: %s", barcodeResultItem->GetText());

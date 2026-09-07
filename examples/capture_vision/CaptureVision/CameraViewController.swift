@@ -5,12 +5,7 @@ import SwiftUI
 #if os(iOS)
     import UIKit
     import CoreGraphics
-    import DynamsoftCameraEnhancer
-    import DynamsoftCaptureVisionRouter
-    import DynamsoftBarcodeReader
-    import DynamsoftLicense
-    import DynamsoftCodeParser
-    import DynamsoftLabelRecognizer
+    import DynamsoftCaptureVisionBundle
     typealias ViewController = UIViewController
     typealias ImageType = UIImage
 #elseif os(macOS)
@@ -40,7 +35,7 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
 
         // Initialize the license here
         let licenseKey =
-            "LICENSE-KEY"
+            "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
 
         #if os(iOS)
             setLicense(license: licenseKey)
@@ -135,80 +130,6 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
         processCameraFrame(pixelBuffer)
     }
 
-    func flipBufferVertically(buffer: Data, width: Int, height: Int, bytesPerRow: Int) -> Data {
-        var flippedBuffer = Data(capacity: buffer.count)
-
-        for row in 0..<height {
-            // Calculate the range of the current row in the buffer
-            let start = (height - row - 1) * bytesPerRow
-            let end = start + bytesPerRow
-
-            // Append the row from the original buffer to the flipped buffer
-            flippedBuffer.append(buffer[start..<end])
-        }
-
-        return flippedBuffer
-    }
-
-    func flipVertically(pixelBuffer: CVPixelBuffer) -> CVPixelBuffer? {
-        CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
-
-        guard let srcBaseAddress = CVPixelBufferGetBaseAddress(pixelBuffer) else {
-            CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
-            return nil
-        }
-
-        let width = CVPixelBufferGetWidth(pixelBuffer)
-        let height = CVPixelBufferGetHeight(pixelBuffer)
-        let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
-
-        var srcBuffer = vImage_Buffer(
-            data: srcBaseAddress,
-            height: vImagePixelCount(height),
-            width: vImagePixelCount(width),
-            rowBytes: bytesPerRow
-        )
-
-        guard let dstData = malloc(bytesPerRow * height) else {
-            CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
-            return nil
-        }
-
-        var dstBuffer = vImage_Buffer(
-            data: dstData,
-            height: vImagePixelCount(height),
-            width: vImagePixelCount(width),
-            rowBytes: bytesPerRow
-        )
-
-        // Perform vertical flip
-        vImageVerticalReflect_ARGB8888(&srcBuffer, &dstBuffer, 0)
-
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
-
-        // Create a new CVPixelBuffer for the flipped image
-        var flippedPixelBuffer: CVPixelBuffer?
-        CVPixelBufferCreate(
-            nil,
-            width,
-            height,
-            CVPixelBufferGetPixelFormatType(pixelBuffer),
-            nil,
-            &flippedPixelBuffer
-        )
-
-        if let flippedPixelBuffer = flippedPixelBuffer {
-            CVPixelBufferLockBaseAddress(flippedPixelBuffer, .readOnly)
-            memcpy(
-                CVPixelBufferGetBaseAddress(flippedPixelBuffer), dstBuffer.data,
-                bytesPerRow * height)
-            CVPixelBufferUnlockBaseAddress(flippedPixelBuffer, .readOnly)
-        }
-
-        free(dstData)
-        return flippedPixelBuffer
-    }
-
     func processCameraFrame(_ pixelBuffer: CVPixelBuffer) {
         // Get camera preview size from pixel buffer
         let previewWidth = CVPixelBufferGetWidth(pixelBuffer)
@@ -219,86 +140,54 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
             self.overlayView.cameraPreviewSize = CGSize(width: previewWidth, height: previewHeight)
         }
         #if os(iOS)
-            // Convert pixel buffer to UIImage
-            //            let uiImage = imageFromPixelBuffer(pixelBuffer)
-            //            let result = cvr.captureFromImage(
-            //                uiImage, templateName: PresetTemplate.readBarcodes.rawValue)
+            var barcodeArray: [[String: Any]] = []
 
             CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
+            defer { CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly) }
 
-            let baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer)
-            let width = CVPixelBufferGetWidth(pixelBuffer)
-            let height = CVPixelBufferGetHeight(pixelBuffer)
-            let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
-            let pixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
+            if let baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer) {
+                let width = CVPixelBufferGetWidth(pixelBuffer)
+                let height = CVPixelBufferGetHeight(pixelBuffer)
+                let bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer)
 
-            //            switch pixelFormat {
-            //            case kCVPixelFormatType_32ARGB:
-            //                print("Pixel format: 32-bit ARGB (Alpha, Red, Green, Blue)")
-            //            case kCVPixelFormatType_32BGRA:
-            //                print("Pixel format: 32-bit BGRA (Blue, Green, Red, Alpha)")
-            //            case kCVPixelFormatType_420YpCbCr8BiPlanarFullRange:
-            //                print("Pixel format: 420YpCbCr8 Bi-Planar Full Range (NV12)")
-            //            case kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange:
-            //                print("Pixel format: 420YpCbCr8 Bi-Planar Video Range")
-            //            case kCVPixelFormatType_422YpCbCr8:
-            //                print("Pixel format: 422 YpCbCr8")
-            //            case kCVPixelFormatType_OneComponent8:
-            //                print("Pixel format: 8-bit single component grayscale")
-            //            default:
-            //                print("Unknown pixel format: \(pixelFormat)")
-            //            }
-
-            // Pass frame data to C++ via the wrapper
-            if let baseAddress = baseAddress {
+                // Wrap the BGRA frame into ImageData and decode it with the
+                // built-in barcode-only preset template.
                 let buffer = Data(bytes: baseAddress, count: bytesPerRow * height)
                 let imageData = ImageData(
                     bytes: buffer, width: UInt(width), height: UInt(height),
-                    stride: UInt(bytesPerRow), format: .ARGB8888, orientation: 0, tag: nil)
+                    stride: UInt(bytesPerRow), format: .ABGR8888, orientation: 0, tag: nil)
                 let result = cvr.captureFromBuffer(
                     imageData, templateName: PresetTemplate.readBarcodes.rawValue)
 
-                var barcodeArray: [[String: Any]] = []
-                if let items = result.items, items.count > 0 {
+                if let items = result.decodedBarcodesResult?.items, items.count > 0 {
                     print("Decoded Barcode Count: \(items.count)")
 
-                    for item in items {
-                        if item.type == .barcode, let barcodeItem = item as? BarcodeResultItem {
-                            let format = barcodeItem.formatString
-                            let text = barcodeItem.text
-                            let points = barcodeItem.location.points
-
-                            // Map points to a dictionary format
-                            let pointArray: [[String: CGFloat]] = points.compactMap { point in
-                                guard let cgPoint = point as? CGPoint else { return nil }
-                                return ["x": cgPoint.x, "y": cgPoint.y]
-                            }
-
-                            // Create dictionary for barcode data
-                            let barcodeData: [String: Any] = [
-                                "format": format,
-                                "text": text,
-                                "points": pointArray,
-                            ]
-
-                            // Append barcode data to array
-                            barcodeArray.append(barcodeData)
-
-                            // Debugging logs
-                            print("Barcode Format: \(format)")
-                            print("Barcode Text: \(text)")
+                    for barcodeItem in items {
+                        let format = barcodeItem.formatString
+                        let text = barcodeItem.text
+                        let points = barcodeItem.location.points.compactMap { value -> [String: CGFloat]? in
+                            let point = value.cgPointValue
+                            return ["x": point.x, "y": point.y]
                         }
-                    }
-                }
 
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.overlayView.barcodeData = barcodeArray
-                    self.overlayView.setNeedsDisplay()
+                        barcodeArray.append([
+                            "format": format,
+                            "text": text,
+                            "points": points,
+                        ])
+
+                        // Debugging logs
+                        print("Barcode Format: \(format)")
+                        print("Barcode Text: \(text)")
+                    }
                 }
             }
 
-            CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.overlayView.barcodeData = barcodeArray
+                self.overlayView.setNeedsDisplay()
+            }
 
         #elseif os(macOS)
 
@@ -328,48 +217,6 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
             CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
         #endif
     }
-
-    #if os(iOS)
-        // Helper function to convert CVPixelBuffer to UIImage
-        func imageFromPixelBuffer(_ pixelBuffer: CVPixelBuffer) -> ImageType {
-            let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
-            let context = CIContext()
-
-            guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else {
-                fatalError("Failed to create CGImage from pixel buffer.")
-            }
-
-            // Convert the CGImage to UIImage
-            let orientation: UIImage.Orientation
-            switch UIDevice.current.orientation {
-            case .portrait: orientation = .right
-            case .portraitUpsideDown: orientation = .left
-            case .landscapeLeft: orientation = .up
-            case .landscapeRight: orientation = .down
-            default: orientation = .up
-            }
-
-            return ImageType(cgImage: cgImage, scale: 1.0, orientation: orientation)
-        }
-
-        func transformPoints(
-            for points: [CGPoint], imageWidth: CGFloat, imageHeight: CGFloat, rotation: CGFloat
-        ) -> [CGPoint] {
-            return points.map { point in
-                switch rotation {
-                case 90:  // Clockwise 90 degrees
-                    return CGPoint(x: imageHeight - point.y, y: point.x)
-                case -90:  // Counterclockwise 90 degrees
-                    return CGPoint(x: point.y, y: imageWidth - point.x)
-                case 180:  // 180 degrees
-                    return CGPoint(x: imageWidth - point.x, y: imageHeight - point.y)
-                default:  // No rotation
-                    return point
-                }
-            }
-        }
-
-    #endif
 
     func capturePhoto() {
         let settings = AVCapturePhotoSettings()
