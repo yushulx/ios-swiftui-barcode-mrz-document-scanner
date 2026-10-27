@@ -87,7 +87,7 @@ extension CameraViewController: CapturedResultReceiver {
             DispatchQueue.main.async {
                 self.cvr.stopCapturing()
                 self.dce.clearBuffer()
-                self.dce.cameraView.getDrawingLayer(DrawingLayerId.DLR.rawValue)?.visible =
+                self.dce.cameraView?.getDrawingLayer(DrawingLayerId.DLR.rawValue)?.visible =
                     false
                 let vc = MRZResultViewController()
                 vc.mrzResultModel = self.model

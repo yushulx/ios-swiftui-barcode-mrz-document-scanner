@@ -1,33 +1,33 @@
 {
-  "originHash" : "43a2a40924a2ff90d3a7d6cc42511211de4fc8f68a5bf7a3d5728d83fc0c3689",
-  "pins" : [
+  "originHash": "43a2a40924a2ff90d3a7d6cc42511211de4fc8f68a5bf7a3d5728d83fc0c3689",
+  "pins": [
     {
-      "identity" : "barcode-reader-spm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Dynamsoft/barcode-reader-spm",
-      "state" : {
-        "revision" : "c04b5d13241715381156b520a2610483624aa493",
-        "version" : "11.4.1200"
+      "identity": "barcode-reader-spm",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/Dynamsoft/barcode-reader-spm",
+      "state": {
+        "revision": "505acd830e83892486c188d47a26d4b6f9897770",
+        "version": "11.6.4000"
       }
     },
     {
-      "identity" : "capture-vision-spm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Dynamsoft/capture-vision-spm.git",
-      "state" : {
-        "revision" : "aff21665d9c6f0dfccebb845e821aee227e567dc",
-        "version" : "3.4.1200"
+      "identity": "capture-vision-spm",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/Dynamsoft/capture-vision-spm.git",
+      "state": {
+        "revision": "4a86b39dfe64376c9838a5ee5d97973c2bc588e9",
+        "version": "3.6.4000"
       }
     },
     {
-      "identity" : "zxing-cpp",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/zxing-cpp/zxing-cpp",
-      "state" : {
-        "revision" : "d6068bcebeb8fd9f0d35a99b00d202be86a14dbe",
-        "version" : "2.3.0"
+      "identity": "zxing-cpp",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/zxing-cpp/zxing-cpp",
+      "state": {
+        "revision": "d6068bcebeb8fd9f0d35a99b00d202be86a14dbe",
+        "version": "2.3.0"
       }
     }
   ],
-  "version" : 3
+  "version": 3
 }

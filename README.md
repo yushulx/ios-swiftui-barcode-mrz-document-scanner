@@ -4,6 +4,8 @@ This repository contains examples of using the Dynamsoft Capture Vision SDK to d
 
 ## Prerequisites
 - Click [here](https://www.dynamsoft.com/customer/license/trialLicense/?product=dcv&package=cross-platform) to apply for a 30-day FREE Trial license.
+- All examples are pinned to **Dynamsoft Barcode Reader v11.6.4000** and **Dynamsoft Capture Vision v3.6.4000** through Swift Package Manager ([barcode-reader-spm](https://github.com/Dynamsoft/barcode-reader-spm) / [capture-vision-spm](https://github.com/Dynamsoft/capture-vision-spm)). The MRZ Scanner examples use [mrz-scanner-spm](https://github.com/Dynamsoft/mrz-scanner-spm) v3.6.2000.
+- Xcode 16+ with an iOS 16+ deployment target (some examples require iOS 17/18; check each project's deployment target).
 
 ## Examples
 - [Barcode Scanning](./examples/barcode/)

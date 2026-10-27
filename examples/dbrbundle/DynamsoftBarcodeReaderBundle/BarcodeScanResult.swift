@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import DynamsoftBarcodeReader
+import DynamsoftCaptureVisionBundle
 
 @objc(DSResultStatus)
 public enum ResultStatus:Int {

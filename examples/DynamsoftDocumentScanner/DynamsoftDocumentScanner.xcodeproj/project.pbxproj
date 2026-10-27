@@ -344,7 +344,7 @@
 			repositoryURL = "https://github.com/Dynamsoft/capture-vision-spm";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.4.1200;
+				minimumVersion = 3.6.4000;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

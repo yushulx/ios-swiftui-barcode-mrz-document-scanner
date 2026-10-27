@@ -369,7 +369,7 @@
 			repositoryURL = "https://github.com/Dynamsoft/mrz-scanner-spm";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.4.1300;
+				minimumVersion = 3.6.2000;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
