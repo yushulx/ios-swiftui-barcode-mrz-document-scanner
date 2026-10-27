@@ -5,12 +5,7 @@ import SwiftUI
 #if os(iOS)
     import UIKit
     import CoreGraphics
-    import DynamsoftCameraEnhancer
-    import DynamsoftCaptureVisionRouter
-    import DynamsoftLicense
-    import DynamsoftCodeParser
-    import DynamsoftLabelRecognizer
-    import DynamsoftDocumentNormalizer
+    import DynamsoftCaptureVisionBundle
     typealias ViewController = UIViewController
     typealias ImageType = UIImage
 #elseif os(macOS)
@@ -245,26 +240,28 @@ class CameraViewController: ViewController, AVCapturePhotoCaptureDelegate,
                     print("Decoded document Count: \(items.count)")
 
                     for item in items {
-                        if item.type == .normalizedImage,
-                            let documentItem = item as? NormalizedImageResultItem
+                        if item.type == .deskewedImage,
+                            let documentItem = item as? DeskewedImageResultItem
                         {
 
                             do {
-                                let image = try documentItem.imageData?.toUIImage()
-                                let points = documentItem.location.points
+                                guard let image = try documentItem.imageData?.toUIImage()
+                                else { return }
+                                let points = documentItem.sourceDeskewQuad.points
 
                                 // Map points to a dictionary format
-                                let pointArray: [[String: CGFloat]] = points.compactMap { point in
+                                let pointArray: [[String: CGFloat]] = points.compactMap {
+                                    point -> [String: CGFloat]? in
                                     guard let cgPoint = point as? CGPoint else { return nil }
                                     return ["x": cgPoint.x, "y": cgPoint.y]
                                 }
 
                                 // rotate image
-                                let rotatedImage = image!.rotate(byDegrees: 90)
+                                let rotatedImage = image.rotate(byDegrees: 90) ?? image
 
                                 // Create dictionary for barcode data
                                 let documentData: [String: Any] = [
-                                    "image": rotatedImage!,
+                                    "image": rotatedImage,
                                     "points": pointArray,
                                 ]
 

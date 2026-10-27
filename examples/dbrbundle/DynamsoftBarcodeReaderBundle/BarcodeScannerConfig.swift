@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import DynamsoftCaptureVisionBundle
+import DynamsoftBarcodeReader
 
 @objcMembers
 @objc(DSBarcodeScannerConfig)

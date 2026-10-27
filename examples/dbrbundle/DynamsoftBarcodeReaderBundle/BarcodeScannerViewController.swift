@@ -5,7 +5,12 @@
 //  Copyright © Dynamsoft Corporation.  All rights reserved.
 //
 
-import DynamsoftCaptureVisionBundle
+import DynamsoftCore
+import DynamsoftCameraEnhancer
+import DynamsoftCaptureVisionRouter
+import DynamsoftBarcodeReader
+import DynamsoftLicense
+import DynamsoftUtility
 
 @objc(DSBarcodeScannerViewController)
 public class BarcodeScannerViewController: UIViewController {
@@ -217,14 +222,14 @@ extension BarcodeScannerViewController {
         let position = dce.getCameraPosition()
         switch position {
         case .back, .backDualWideAuto, .backUltraWide:
-            dce.selectCamera(with: .front) { _, _ in }
+            try? dce.selectCamera(with: .front)
             torchButton.isHidden = true
             torchButton.isSelected = false
         case .front:
-            dce.selectCamera(with: .back) { _, _ in }
+            try? dce.selectCamera(with: .back)
             torchButton.isHidden = !config.isTorchButtonVisible
         @unknown default:
-            dce.selectCamera(with: .back) { _, _ in }
+            try? dce.selectCamera(with: .back)
             torchButton.isHidden = !config.isTorchButtonVisible
         }
     }

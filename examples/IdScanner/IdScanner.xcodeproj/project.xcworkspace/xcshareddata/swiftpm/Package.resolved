@@ -1,15 +1,24 @@
 {
-  "originHash": "ec3b50548d38c19404bf86829aef700ea7a6e5b1fbeba042d790028bd3eccd9e",
-  "pins": [
+  "originHash" : "ec3b50548d38c19404bf86829aef700ea7a6e5b1fbeba042d790028bd3eccd9e",
+  "pins" : [
     {
-      "identity": "mrz-scanner-spm",
-      "kind": "remoteSourceControl",
-      "location": "https://github.com/Dynamsoft/mrz-scanner-spm",
-      "state": {
-        "revision": "3a4798eade978cdeeb281385d5a4980cec92f9fb",
-        "version": "3.6.2000"
+      "identity" : "capture-vision-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Dynamsoft/capture-vision-spm.git",
+      "state" : {
+        "revision" : "4a86b39dfe64376c9838a5ee5d97973c2bc588e9",
+        "version" : "3.6.4000"
+      }
+    },
+    {
+      "identity" : "mrz-scanner-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Dynamsoft/mrz-scanner-spm",
+      "state" : {
+        "revision" : "3a4798eade978cdeeb281385d5a4980cec92f9fb",
+        "version" : "3.6.2000"
       }
     }
   ],
-  "version": 3
+  "version" : 3
 }

@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11189DEE2E7274E900766705 /* DynamsoftCaptureVisionBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 11189DED2E7274E900766705 /* DynamsoftCaptureVisionBundle */; };
-		11189DF02E7274E900766705 /* DynamsoftMRZScannerBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 11189DEF2E7274E900766705 /* DynamsoftMRZScannerBundle */; };
+		11189DF02E7274E900766705 /* DynamsoftMRZScannerBundle in Frameworks */ = {isa = PBXBuildFile; productRef = 11189DEF2E7274E900766705 /* DynamsoftMRZScanner */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,8 +71,7 @@
 			);
 			name = IdScanner;
 			packageProductDependencies = (
-				11189DED2E7274E900766705 /* DynamsoftCaptureVisionBundle */,
-				11189DEF2E7274E900766705 /* DynamsoftMRZScannerBundle */,
+				11189DEF2E7274E900766705 /* DynamsoftMRZScanner */,
 			);
 			productName = IdScanner;
 			productReference = 11189D922E6FF5F000766705 /* IdScanner.app */;
@@ -353,15 +351,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		11189DED2E7274E900766705 /* DynamsoftCaptureVisionBundle */ = {
+		11189DEF2E7274E900766705 /* DynamsoftMRZScanner */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 11189DEC2E7274E900766705 /* XCRemoteSwiftPackageReference "mrz-scanner-spm" */;
-			productName = DynamsoftCaptureVisionBundle;
-		};
-		11189DEF2E7274E900766705 /* DynamsoftMRZScannerBundle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 11189DEC2E7274E900766705 /* XCRemoteSwiftPackageReference "mrz-scanner-spm" */;
-			productName = DynamsoftMRZScannerBundle;
+			productName = DynamsoftMRZScanner;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
