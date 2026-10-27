@@ -28,13 +28,7 @@
 		680A03C62CEB0CB80057FA6A /* BarcodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680A03C42CEB0CB80057FA6A /* BarcodeScannerViewController.swift */; };
 		680A03C72CEB0CB80057FA6A /* BarcodeScannerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680A03C32CEB0CB80057FA6A /* BarcodeScannerConfig.swift */; };
 		680A03CA2CEB0CDA0057FA6A /* DynamsoftBarcodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 680A03C92CEB0CDA0057FA6A /* DynamsoftBarcodeReader */; };
-		680A03CC2CEB0CDA0057FA6A /* DynamsoftCameraEnhancer in Frameworks */ = {isa = PBXBuildFile; productRef = 680A03CB2CEB0CDA0057FA6A /* DynamsoftCameraEnhancer */; };
-		680A03CE2CEB0CDA0057FA6A /* DynamsoftCaptureVisionRouter in Frameworks */ = {isa = PBXBuildFile; productRef = 680A03CD2CEB0CDA0057FA6A /* DynamsoftCaptureVisionRouter */; };
-		680A03D02CEB0CDA0057FA6A /* DynamsoftCore in Frameworks */ = {isa = PBXBuildFile; productRef = 680A03CF2CEB0CDA0057FA6A /* DynamsoftCore */; };
-		680A03D22CEB0CDA0057FA6A /* DynamsoftImageProcessing in Frameworks */ = {isa = PBXBuildFile; productRef = 680A03D12CEB0CDA0057FA6A /* DynamsoftImageProcessing */; };
-		680A03D42CEB0CDA0057FA6A /* DynamsoftLicense in Frameworks */ = {isa = PBXBuildFile; productRef = 680A03D32CEB0CDA0057FA6A /* DynamsoftLicense */; };
 		680A03D82CEB0D320057FA6A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 680A03D72CEB0D320057FA6A /* Media.xcassets */; };
-		68E7D6C42D26862B00B0CDF8 /* DynamsoftUtility in Frameworks */ = {isa = PBXBuildFile; productRef = 68E7D6C32D26862B00B0CDF8 /* DynamsoftUtility */; };
 		68E7D6C62D269B0300B0CDF8 /* ReadMultipleBarcodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 68E7D6C52D269B0300B0CDF8 /* ReadMultipleBarcodes.json */; };
 /* End PBXBuildFile section */
 
@@ -203,7 +197,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# xcframework\nset -e\n# Sets\nreadonly target_name=${PROJECT_NAME}\nreadonly framework_name=${target_name}\nbuild_dir=\"build\"\nxcarchive_iOS=${build_dir}/${framework_name}_iOS.xcarchive\nxcarchive_iOSSimulator=${build_dir}/${framework_name}_iOSSimulator.xcarchive\n\ndSYM_iOS=${xcarchive_iOS}/dSYMs/${framework_name}.framework.dSYM\ndSYM_iOSSimulator=${xcarchive_iOSSimulator}/dSYMs/${framework_name}.framework.dSYM\n\n# Clean oldest\nfunction build_clean {\n    printf \"====build_clean====\"\n    if [ -d ${build_dir} ]\n    then\n        rm -rf ${build_dir}\n    fi\n}\n\n# Build frameworks\nfunction build_frameworks {\n    printf \"====build_frameworks====\"\n    xcodebuild archive -scheme ${target_name} -destination \"generic/platform=iOS\" -archivePath ${xcarchive_iOS} SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES\n    xcodebuild archive -scheme ${target_name} -destination \"generic/platform=iOS Simulator\" -archivePath ${xcarchive_iOSSimulator} SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES\n}\n\n# Build xcframework\nfunction build_xcframework {\n    printf \"====build_xcframework====\"\n    xcodebuild -create-xcframework -archive ${xcarchive_iOS} -framework \"${framework_name}.framework\" -archive ${xcarchive_iOSSimulator} -framework \"${framework_name}.framework\" -output \"${build_dir}/${framework_name}.xcframework\"\n}\n\n# do\nbuild_clean\nbuild_frameworks\nbuild_xcframework\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# xcframework\nset -e\n# Sets\nreadonly target_name=${PROJECT_NAME}\nreadonly framework_name=DynamsoftBarcodeScanner\nbuild_dir=\"build\"\nxcarchive_iOS=${build_dir}/${framework_name}_iOS.xcarchive\nxcarchive_iOSSimulator=${build_dir}/${framework_name}_iOSSimulator.xcarchive\n\ndSYM_iOS=${xcarchive_iOS}/dSYMs/${framework_name}.framework.dSYM\ndSYM_iOSSimulator=${xcarchive_iOSSimulator}/dSYMs/${framework_name}.framework.dSYM\n\n# Clean oldest\nfunction build_clean {\n    printf \"====build_clean====\"\n    if [ -d ${build_dir} ]\n    then\n        rm -rf ${build_dir}\n    fi\n}\n\n# Build frameworks\nfunction build_frameworks {\n    printf \"====build_frameworks====\"\n    xcodebuild archive -scheme ${target_name} -destination \"generic/platform=iOS\" -archivePath ${xcarchive_iOS} SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES\n    xcodebuild archive -scheme ${target_name} -destination \"generic/platform=iOS Simulator\" -archivePath ${xcarchive_iOSSimulator} SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES\n}\n\n# Build xcframework\nfunction build_xcframework {\n    printf \"====build_xcframework====\"\n    xcodebuild -create-xcframework -archive ${xcarchive_iOS} -framework \"${framework_name}.framework\" -archive ${xcarchive_iOSSimulator} -framework \"${framework_name}.framework\" -output \"${build_dir}/${framework_name}.xcframework\"\n}\n\n# do\nbuild_clean\nbuild_frameworks\nbuild_xcframework\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -370,8 +364,8 @@
 				MARKETING_VERSION = 10.4.3001;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dynamsoft.DynamsoftFramework;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dynamsoft.DynamsoftBarcodeScanner;
+				PRODUCT_NAME = DynamsoftBarcodeScanner;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
@@ -405,8 +399,8 @@
 				MARKETING_VERSION = 10.4.3001;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dynamsoft.DynamsoftFramework;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dynamsoft.DynamsoftBarcodeScanner;
+				PRODUCT_NAME = DynamsoftBarcodeScanner;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
@@ -473,7 +467,7 @@
 			repositoryURL = "https://github.com/Dynamsoft/barcode-reader-spm";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 10.4.2000;
+				minimumVersion = 11.6.4000;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -483,36 +477,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 680A03C82CEB0CDA0057FA6A /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
 			productName = DynamsoftBarcodeReader;
-		};
-		680A03CB2CEB0CDA0057FA6A /* DynamsoftCameraEnhancer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 680A03C82CEB0CDA0057FA6A /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
-			productName = DynamsoftCameraEnhancer;
-		};
-		680A03CD2CEB0CDA0057FA6A /* DynamsoftCaptureVisionRouter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 680A03C82CEB0CDA0057FA6A /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
-			productName = DynamsoftCaptureVisionRouter;
-		};
-		680A03CF2CEB0CDA0057FA6A /* DynamsoftCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 680A03C82CEB0CDA0057FA6A /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
-			productName = DynamsoftCore;
-		};
-		680A03D12CEB0CDA0057FA6A /* DynamsoftImageProcessing */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 680A03C82CEB0CDA0057FA6A /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
-			productName = DynamsoftImageProcessing;
-		};
-		680A03D32CEB0CDA0057FA6A /* DynamsoftLicense */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 680A03C82CEB0CDA0057FA6A /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
-			productName = DynamsoftLicense;
-		};
-		68E7D6C32D26862B00B0CDF8 /* DynamsoftUtility */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 680A03C82CEB0CDA0057FA6A /* XCRemoteSwiftPackageReference "barcode-reader-spm" */;
-			productName = DynamsoftUtility;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

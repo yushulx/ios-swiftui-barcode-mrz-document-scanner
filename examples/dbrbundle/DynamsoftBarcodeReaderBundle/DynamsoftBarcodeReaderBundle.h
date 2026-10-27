@@ -1,19 +1,16 @@
 /*
- * This is the header files of DynamsoftBarcodeReaderBundle.
+ * This is the header files of DynamsoftBarcodeScanner.
  *
  * Copyright © Dynamsoft Corporation.  All rights reserved.
  */
 
 #import <Foundation/Foundation.h>
 
-FOUNDATION_EXPORT double DynamsoftBarcodeReaderBundleVersionNumber;
+FOUNDATION_EXPORT double DynamsoftBarcodeScannerVersionNumber;
 
-FOUNDATION_EXPORT const unsigned char DynamsoftBarcodeReaderBundleVersionString[];
+FOUNDATION_EXPORT const unsigned char DynamsoftBarcodeScannerVersionString[];
 
-#import <DynamsoftCore/DynamsoftCore.h>
-#import <DynamsoftLicense/DynamsoftLicense.h>
-#import <DynamsoftImageProcessing/DynamsoftImageProcessing.h>
-#import <DynamsoftCameraEnhancer/DynamsoftCameraEnhancer.h>
-#import <DynamsoftCaptureVisionRouter/DynamsoftCaptureVisionRouter.h>
-#import <DynamsoftBarcodeReader/DynamsoftBarcodeReader.h>
-#import <DynamsoftUtility/DynamsoftUtility.h>
+// Since v11 the barcode reader, camera enhancer, license, image processing,
+// capture vision router and utility modules all live in the single
+// DynamsoftCaptureVisionBundle framework.
+#import <DynamsoftCaptureVisionBundle/DynamsoftCaptureVisionBundle.h>
