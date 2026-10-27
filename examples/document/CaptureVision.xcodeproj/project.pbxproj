@@ -10,21 +10,17 @@
 		11B0E3902CEECE9300E3748D /* DynamsoftCaptureVisionBundle in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 11B0E38F2CEECE9300E3748D /* DynamsoftCaptureVisionBundle */; };
 		11BD8FAB2CF4603E00C904FA /* libDynamsoftUtility.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA82CF4603E00C904FA /* libDynamsoftUtility.dylib */; platformFilters = (macos, ); };
 		11BD8FAC2CF4603E00C904FA /* libDynamsoftImageProcessing.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA42CF4603E00C904FA /* libDynamsoftImageProcessing.dylib */; platformFilters = (macos, ); };
-		11BD8FAD2CF4603E00C904FA /* libDynamicImagex64.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F9B2CF4603E00C904FA /* libDynamicImagex64.dylib */; platformFilters = (macos, ); };
 		11BD8FAE2CF4603E00C904FA /* libDynamsoftCodeParserDedicator.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA12CF4603E00C904FA /* libDynamsoftCodeParserDedicator.dylib */; platformFilters = (macos, ); };
 		11BD8FAF2CF4603E00C904FA /* libDynamsoftNeuralNetwork.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA72CF4603E00C904FA /* libDynamsoftNeuralNetwork.dylib */; platformFilters = (macos, ); };
 		11BD8FB02CF4603E00C904FA /* libDynamsoftCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA22CF4603E00C904FA /* libDynamsoftCore.dylib */; platformFilters = (macos, ); };
 		11BD8FB12CF4603E00C904FA /* libDynamicPdf.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F9C2CF4603E00C904FA /* libDynamicPdf.dylib */; platformFilters = (macos, ); };
 		11BD8FB22CF4603E00C904FA /* libDynamsoftLabelRecognizer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA52CF4603E00C904FA /* libDynamsoftLabelRecognizer.dylib */; platformFilters = (macos, ); };
-		11BD8FB32CF4603E00C904FA /* libDynamicPdfCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F9D2CF4603E00C904FA /* libDynamicPdfCore.dylib */; platformFilters = (macos, ); };
 		11BD8FB42CF4603E00C904FA /* libDynamsoftBarcodeReader.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F9E2CF4603E00C904FA /* libDynamsoftBarcodeReader.dylib */; platformFilters = (macos, ); };
 		11BD8FB52CF4603E00C904FA /* libDynamsoftCodeParser.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA02CF4603E00C904FA /* libDynamsoftCodeParser.dylib */; platformFilters = (macos, ); };
 		11BD8FB62CF4603E00C904FA /* libDynamsoftDocumentNormalizer.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA32CF4603E00C904FA /* libDynamsoftDocumentNormalizer.dylib */; platformFilters = (macos, ); };
 		11BD8FB72CF4603E00C904FA /* libDynamsoftCaptureVisionRouter.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8F9F2CF4603E00C904FA /* libDynamsoftCaptureVisionRouter.dylib */; platformFilters = (macos, ); };
 		11BD8FB82CF4603E00C904FA /* libDynamsoftLicense.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BD8FA62CF4603E00C904FA /* libDynamsoftLicense.dylib */; platformFilters = (macos, ); };
-		11BD8FB92CF4609700C904FA /* libDynamicImagex64.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F9B2CF4603E00C904FA /* libDynamicImagex64.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		11BD8FBA2CF4609700C904FA /* libDynamicPdf.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F9C2CF4603E00C904FA /* libDynamicPdf.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		11BD8FBB2CF4609700C904FA /* libDynamicPdfCore.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F9D2CF4603E00C904FA /* libDynamicPdfCore.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		11BD8FBC2CF4609700C904FA /* libDynamsoftBarcodeReader.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F9E2CF4603E00C904FA /* libDynamsoftBarcodeReader.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		11BD8FBD2CF4609700C904FA /* libDynamsoftCaptureVisionRouter.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8F9F2CF4603E00C904FA /* libDynamsoftCaptureVisionRouter.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		11BD8FBE2CF4609700C904FA /* libDynamsoftCodeParser.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 11BD8FA02CF4603E00C904FA /* libDynamsoftCodeParser.dylib */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -46,9 +42,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				11BD8FB92CF4609700C904FA /* libDynamicImagex64.dylib in CopyFiles */,
 				11BD8FBA2CF4609700C904FA /* libDynamicPdf.dylib in CopyFiles */,
-				11BD8FBB2CF4609700C904FA /* libDynamicPdfCore.dylib in CopyFiles */,
 				11BD8FBC2CF4609700C904FA /* libDynamsoftBarcodeReader.dylib in CopyFiles */,
 				11BD8FBD2CF4609700C904FA /* libDynamsoftCaptureVisionRouter.dylib in CopyFiles */,
 				11BD8FBE2CF4609700C904FA /* libDynamsoftCodeParser.dylib in CopyFiles */,
@@ -84,9 +78,7 @@
 		11BD8F972CF4603E00C904FA /* DynamsoftLabelRecognizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftLabelRecognizer.h; sourceTree = "<group>"; };
 		11BD8F982CF4603E00C904FA /* DynamsoftLicense.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftLicense.h; sourceTree = "<group>"; };
 		11BD8F992CF4603E00C904FA /* DynamsoftUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamsoftUtility.h; sourceTree = "<group>"; };
-		11BD8F9B2CF4603E00C904FA /* libDynamicImagex64.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicImagex64.dylib; sourceTree = "<group>"; };
 		11BD8F9C2CF4603E00C904FA /* libDynamicPdf.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicPdf.dylib; sourceTree = "<group>"; };
-		11BD8F9D2CF4603E00C904FA /* libDynamicPdfCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamicPdfCore.dylib; sourceTree = "<group>"; };
 		11BD8F9E2CF4603E00C904FA /* libDynamsoftBarcodeReader.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftBarcodeReader.dylib; sourceTree = "<group>"; };
 		11BD8F9F2CF4603E00C904FA /* libDynamsoftCaptureVisionRouter.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftCaptureVisionRouter.dylib; sourceTree = "<group>"; };
 		11BD8FA02CF4603E00C904FA /* libDynamsoftCodeParser.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libDynamsoftCodeParser.dylib; sourceTree = "<group>"; };
@@ -119,13 +111,11 @@
 			files = (
 				11BD8FAB2CF4603E00C904FA /* libDynamsoftUtility.dylib in Frameworks */,
 				11BD8FAC2CF4603E00C904FA /* libDynamsoftImageProcessing.dylib in Frameworks */,
-				11BD8FAD2CF4603E00C904FA /* libDynamicImagex64.dylib in Frameworks */,
 				11BD8FAE2CF4603E00C904FA /* libDynamsoftCodeParserDedicator.dylib in Frameworks */,
 				11BD8FAF2CF4603E00C904FA /* libDynamsoftNeuralNetwork.dylib in Frameworks */,
 				11BD8FB02CF4603E00C904FA /* libDynamsoftCore.dylib in Frameworks */,
 				11BD8FB12CF4603E00C904FA /* libDynamicPdf.dylib in Frameworks */,
 				11BD8FB22CF4603E00C904FA /* libDynamsoftLabelRecognizer.dylib in Frameworks */,
-				11BD8FB32CF4603E00C904FA /* libDynamicPdfCore.dylib in Frameworks */,
 				11BD8FB42CF4603E00C904FA /* libDynamsoftBarcodeReader.dylib in Frameworks */,
 				11BD8FB52CF4603E00C904FA /* libDynamsoftCodeParser.dylib in Frameworks */,
 				11BD8FB62CF4603E00C904FA /* libDynamsoftDocumentNormalizer.dylib in Frameworks */,
@@ -157,9 +147,7 @@
 		11BD8FA92CF4603E00C904FA /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				11BD8F9B2CF4603E00C904FA /* libDynamicImagex64.dylib */,
 				11BD8F9C2CF4603E00C904FA /* libDynamicPdf.dylib */,
-				11BD8F9D2CF4603E00C904FA /* libDynamicPdfCore.dylib */,
 				11BD8F9E2CF4603E00C904FA /* libDynamsoftBarcodeReader.dylib */,
 				11BD8F9F2CF4603E00C904FA /* libDynamsoftCaptureVisionRouter.dylib */,
 				11BD8FA02CF4603E00C904FA /* libDynamsoftCodeParser.dylib */,

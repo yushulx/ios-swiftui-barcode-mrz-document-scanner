@@ -71,20 +71,20 @@
   if (result->GetErrorCode() != 0) {
     NSLog(@"Error code: %d", result->GetErrorCode());
   }
-  CNormalizedImagesResult *documentResult = result->GetNormalizedImagesResult();
-  if (documentResult == nullptr || documentResult->GetItemsCount() == 0) {
+  CProcessedDocumentResult *documentResult = result->GetProcessedDocumentResult();
+  if (documentResult == nullptr || documentResult->GetDeskewedImageResultItemsCount() == 0) {
     NSLog(@"No document found");
     delete imageStruct;
     return nil;
   }
 
-  int documentResultItemCount = documentResult->GetItemsCount();
+  int documentResultItemCount = documentResult->GetDeskewedImageResultItemsCount();
   NSLog(@"Total document(s) found: %d", documentResultItemCount);
   NSMutableArray *documentArray = [NSMutableArray array];
 
   for (int j = 0; j < documentResultItemCount; j++) {
-    const CNormalizedImageResultItem *documentResultItem =
-        documentResult->GetItem(j);
+    const CDeskewedImageResultItem *documentResultItem =
+        documentResult->GetDeskewedImageResultItem(j);
 
     //    CImageManager *imageManager = new CImageManager();
 
@@ -105,7 +105,8 @@
                                               stride:niStride
                                               format:format];
 
-    CPoint *points = documentResultItem->GetLocation().points;
+    CQuadrilateral quad = documentResultItem->GetSourceDeskewQuad();
+    const CPoint *points = quad.points;
     NSLog(@"Result %d", j + 1);
 
     NSDictionary *documentData = @{
