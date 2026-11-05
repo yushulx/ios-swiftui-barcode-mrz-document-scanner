@@ -25,11 +25,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             for item in results {
                 if (item.itemProvider.canLoadObject(ofClass: UIImage.self)) {
                     item.itemProvider.loadObject(ofClass: UIImage.self) { image , error  in
-                        if let error{
-                            print(error)
+                        if let error {
+                            NSLog("Failed to load the picked image: %@", error.localizedDescription)
                         }
                         if let selectedImage = image as? UIImage{
-                            print(selectedImage.size)
                             images.append(selectedImage)
                             processed = processed + 1
                             if processed == size {
@@ -43,42 +42,40 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func mergeImagesIntoPDF(images:[UIImage]) {
-        print("mergeImagesIntoPDF")
         var enableAutoCropping = false
         var selectedColorModeIndex = 0
         DispatchQueue.main.sync {
             statusLabel.text = "Processing..."
-            
-            if enableAutoCroppingUISwitch.isOn {
-                enableAutoCropping = true
-            }
+            enableAutoCropping = enableAutoCroppingUISwitch.isOn
             selectedColorModeIndex = colorModeUIPickerView.selectedRow(inComponent: 0)
         }
-        let templateName:String;
-        if enableAutoCropping {
-            print("enable auto cropping")
-            templateName = PresetTemplate.detectAndNormalizeDocument.rawValue
-        }else{
-            print("disable auto cropping")
-            templateName = PresetTemplate.normalizeDocument.rawValue
+
+        let templateName = enableAutoCropping
+            ? PresetTemplate.detectAndNormalizeDocument.rawValue
+            : PresetTemplate.normalizeDocument.rawValue
+
+        guard let settings = try? cvr.getSimplifiedSettings(templateName) else {
+            statusLabel.text = ""
+            return
         }
-        var settings = try? cvr.getSimplifiedSettings(templateName)
-        print("selected row")
-        print(selectedColorModeIndex)
-        if selectedColorModeIndex == 0 {
-            settings?.documentSettings?.colourMode = ImageColourMode.binary
-        }else if selectedColorModeIndex == 1 {
-            settings?.documentSettings?.colourMode = ImageColourMode.grayscale
-        }else{
-            settings?.documentSettings?.colourMode = ImageColourMode.colour
+
+        switch selectedColorModeIndex {
+        case 0:
+            settings.documentSettings?.colourMode = ImageColourMode.binary
+        case 1:
+            settings.documentSettings?.colourMode = ImageColourMode.grayscale
+        default:
+            settings.documentSettings?.colourMode = ImageColourMode.colour
         }
-        if enableAutoCropping == false {
+
+        if !enableAutoCropping {
+            // Normalize the whole image when document detection is off.
             let fullPage = [CGPoint(x: 0, y: 0), CGPoint(x: 100, y: 0), CGPoint(x: 100, y: 100), CGPoint(x: 0, y: 100)]
-            settings?.roi = Quadrilateral(pointArray: fullPage.map { NSValue(cgPoint: $0) })
-            settings?.roiMeasuredInPercentage = true
+            settings.roi = Quadrilateral(pointArray: fullPage.map { NSValue(cgPoint: $0) })
+            settings.roiMeasuredInPercentage = true
         }
-        try? cvr.updateSettings(templateName, settings: settings!)
-        
+        try? cvr.updateSettings(templateName, settings: settings)
+
         let pdfDocument = PDFDocument()
         for image in images {
             let capturedResult = cvr.captureFromImage(image, templateName: templateName)
@@ -138,8 +135,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     @IBAction func selectImagesUIButton_clicked(_ sender: Any) {
-        print("clicked")
-
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
         //0 - unlimited 1 - default
         configuration.selectionLimit = 0

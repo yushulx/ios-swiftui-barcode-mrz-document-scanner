@@ -43,4 +43,6 @@ xcodebuild -workspace "Document Scanner.xcworkspace" -scheme "Document Scanner" 
 
 ## Blog
 
-[How to Build an iOS Document Scanner App in Swift with AVFoundation](https://www.dynamsoft.com/codepool/ios-document-scanner.html)
+The UIKit walkthrough that shipped with this sample has been retired in favour of
+the SwiftUI document scanner tutorial:
+[Build a SwiftUI iOS Document Scanner with Stable Auto Capture and PDF Export](https://www.dynamsoft.com/codepool/build-mobile-document-scanner-ios-app.html).
