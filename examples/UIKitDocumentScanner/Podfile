@@ -1,0 +1,8 @@
+platform :ios, '15.0'
+
+target 'Document Scanner' do
+  use_frameworks!
+
+  # Dynamsoft Capture Vision bundle (Document Normalizer) 3.6.4000
+  pod 'DynamsoftCaptureVisionBundle','3.6.4000'
+end

@@ -149,7 +149,8 @@ using namespace dynamsoft::basic_structures;
       const char *format = barcodeResultItem->GetFormatString();
       const char *text = barcodeResultItem->GetText();
       int angle = barcodeResultItem->GetAngle();
-      CPoint *points = barcodeResultItem->GetLocation().points;
+      CQuadrilateral quad = barcodeResultItem->GetLocation(); // Keep the returned value alive before reading points
+      CPoint *points = quad.points;
       unsigned char *raw = barcodeResultItem->GetBytes();
 
       NSDictionary *barcodeData = @{

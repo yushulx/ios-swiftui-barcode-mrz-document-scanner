@@ -1,0 +1,15 @@
+platform :ios, '15.0'
+
+target 'PDFCreator' do
+  use_frameworks!
+
+  # Dynamsoft Capture Vision bundle (Document Normalizer + Utility) 3.6.4000
+  pod 'DynamsoftCaptureVisionBundle','3.6.4000'
+
+  target 'PDFCreatorTests' do
+    inherit! :search_paths
+  end
+
+  target 'PDFCreatorUITests' do
+  end
+end

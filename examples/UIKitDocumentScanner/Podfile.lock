@@ -1,0 +1,16 @@
+PODS:
+  - DynamsoftCaptureVisionBundle (3.6.4000)
+
+DEPENDENCIES:
+  - DynamsoftCaptureVisionBundle (= 3.6.4000)
+
+SPEC REPOS:
+  trunk:
+    - DynamsoftCaptureVisionBundle
+
+SPEC CHECKSUMS:
+  DynamsoftCaptureVisionBundle: 563c1cc75430259492fa50dd1e91927e61fe57e9
+
+PODFILE CHECKSUM: f6ef717a2ba7f7b3376027ba0956a677e12c52e4
+
+COCOAPODS: 1.16.2
